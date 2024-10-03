@@ -2,9 +2,9 @@
  A user-friendly mobile application designed to help users effectively monitor and manage their personal finances by recording income, tracking expenses, and providing detailed reports to enhance budgeting and financial decision-making.
 
 ## Authors
-- [Franz Ruie Morada](https:/guthib.com) - Project Manager
+- [Franz Ruie Morada](https://www.github.com/UnusualRuWei) - Project Manager
 - [Alvin John Araneta](https://www.github.com/ajiwnl) - Tech Lead
-- [Edz Henissey Son](https:/guthib.com) - System Analyst
+- [Edz Henissey Son](https://www.github.com/edzzson) - System Analyst
 - [Jay-r Olores](https://github.com/jayr-olores) - Developer
 - [Kenneth James Macas](https://github.com/soliken1) - Developer
 
