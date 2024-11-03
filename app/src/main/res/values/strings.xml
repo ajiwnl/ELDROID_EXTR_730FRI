@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">ExpenseTrackerAndroid</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="logindesc">Login to our application to access our services
+such as Expense Tracking, Budget Planning, Categorization and More!</string>
+    <string name="registerdesc">Register to our application to access our services such as Expense Tracking, Budget Planning, Categorization and More!</string>
+    <string name="forgotdesc">Make sure that the email is valid in order
+for us to send an email.</string>
+    <string name="verifydesc">We have sent you an email for verification,
+please verify on your email.</string>
+    <string name="termsandconditiondesc">By continuing, you agree to our Terms and Conditions and have read our Privacy Policy.</string>
+    <string name="email">Email</string>
+    <string name="emailhint">johndoe@gmail.com</string>
+    <string name="username">Username</string>
+    <string name="usernamehint">User1</string>
+    <string name="password">Password</string>
+    <string name="passwordhint">***********</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
 </resources>
