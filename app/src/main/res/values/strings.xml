@@ -19,4 +19,10 @@ please verify on your email.</string>
     <string name="passwordhint">***********</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="usergmail_com">Usergmail.com</string>
+    <string name="send">Send</string>
+    <string name="todo">TODO</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="go_back">Go Back</string>
 </resources>

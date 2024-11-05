@@ -14,7 +14,6 @@ public class RegisterViewModel extends ViewModel {
     public LiveData<String> getEmailError() {
         return emailError;
     }
-
     public LiveData<String> getPasswordError() {
         return passwordError;
     }
