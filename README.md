@@ -14,17 +14,17 @@
 - [Edz Henissey Son](https://www.github.com/edzzson) 
 - [Jay-r Olores](https://github.com/jayr-olores) - Alliance
 - [Kenneth James Macas](https://github.com/soliken1) - Alliance
-- [Joshriel Mive Carzon] - Alliance
-- [Angel Dorothy Medez] - Alliance
-- [Art James Narboada] - Alliance
-- [Gheyl Aguilar]
-- [Jelu Mari Cajipe] 
+- [Joshriel Mive Carzon]() - Alliance
+- [Angel Dorothy Medez]() - Alliance
+- [Art James Narboada]() - Alliance
+- [Gheyl Aguilar]()
+- [Jelu Mari Cajipe]() 
 
 ## Android Repository Link
-- [Android Repository](https://github.com/ajiwnl/ELDROID_EXTR_730FRI)
+[Android Repository](https://github.com/ajiwnl/ELDROID_EXTR_730FRI)
 
 ## PHP Repository Link
-- [PHP Repository]()
+[PHP Repository]()
 
 ## UI Design
 [EXTR UI Design](https://www.figma.com/design/mmyOXxq06WnneADJIHGHWI/Expense-Tracker-Mobile?node-id=0-1&t=75P8iLZ9YfnCpkOZ-1)
