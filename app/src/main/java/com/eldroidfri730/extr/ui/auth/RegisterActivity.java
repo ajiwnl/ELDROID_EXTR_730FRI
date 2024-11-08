@@ -1,15 +1,17 @@
 package com.eldroidfri730.extr.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.utils.IntentUtil;
 import com.eldroidfri730.extr.viewmodel.auth.RegisterViewModel;
+import com.eldroidfri730.extr.viewmodel.auth.RegisterViewModelFactory;
 import com.eldroidfri730.extr.utils.TextUtil;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -23,11 +25,11 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
 
-        // Initialize ViewModel
-        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        // Initialize ViewModel with Application context using the Factory
+        RegisterViewModelFactory factory = new RegisterViewModelFactory(getApplication());
+        registerViewModel = new ViewModelProvider(this, factory).get(RegisterViewModel.class);
 
         // UI setup
         existingAccountTextView = findViewById(R.id.existingaccounttextview);
@@ -37,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerPassword = findViewById(R.id.loginpassword);
 
         // Set underlined text
-        existingAccountTextView.setText(TextUtil.getUnderlinedText("Already Have An Account?"));
+        existingAccountTextView.setText(TextUtil.getUnderlinedText(getString(R.string.existing_acct)));
 
         // Observe validation errors
         registerViewModel.getEmailError().observe(this, error -> {
@@ -69,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
             // Validate inputs
             if (registerViewModel.validateInputs(email, password, username)) {
                 // Proceed with registration (next step)
-/*                startActivity(new Intent(this, VerifyEmailActivity.class));*/
+                IntentUtil.startActivity(RegisterActivity.this, VerifyEmailActivity.class);
             }
         });
     }
