@@ -45,4 +45,21 @@ please verify on your email.</string>
     <string name="expense_name">Expense Name</string>
     <string name="expense_cost">Expense Cost</string>
     <string name="date_purchased">Date Purchased</string>
+    <string name="BotNavTitleExp">Expense</string>
+    <string name="BotNavTitleProf">Profile</string>
+    <string name="BotNavTitleSet">Settings</string>
+    <string name="BotTitleNavLogout">Logout</string>
+    <string name="FragExpTitleExp">Expense</string>
+    <string name="FragExpLabelExpName">Expense Name</string>
+    <string name="FragExpLabelCat">Category</string>
+    <string name="FragExpLabelAm">Amount</string>
+    <string name="FragExpLabelDate">Date</string>
+    <string name="FragExpLabelDesc">Description</string>
+    <string name="FragExpBtnTextSubmit">Submit</string>
+    <string name="FragCatLabelCat">Category</string>
+    <string name="FragCatLabelCat2">Your Categories</string>
+    <string name="FragCatLabelCatName">Category Name</string>
+    <string name="MenuHomeOptBgt">Budget</string>
+    <string name="MenuHomeOptExp">Expense</string>
+    <string name="MenuHomeOptCat">Category</string>
 </resources>

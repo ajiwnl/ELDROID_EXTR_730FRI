@@ -1,6 +1,7 @@
 // LoginActivity.java
 package com.eldroidfri730.extr.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
@@ -42,10 +44,12 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getIsLoggedIn().observe(this, isLoggedIn -> {
             if (isLoggedIn != null && isLoggedIn) {
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
-                // Navigate to another screen or perform additional actions
+                Intent toBasicSummary = new Intent(this, BasicSummaryActivity.class);
+                startActivity(toBasicSummary);
             } else {
                 Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }
