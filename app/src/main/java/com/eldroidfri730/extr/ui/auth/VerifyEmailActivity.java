@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.utils.IntentUtil;
 
 public class VerifyEmailActivity extends AppCompatActivity {
 
@@ -24,8 +25,7 @@ public class VerifyEmailActivity extends AppCompatActivity {
         gobacktologin = findViewById(R.id.gobackbutton);
 
         gobacktologin.setOnClickListener( v-> {
-            Intent toLogin = new Intent(this, LoginActivity.class);
-            startActivity(toLogin);
+            IntentUtil.startActivity(VerifyEmailActivity.this, LoginActivity.class);
         });
     }
 }

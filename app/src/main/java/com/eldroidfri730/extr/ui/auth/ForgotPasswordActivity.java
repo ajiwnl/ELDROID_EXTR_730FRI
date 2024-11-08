@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.utils.IntentUtil;
 import com.eldroidfri730.extr.utils.TextUtil;
 import com.eldroidfri730.extr.viewmodel.auth.ForgotPasswordViewModel;
 import com.eldroidfri730.extr.viewmodel.auth.ForgotPasswordViewModelFactory;
@@ -46,8 +47,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         goback.setText(TextUtil.getUnderlinedText(text));
 
         goback.setOnClickListener(v -> {
-            Intent toLogin = new Intent(this, LoginActivity.class);
-            startActivity(toLogin);
+            IntentUtil.startActivity(ForgotPasswordActivity.this, LoginActivity.class);
         });
 
         sendemail.setOnClickListener(v -> {

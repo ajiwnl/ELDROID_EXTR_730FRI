@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -61,7 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         // Set up click listeners
-        existingAccountTextView.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
+      existingAccountTextView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              IntentUtil.startActivity(RegisterActivity.this, LoginActivity.class);
+          }
+      });
 
         registerAccountButton.setOnClickListener(v -> {
             String email = registerEmail.getText().toString();
