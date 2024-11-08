@@ -15,10 +15,11 @@
 - [Jay-r Olores](https://github.com/jayr-olores) - Alliance
 - [Kenneth James Macas](https://github.com/soliken1) - Alliance
 - [Joshriel Mive Carzon]() - Alliance
-- [Angel Dorothy Medez]() - Alliance
+- [Angel Dorothy Medez]()
 - [Art James Narboada]() - Alliance
 - [Gheyl Aguilar]()
-- [Jelu Mari Cajipe]() 
+- [Jelu Mari Cajipe]()
+- [Loui Canete]()
 
 ## Android Repository Link
 [Android Repository](https://github.com/ajiwnl/ELDROID_EXTR_730FRI)
