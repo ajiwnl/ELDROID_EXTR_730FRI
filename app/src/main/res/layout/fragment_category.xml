@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CategoryFragment">
+    tools:context="ui.exp_and_cat.CategoryFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category"
+                android:text="@string/FragCatLabelCat"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:text="Your Categories"
+                    android:text="@string/FragCatLabelCat2"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:text="Category Name"
+                    android:text="@string/FragCatLabelCatName"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -108,7 +108,7 @@
                     android:paddingTop="10dp"
                     android:paddingEnd="50dp"
                     android:paddingBottom="10dp"
-                    android:text="Submit"
+                    android:text="@string/FragExpBtnTextSubmit"
                     android:textSize="12dp" />
 
 
