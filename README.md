@@ -8,7 +8,7 @@
 - [Jay-r Olores](https://github.com/jayr-olores)
 - [Kenneth James Macas](https://github.com/soliken1)
 
-## PHP Members
+## PHP Merged with Carzon's Group
 - [Franz Ruie Morada](https://www.github.com/UnusualRuWei) - Alliance
 - [Alvin John Araneta](https://www.github.com/ajiwnl) - Alliance
 - [Edz Henissey Son](https://www.github.com/edzzson) 
@@ -16,10 +16,10 @@
 - [Kenneth James Macas](https://github.com/soliken1) - Alliance
 - [Joshriel Mive Carzon]() - Alliance
 - [Angel Dorothy Medez]()
-- [Art James Narboada]() - Alliance
+- [Art James Narboada](https://github.com/artnarboada) - Alliance
 - [Gheyl Aguilar]()
-- [Jelu Mari Cajipe]()
-- [Loui Canete]()
+- [Jelu Mari Cajipe](https://github.com/lxujjj)
+- [Loui Canete](https://github.com/loweehub)
 
 ## Android Repository Link
 [Android Repository](https://github.com/ajiwnl/ELDROID_EXTR_730FRI)
