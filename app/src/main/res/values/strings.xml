@@ -11,20 +11,29 @@ for us to send an email.</string>
     <string name="verifydesc">We have sent you an email for verification,
 please verify on your email.</string>
     <string name="termsandconditiondesc">By continuing, you agree to our Terms and Conditions and have read our Privacy Policy.</string>
+
+    <!--Authentication Strings-->
     <string name="email">Email</string>
     <string name="emailhint">johndoe@gmail.com</string>
     <string name="username">Username</string>
-    <string name="usernamehint">User1</string>
+    <string name="usernamehint">Username</string>
     <string name="password">Password</string>
-    <string name="passwordhint">***********</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="usergmail_com">Usergmail.com</string>
     <string name="send">Send</string>
     <string name="todo">TODO</string>
     <string name="verify_email">Verify Email</string>
     <string name="go_back">Go Back</string>
+    <string name="existing_acct">Already have an account?</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="password_min">Password must be at least 6 characters</string>
+    <string name="username_check">Username must be at least 3 characters</string>
+    <string name="login_success">Login successfully!</string>
+    <string name="login_fail">Login failed.</string>
+    <string name="email_notif">Email sent!</string>
+    <string name="create_acct">Register</string>
+
 
     <!-- BudgetPlanningFragment Layout Strings -->
     <string name="budget_planning_title">Budget Planning</string>
