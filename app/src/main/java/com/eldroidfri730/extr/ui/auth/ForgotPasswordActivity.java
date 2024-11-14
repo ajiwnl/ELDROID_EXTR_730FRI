@@ -2,46 +2,37 @@ package com.eldroidfri730.extr.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.utils.IntentUtil;
+import com.eldroidfri730.extr.utils.TextUtil;
 import com.eldroidfri730.extr.viewmodel.auth.ForgotPasswordViewModel;
+import com.eldroidfri730.extr.viewmodel.auth.ForgotPasswordViewModelFactory;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private TextView goback;
     private Button sendemail;
     private EditText forgotPasswordEmail;
-
     private ForgotPasswordViewModel forgotPasswordViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_forgot_password);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         sendemail = findViewById(R.id.sendemailforgotpassbutton);
         goback = findViewById(R.id.gobacktextview);
 
-        forgotPasswordViewModel = new ViewModelProvider(this).get(ForgotPasswordViewModel.class);
+        // Use ViewModelProvider.Factory to pass Application context
+        ForgotPasswordViewModelFactory factory = new ForgotPasswordViewModelFactory(getApplication());
+        forgotPasswordViewModel = new ViewModelProvider(this, factory).get(ForgotPasswordViewModel.class);
 
         forgotPasswordEmail = findViewById(R.id.forgotpasswordemail);
 
@@ -51,24 +42,21 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
 
-        String text = "Go Back";
-        SpannableString spannableString = new SpannableString(text);
-        spannableString.setSpan(new UnderlineSpan(), 0, text.length(), 0);
-        goback.setText(spannableString);
+        // Use the TextUtil to underline the text
+        String text = getString(R.string.go_back);
+        goback.setText(TextUtil.getUnderlinedText(text));
 
-        goback.setOnClickListener( v -> {
-            Intent toLogin = new Intent(this, LoginActivity.class);
-            startActivity(toLogin);
+        goback.setOnClickListener(v -> {
+            IntentUtil.startActivity(ForgotPasswordActivity.this, LoginActivity.class);
         });
 
-        String email = sendemail.getText().toString();
+        sendemail.setOnClickListener(v -> {
+            String email = forgotPasswordEmail.getText().toString();
 
-        sendemail.setOnClickListener( v -> {
             if (forgotPasswordViewModel.validateEmail(email)) {
-                // Proceed with registration (next step)
-                Toast.makeText(this, "Email Sent!", Toast.LENGTH_SHORT).show();
+                // Proceed with email sending or notification
+                Toast.makeText(this, getString(R.string.email_notif), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
