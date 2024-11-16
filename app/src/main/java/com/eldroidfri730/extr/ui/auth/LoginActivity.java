@@ -20,6 +20,10 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private EditText usernameLogin, passwordLogin;
     private Button loginButton;
+    private TextView createAccountTxtView, forgotPasswordTxtView;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +38,22 @@ public class LoginActivity extends AppCompatActivity {
         usernameLogin = findViewById(R.id.loginusername);
         passwordLogin = findViewById(R.id.loginpassword);
         loginButton = findViewById(R.id.loginuserbutton);
+        createAccountTxtView = findViewById(R.id.createnewaccounttextview);
+        forgotPasswordTxtView = findViewById(R.id.forgotpasswordtextview);
 
         // Set up login button click listener
         loginButton.setOnClickListener(v -> {
             String username = usernameLogin.getText().toString();
             String password = passwordLogin.getText().toString();
             loginViewModel.login(username, password);
+        });
+
+        createAccountTxtView.setOnClickListener(v -> {
+            IntentUtil.startActivity(LoginActivity.this, RegisterActivity.class);
+        });
+
+        forgotPasswordTxtView.setOnClickListener(v -> {
+            IntentUtil.startActivity(LoginActivity.this, ForgotPasswordActivity.class);
         });
 
         // Observe username validation error
@@ -59,9 +73,23 @@ public class LoginActivity extends AppCompatActivity {
         // Observe login success
         loginViewModel.getIsLoggedIn().observe(this, isLoggedIn -> {
             if (isLoggedIn != null && isLoggedIn) {
-                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                 IntentUtil.startActivity(LoginActivity.this, BasicSummaryActivity.class);
             }
         });
+
+        // Observe success message
+        loginViewModel.getLoginSuccessMessage().observe(this, successMessage -> {
+            if (successMessage != null) {
+                Toast.makeText(this, successMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Observe error message
+        loginViewModel.getLoginErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null) {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 }

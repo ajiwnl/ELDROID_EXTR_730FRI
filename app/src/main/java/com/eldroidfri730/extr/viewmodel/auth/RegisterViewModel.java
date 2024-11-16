@@ -45,9 +45,7 @@ public class RegisterViewModel extends ViewModel {
         return usernameError;
     }
 
-    public LiveData<String> getRegisterSuccessMessage() {
-        return registerSuccessMessage;
-    }
+    public LiveData<String> getRegisterSuccessMessage() {return registerSuccessMessage;}
 
     public LiveData<String> getRegisterErrorMessage() {
         return registerErrorMessage;
@@ -83,8 +81,8 @@ public class RegisterViewModel extends ViewModel {
 
     // Register user API call
     public void registerUser(String email, String password, String username) {
-        mUser user = new mUser(username, email, password, false);
-        Call<mUser> call = apiService.registerUser(user);
+        mUser newUser = new mUser(username, email, password, false);
+        Call<mUser> call = apiService.registerUser(newUser);
 
         call.enqueue(new Callback<mUser>() {
             @Override
