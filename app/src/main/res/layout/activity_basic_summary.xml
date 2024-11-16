@@ -5,16 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:contentInsetStart="0dp"
+    app:contentInsetLeft="0dp"
     android:background="@drawable/app_background"
     tools:context=".ui.home.BasicSummaryActivity">
-
 
     <FrameLayout
         android:id="@+id/layout_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="47dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_marginBottom="30dp"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_navigation"
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
+            app:elevation="0dp"
             app:labelVisibilityMode="labeled"
             android:background="@android:color/transparent"
             app:menu="@menu/bottomnavigation">
