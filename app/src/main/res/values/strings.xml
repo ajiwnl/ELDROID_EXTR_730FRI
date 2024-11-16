@@ -71,4 +71,12 @@ please verify on your email.</string>
     <string name="MenuHomeOptBgt">Budget</string>
     <string name="MenuHomeOptExp">Expense</string>
     <string name="MenuHomeOptCat">Category</string>
+    <string name="FragCatLabelCatDesc">Category Description</string>
+
+    <!-- Registration toast messages -->
+    <string name="reg_success">Registration Successful. Please check your email for verification</string>
+    <string name="reg_409">Username or email already exists!</string>
+    <string name="reg_fail">Registration failed. Please try again.</string>
+    <string name="network_err">Network error: </string>
+
 </resources>
