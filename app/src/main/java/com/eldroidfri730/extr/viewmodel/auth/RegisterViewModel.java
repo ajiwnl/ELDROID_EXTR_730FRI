@@ -90,25 +90,21 @@ public class RegisterViewModel extends ViewModel {
             @Override
             public void onResponse(Call<mUser> call, Response<mUser> response) {
                 if (response.isSuccessful()) {
-                    String regSuccess = application.getString(R.string.reg_success);
-                    registerSuccessMessage.setValue(regSuccess);
+                    registerSuccessMessage.setValue(application.getString(R.string.reg_success));
                 } else {
 
                     if (response.code() ==409){
-                        String error409 = application.getString(R.string.reg_409);
-                        registerErrorMessage.setValue(error409);
+                        registerErrorMessage.setValue(application.getString(R.string.reg_409));
 
                     }else {
-                        String regFail = application.getString(R.string.reg_fail);
-                    registerErrorMessage.setValue(regFail);
+                    registerErrorMessage.setValue(application.getString(R.string.reg_fail));
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<mUser> call, Throwable t) {
-                String networkErr = application.getString(R.string.network_err);
-                registerErrorMessage.setValue(networkErr + t.getMessage());
+                registerErrorMessage.setValue(application.getString(R.string.network_err) + t.getMessage());
             }
         });
     }

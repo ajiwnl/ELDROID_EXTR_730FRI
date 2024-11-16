@@ -79,4 +79,8 @@ please verify on your email.</string>
     <string name="reg_fail">Registration failed. Please try again.</string>
     <string name="network_err">Network error: </string>
 
+    <!-- Login toast and error messages -->
+    <string name="invalid_username">Username is required</string>
+    <string name="invalid_password">Password is required</string>
+
 </resources>
