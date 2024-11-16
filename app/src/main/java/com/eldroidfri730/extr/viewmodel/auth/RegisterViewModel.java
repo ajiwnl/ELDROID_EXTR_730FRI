@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
-import com.eldroidfri730.extr.data.models.User;
+import com.eldroidfri730.extr.data.models.mUser;
 import com.eldroidfri730.extr.utils.InputValidator;
 import com.eldroidfri730.extr.utils.RetrofitClient;
 
@@ -83,15 +83,15 @@ public class RegisterViewModel extends ViewModel {
 
     // Register user API call
     public void registerUser(String email, String password, String username) {
-        User user = new User(username, email, password, false);
-        Call<User> call = apiService.registerUser(user);
+        mUser user = new mUser(username, email, password, false);
+        Call<mUser> call = apiService.registerUser(user);
 
         // Log the API request
         Log.d("RegisterViewModel", "registerUser: Attempting to register user with email: " + email);
 
-        call.enqueue(new Callback<User>() {
+        call.enqueue(new Callback<mUser>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<mUser> call, Response<mUser> response) {
                 if (response.isSuccessful()) {
                     // Log success
                     Log.d("RegisterViewModel", "registerUser: Registration successful, response: " + response.body());
@@ -104,7 +104,7 @@ public class RegisterViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<mUser> call, Throwable t) {
                 // Log the network failure
                 Log.e("RegisterViewModel", "registerUser: Network error: " + t.getMessage());
                 registerErrorMessage.setValue("Network error: " + t.getMessage());
