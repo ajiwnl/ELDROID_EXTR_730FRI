@@ -10,4 +10,8 @@ public interface ApiService {
 
     @POST("register")
     Call<mUser> registerUser(@Body mUser user);
+
+    @POST("login")
+    Call<mUser> loginUser(@Body mUser user);
+
 }
