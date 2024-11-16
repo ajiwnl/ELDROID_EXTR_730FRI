@@ -2,6 +2,7 @@ package com.eldroidfri730.extr.utils;
 
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,9 +16,9 @@ public class IntentUtil {
     }
 
     // Method to replace the current fragment with a new one
-    public static void replaceFragment(FragmentActivity activity, Fragment fragment, String tag) {
+    public static void replaceFragment(int content, FragmentActivity activity, Fragment fragment, String tag) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        transaction.replace(android.R.id.content, fragment, tag);  // Replace with container view ID if needed
+        transaction.replace(content, fragment, tag);  // Replace with container view ID if needed
         transaction.addToBackStack(tag);  // Add fragment to backstack so user can navigate back
         transaction.commit();
     }
