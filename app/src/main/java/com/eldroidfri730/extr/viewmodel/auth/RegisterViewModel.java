@@ -86,28 +86,29 @@ public class RegisterViewModel extends ViewModel {
         mUser user = new mUser(username, email, password, false);
         Call<mUser> call = apiService.registerUser(user);
 
-        // Log the API request
-        Log.d("RegisterViewModel", "registerUser: Attempting to register user with email: " + email);
-
         call.enqueue(new Callback<mUser>() {
             @Override
             public void onResponse(Call<mUser> call, Response<mUser> response) {
                 if (response.isSuccessful()) {
-                    // Log success
-                    Log.d("RegisterViewModel", "registerUser: Registration successful, response: " + response.body());
-                    registerSuccessMessage.setValue("User registered successfully!");
+                    String regSuccess = application.getString(R.string.reg_success);
+                    registerSuccessMessage.setValue(regSuccess);
                 } else {
-                    // Log failure
-                    Log.e("RegisterViewModel", "registerUser: Registration failed with status code: " + response.code());
-                    registerErrorMessage.setValue("Registration failed. Please try again.");
+
+                    if (response.code() ==409){
+                        String error409 = application.getString(R.string.reg_409);
+                        registerErrorMessage.setValue(error409);
+
+                    }else {
+                        String regFail = application.getString(R.string.reg_fail);
+                    registerErrorMessage.setValue(regFail);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<mUser> call, Throwable t) {
-                // Log the network failure
-                Log.e("RegisterViewModel", "registerUser: Network error: " + t.getMessage());
-                registerErrorMessage.setValue("Network error: " + t.getMessage());
+                String networkErr = application.getString(R.string.network_err);
+                registerErrorMessage.setValue(networkErr + t.getMessage());
             }
         });
     }

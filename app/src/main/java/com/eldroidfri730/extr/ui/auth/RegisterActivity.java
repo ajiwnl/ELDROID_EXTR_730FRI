@@ -53,21 +53,18 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel.getEmailError().observe(this, error -> {
             if (error != null) {
                 registerEmail.setError(error);
-                Log.d(TAG, "onCreate: Email error - " + error);
             }
         });
 
         registerViewModel.getPasswordError().observe(this, error -> {
             if (error != null) {
                 registerPassword.setError(error);
-                Log.d(TAG, "onCreate: Password error - " + error);
             }
         });
 
         registerViewModel.getUsernameError().observe(this, error -> {
             if (error != null) {
                 registerUsername.setError(error);
-                Log.d(TAG, "onCreate: Username error - " + error);
             }
         });
 
@@ -75,7 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
         existingAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onCreate: Existing account clicked");
                 IntentUtil.startActivity(RegisterActivity.this, LoginActivity.class);
             }
         });
@@ -85,27 +81,21 @@ public class RegisterActivity extends AppCompatActivity {
             String username = registerUsername.getText().toString().trim();
             String password = registerPassword.getText().toString().trim();
 
-            Log.d(TAG, "onCreate: Register button clicked with email: " + email + ", username: " + username);
 
             if (registerViewModel.validateInputs(email, password, username)) {
-                Log.d(TAG, "onCreate: Inputs are valid, calling registerUser");
                 registerViewModel.registerUser(email, password, username);
-            } else {
-                Log.d(TAG, "onCreate: Inputs are invalid");
-            }
+            } else {}
         });
 
         registerViewModel.getRegisterSuccessMessage().observe(this, successMessage -> {
             if (successMessage != null) {
-                Log.d(TAG, "onCreate: Registration success - " + successMessage);
-                Toast.makeText(RegisterActivity.this, "Registration Successful. Please check your email for verification", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, successMessage, Toast.LENGTH_SHORT).show();
                 IntentUtil.startActivity(RegisterActivity.this, VerifyEmailActivity.class);
             }
         });
 
         registerViewModel.getRegisterErrorMessage().observe(this, errorMessage -> {
             if (errorMessage != null) {
-                Log.d(TAG, "onCreate: Registration failed - " + errorMessage);
                 Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
