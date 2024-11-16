@@ -1,20 +1,35 @@
 package com.eldroidfri730.extr.viewmodel.auth;
 
 import android.app.Application;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.data.ApiService;
+import com.eldroidfri730.extr.data.models.User;
 import com.eldroidfri730.extr.utils.InputValidator;
+import com.eldroidfri730.extr.utils.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterViewModel extends ViewModel {
     private final MutableLiveData<String> emailError = new MutableLiveData<>();
     private final MutableLiveData<String> passwordError = new MutableLiveData<>();
     private final MutableLiveData<String> usernameError = new MutableLiveData<>();
+    private final MutableLiveData<String> registerSuccessMessage = new MutableLiveData<>();
+    private final MutableLiveData<String> registerErrorMessage = new MutableLiveData<>();
     private Application application;
+
+    private ApiService apiService;
 
     public RegisterViewModel(Application application) {
         this.application = application;
+        this.apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
     }
 
     // Getter methods for error LiveData
@@ -28,6 +43,14 @@ public class RegisterViewModel extends ViewModel {
 
     public LiveData<String> getUsernameError() {
         return usernameError;
+    }
+
+    public LiveData<String> getRegisterSuccessMessage() {
+        return registerSuccessMessage;
+    }
+
+    public LiveData<String> getRegisterErrorMessage() {
+        return registerErrorMessage;
     }
 
     // Input validation logic
@@ -57,4 +80,36 @@ public class RegisterViewModel extends ViewModel {
 
         return isValid;
     }
+
+    // Register user API call
+    public void registerUser(String email, String password, String username) {
+        User user = new User(username, email, password, false);
+        Call<User> call = apiService.registerUser(user);
+
+        // Log the API request
+        Log.d("RegisterViewModel", "registerUser: Attempting to register user with email: " + email);
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    // Log success
+                    Log.d("RegisterViewModel", "registerUser: Registration successful, response: " + response.body());
+                    registerSuccessMessage.setValue("User registered successfully!");
+                } else {
+                    // Log failure
+                    Log.e("RegisterViewModel", "registerUser: Registration failed with status code: " + response.code());
+                    registerErrorMessage.setValue("Registration failed. Please try again.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                // Log the network failure
+                Log.e("RegisterViewModel", "registerUser: Network error: " + t.getMessage());
+                registerErrorMessage.setValue("Network error: " + t.getMessage());
+            }
+        });
+    }
+
 }
