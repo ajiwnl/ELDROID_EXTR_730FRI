@@ -1,13 +1,13 @@
 package com.eldroidfri730.extr.data.models;
 
-public class User {
+public class mUser {
     private String username;
     private String email;
     private String password;
-    private boolean verified; // You can set this to false initially
+    private boolean verified;
 
     // Constructor
-    public User(String username, String email, String password, boolean verified) {
+    public mUser(String username, String email, String password, boolean verified) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -47,3 +47,4 @@ public class User {
         this.verified = verified;
     }
 }
+
