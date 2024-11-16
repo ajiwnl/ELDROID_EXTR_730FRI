@@ -5,26 +5,35 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.CategoryModel;
+import com.eldroidfri730.extr.data.ExpenseModel;
 import com.eldroidfri730.extr.ui.home.HomeFragment;
 import com.eldroidfri730.extr.utils.IntentUtil;
-import com.eldroidfri730.extr.viewmodel.expense.ExpenseViewModel;
+import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
+import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExpenseFragment extends Fragment {
 
-    private TextView datePurchasedEditText;
+    private TextView expenseNameEditText, datePurchasedEditText, expenseAmountEditText, expenseDescEditText,noCategory;
     private Spinner categorySpinner;
     private ExpenseViewModel expenseViewModel;
+    private CategoryViewModel categoryViewModel;
     private ImageButton backButton;
+    private Button submitButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,10 +42,17 @@ public class ExpenseFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_expense, container, false);
 
         backButton = rootView.findViewById(R.id.expensebackbutton);
+        submitButton = rootView.findViewById(R.id.expensesubmitbutton);
         categorySpinner = rootView.findViewById(R.id.expensecategoryspinner);
         datePurchasedEditText = rootView.findViewById(R.id.datepurchasededittext);
+        expenseNameEditText = rootView.findViewById(R.id.expensenameedittext);
+        expenseAmountEditText = rootView.findViewById(R.id.expenseamountedittext);
+        expenseDescEditText = rootView.findViewById(R.id.expensedescedittext);
+        noCategory = rootView.findViewById(R.id.AddInitialCat);
 
-        expenseViewModel = new ViewModelProvider(this).get(ExpenseViewModel.class);
+        expenseViewModel = new ViewModelProvider(requireActivity()).get(ExpenseViewModel.class);
+        categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
+
 
         datePurchasedEditText.setOnClickListener(v -> {
             expenseViewModel.showDatePickerDialog(this);
@@ -46,15 +62,28 @@ public class ExpenseFragment extends Fragment {
             datePurchasedEditText.setText(date);
         });
 
-        expenseViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
-            ArrayAdapter<CategoryModel> adapter = new ArrayAdapter<>(getContext(),
-                    android.R.layout.simple_spinner_item, categories);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            categorySpinner.setAdapter(adapter);
+        categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
+            if(!categories.isEmpty()){
+                categorySpinner.setAdapter(categoryViewModel.getCategoryAdapter(getContext()));
+                categorySpinner.setVisibility(View.VISIBLE);
+                noCategory.setVisibility(View.GONE);
+            }
+
         });
 
-        expenseViewModel.loadCategories();
 
+
+        submitButton.setOnClickListener(v -> {
+            String name = expenseNameEditText.getText().toString();
+            String amountStr = expenseAmountEditText.getText().toString();
+            String desc = expenseDescEditText.getText().toString();
+            String dateStr = datePurchasedEditText.getText().toString();
+            String category = categorySpinner.getSelectedItem().toString();
+
+            expenseViewModel.createExpense(name, amountStr, dateStr, category, desc, rootView.getContext());
+
+
+        });
 
         backButton.setOnClickListener(v -> {
             IntentUtil.replaceFragment(R.id.layout_content, getActivity(), new HomeFragment(), "HomeFragment");

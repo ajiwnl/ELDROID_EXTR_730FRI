@@ -71,4 +71,5 @@ please verify on your email.</string>
     <string name="MenuHomeOptBgt">Budget</string>
     <string name="MenuHomeOptExp">Expense</string>
     <string name="MenuHomeOptCat">Category</string>
+    <string name="FragCatLabelCatDesc">Category Description</string>
 </resources>
