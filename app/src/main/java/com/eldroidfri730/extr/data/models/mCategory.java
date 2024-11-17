@@ -1,23 +1,23 @@
-package com.eldroidfri730.extr.data;
+package com.eldroidfri730.extr.data.models;
 
-public class CategoryModel {
+public class mCategory {
     private String id;
     private String icon;
     private String name;
     private String desc;
 
-    public CategoryModel(String icon, String name, String desc) {
+    public mCategory(String icon, String name, String desc) {
         this.icon = icon;
         this.name = name;
         this.desc = desc;
     }
 
-    public CategoryModel(String name, String desc) {
+    public mCategory(String name, String desc) {
         this.name = name;
         this.desc = desc;
     }
 
-    public CategoryModel(String name) {
+    public mCategory(String name) {
         this.name = name;
     }
 

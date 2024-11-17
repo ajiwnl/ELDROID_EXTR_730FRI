@@ -1,6 +1,8 @@
 package com.eldroidfri730.extr.viewmodel.auth;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
@@ -24,10 +26,13 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> loginErrorMessage = new MutableLiveData<>();
     private final Application application;
     private final ApiService apiService;
+    private final SharedPreferences sharedPreferences;
 
     public LoginViewModel(Application application) {
         this.application = application;
         this.apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        this.sharedPreferences = application.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        isLoggedIn.setValue(getLoginState()); // Initialize login state
     }
 
     public LiveData<Boolean> getIsLoggedIn() {
@@ -41,9 +46,24 @@ public class LoginViewModel extends ViewModel {
     public LiveData<String> getPasswordError() {
         return passwordError;
     }
-    public LiveData<String> getLoginSuccessMessage() {return loginSuccessMessage;}
 
-    public LiveData<String> getLoginErrorMessage() {return loginErrorMessage;}
+    public LiveData<String> getLoginSuccessMessage() {
+        return loginSuccessMessage;
+    }
+
+    public LiveData<String> getLoginErrorMessage() {
+        return loginErrorMessage;
+    }
+
+    // Save login state to SharedPreferences
+    private void saveLoginState(boolean isLoggedIn) {
+        sharedPreferences.edit().putBoolean("is_logged_in", isLoggedIn).apply();
+    }
+
+    // Retrieve login state from SharedPreferences
+    private boolean getLoginState() {
+        return sharedPreferences.getBoolean("is_logged_in", false);
+    }
 
     public void login(String username, String password) {
         boolean isValid = true;
@@ -72,6 +92,7 @@ public class LoginViewModel extends ViewModel {
                     if (response.isSuccessful() && response.body() != null) {
                         loginSuccessMessage.setValue(application.getString(R.string.login_success));
                         isLoggedIn.setValue(true);
+                        saveLoginState(true); // Save login state on successful login
                     } else if (response.code() == 404) {
                         usernameError.setValue(application.getString(R.string.no_user));
                     } else if (response.code() == 401) {

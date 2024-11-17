@@ -1,5 +1,6 @@
 package com.eldroidfri730.extr.ui.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,13 +23,17 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private TextView createAccountTxtView, forgotPasswordTxtView;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Check if user is already logged in
+        if (getLoginState()) {
+            IntentUtil.startActivity(this, BasicSummaryActivity.class);
+            finish(); // Close the login activity
+            return; // Exit onCreate early
+        }
 
         // Initialize ViewModel
         LoginViewModelFactory factory = new LoginViewModelFactory(getApplication());
@@ -48,32 +53,21 @@ public class LoginActivity extends AppCompatActivity {
             loginViewModel.login(username, password);
         });
 
+        // Create account navigation
         createAccountTxtView.setOnClickListener(v -> {
             IntentUtil.startActivity(LoginActivity.this, RegisterActivity.class);
         });
 
+        // Forgot password navigation
         forgotPasswordTxtView.setOnClickListener(v -> {
             IntentUtil.startActivity(LoginActivity.this, ForgotPasswordActivity.class);
-        });
-
-        // Observe username validation error
-        loginViewModel.getUsernameError().observe(this, error -> {
-            if (error != null) {
-                usernameLogin.setError(error);
-            }
-        });
-
-        // Observe password validation error
-        loginViewModel.getPasswordError().observe(this, error -> {
-            if (error != null) {
-                passwordLogin.setError(error);
-            }
         });
 
         // Observe login success
         loginViewModel.getIsLoggedIn().observe(this, isLoggedIn -> {
             if (isLoggedIn != null && isLoggedIn) {
                 IntentUtil.startActivity(LoginActivity.this, BasicSummaryActivity.class);
+                finish(); // Close the login activity
             }
         });
 
@@ -84,12 +78,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Observe error message
-        loginViewModel.getLoginErrorMessage().observe(this, errorMessage -> {
-            if (errorMessage != null) {
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        // Observe error messages
+        loginViewModel.getUsernameError().observe(this, error -> {
+            if (error != null) {
+                usernameLogin.setError(error);
+            }
+        });
+
+        loginViewModel.getPasswordError().observe(this, error -> {
+            if (error != null) {
+                passwordLogin.setError(error);
             }
         });
     }
 
+    // Retrieve login state from SharedPreferences
+    private boolean getLoginState() {
+        return getSharedPreferences("app_prefs", MODE_PRIVATE)
+                .getBoolean("is_logged_in", false);
+    }
 }

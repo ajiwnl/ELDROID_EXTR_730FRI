@@ -18,6 +18,7 @@ import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.ui.budgetplan.BudgetPlanningFragment;
 import com.eldroidfri730.extr.ui.exp_and_cat.CategoryFragment;
 import com.eldroidfri730.extr.ui.exp_and_cat.ExpenseFragment;
+import com.eldroidfri730.extr.utils.IntentUtil;
 
 public class HomeFragment extends Fragment {
 
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment {
         });
 
         categoryOption.setOnClickListener(v -> {
-            replaceFragment(new CategoryFragment());
+            IntentUtil.replaceFragment(R.id.layout_content, requireActivity(), new CategoryFragment(), "CategoryFragment");
         });
 
         textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
