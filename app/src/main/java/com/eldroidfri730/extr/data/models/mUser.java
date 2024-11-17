@@ -5,6 +5,7 @@ public class mUser {
     private String email;
     private String password;
     private boolean verified;
+    private String id;
 
     // Constructor
     public mUser(String username, String email, String password, boolean verified) {
@@ -18,12 +19,24 @@ public class mUser {
         this.username = username;
         this.password = password;
     }
-
     public mUser(String email) {
         this.email = email;
     }
 
-    // Getters and setters
+    public mUser(String id, String username, String email, String password, boolean verified) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.verified = verified;
+    }
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getUsername() {
         return username;
     }
@@ -55,5 +68,7 @@ public class mUser {
     public void setVerified(boolean verified) {
         this.verified = verified;
     }
+
+
 }
 

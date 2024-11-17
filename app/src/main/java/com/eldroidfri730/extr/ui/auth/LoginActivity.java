@@ -1,7 +1,10 @@
 package com.eldroidfri730.extr.ui.auth;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameLogin, passwordLogin;
     private Button loginButton;
     private TextView createAccountTxtView, forgotPasswordTxtView;
-
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,9 @@ public class LoginActivity extends AppCompatActivity {
             finish(); // Close the login activity
             return; // Exit onCreate early
         }
+
+        sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE);
+
 
         // Initialize ViewModel
         LoginViewModelFactory factory = new LoginViewModelFactory(getApplication());
@@ -66,8 +72,10 @@ public class LoginActivity extends AppCompatActivity {
         // Observe login success
         loginViewModel.getIsLoggedIn().observe(this, isLoggedIn -> {
             if (isLoggedIn != null && isLoggedIn) {
+                String userId = sharedPreferences.getString("user_id", "No Value");
+                Log.d("LoginActivity", "Logged in with userId: " + userId);
                 IntentUtil.startActivity(LoginActivity.this, BasicSummaryActivity.class);
-                finish(); // Close the login activity
+                finish();
             }
         });
 

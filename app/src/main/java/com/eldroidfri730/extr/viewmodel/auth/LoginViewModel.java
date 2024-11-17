@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModel;
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mUser;
+import com.eldroidfri730.extr.data.response.LoginResponse;
 import com.eldroidfri730.extr.utils.RetrofitClient;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,6 +24,7 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> passwordError = new MutableLiveData<>();
     private final MutableLiveData<String> loginSuccessMessage = new MutableLiveData<>();
     private final MutableLiveData<String> loginErrorMessage = new MutableLiveData<>();
+
     private final Application application;
     private final ApiService apiService;
     private final SharedPreferences sharedPreferences;
@@ -57,7 +58,9 @@ public class LoginViewModel extends ViewModel {
 
     // Save login state to SharedPreferences
     private void saveLoginState(boolean isLoggedIn) {
-        sharedPreferences.edit().putBoolean("is_logged_in", isLoggedIn).apply();
+        sharedPreferences.edit()
+                .putBoolean("is_logged_in", isLoggedIn)
+                .apply();
     }
 
     // Retrieve login state from SharedPreferences
@@ -86,13 +89,15 @@ public class LoginViewModel extends ViewModel {
         // Proceed with login if inputs are valid
         if (isValid) {
             mUser user = new mUser(username, password);
-            apiService.loginUser(user).enqueue(new Callback<mUser>() {
+            apiService.loginUser(user).enqueue(new Callback<LoginResponse>() {  // Updated to LoginResponse
                 @Override
-                public void onResponse(Call<mUser> call, Response<mUser> response) {
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        loginSuccessMessage.setValue(application.getString(R.string.login_success));
+                        LoginResponse loginResponse = response.body();
+                        mUser loggedInUser = loginResponse.getUser();
+                        String userId = loggedInUser.getId();
                         isLoggedIn.setValue(true);
-                        saveLoginState(true); // Save login state on successful login
+                        saveLoginState(true);
                     } else if (response.code() == 404) {
                         usernameError.setValue(application.getString(R.string.no_user));
                     } else if (response.code() == 401) {
@@ -105,7 +110,7 @@ public class LoginViewModel extends ViewModel {
                 }
 
                 @Override
-                public void onFailure(Call<mUser> call, Throwable t) {
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
                     Toast.makeText(application, t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
