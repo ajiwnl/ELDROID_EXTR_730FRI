@@ -43,9 +43,7 @@ public class LoginViewModel extends ViewModel {
     }
     public LiveData<String> getLoginSuccessMessage() {return loginSuccessMessage;}
 
-    public LiveData<String> getLoginErrorMessage() {
-        return loginErrorMessage;
-    }
+    public LiveData<String> getLoginErrorMessage() {return loginErrorMessage;}
 
     public void login(String username, String password) {
         boolean isValid = true;
