@@ -9,15 +9,12 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.eldroidfri730.extr.data.CategoryModel;
 import com.eldroidfri730.extr.data.ExpenseModel;
 import com.eldroidfri730.extr.utils.ExpenseValidation;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class ExpenseViewModel extends ViewModel {

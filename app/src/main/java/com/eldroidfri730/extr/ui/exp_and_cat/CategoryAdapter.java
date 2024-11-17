@@ -9,15 +9,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eldroidfri730.extr.R;
-import com.eldroidfri730.extr.data.CategoryModel;
+import com.eldroidfri730.extr.data.models.mCategory;
 
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    private List<CategoryModel> categoryList;
+    private List<mCategory> categoryList;
 
-    public CategoryAdapter(List<CategoryModel> categoryList) {
+    public CategoryAdapter(List<mCategory> categoryList) {
         this.categoryList = categoryList;
     }
 
@@ -30,7 +30,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
-        CategoryModel category = categoryList.get(position);
+        mCategory category = categoryList.get(position);
 
         holder.categoryNameTextView.setText(category.getName());
         holder.categoryDescTextView.setText(category.getDesc());
@@ -57,7 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 
-    public void setCategoryList(List<CategoryModel> categories) {
+    public void setCategoryList(List<mCategory> categories) {
         this.categoryList = categories;
         notifyDataSetChanged();
     }
