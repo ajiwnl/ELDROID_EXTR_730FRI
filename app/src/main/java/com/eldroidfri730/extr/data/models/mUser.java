@@ -19,6 +19,10 @@ public class mUser {
         this.password = password;
     }
 
+    public mUser(String email) {
+        this.email = email;
+    }
+
     // Getters and setters
     public String getUsername() {
         return username;

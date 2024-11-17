@@ -1,5 +1,6 @@
 package com.eldroidfri730.extr.viewmodel.exp_and_cat;
 
+import android.app.Application;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
@@ -15,6 +16,11 @@ import java.util.List;
 public class CategoryViewModel extends ViewModel {
     private final MutableLiveData<List<CategoryModel>> categories = new MutableLiveData<>();
 
+    private Application application;
+
+    public CategoryViewModel(Application application) {
+        this.application = application;
+    }
     public LiveData<List<CategoryModel>> getCategories() {
         return categories;
     }

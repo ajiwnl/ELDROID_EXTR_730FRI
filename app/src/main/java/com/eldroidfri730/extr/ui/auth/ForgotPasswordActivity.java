@@ -36,9 +36,25 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         forgotPasswordEmail = findViewById(R.id.forgotpasswordemail);
 
+        // Observe email error to show validation error on the EditText field
         forgotPasswordViewModel.getEmailError().observe(this, error -> {
             if (error != null) {
                 forgotPasswordEmail.setError(error);
+            }
+        });
+
+        // Observe success or failure message for forgot password
+        forgotPasswordViewModel.getForgotPasswordSuccessMessage().observe(this, successMessage -> {
+            if (successMessage != null) {
+                Toast.makeText(this, successMessage, Toast.LENGTH_SHORT).show();
+                // You can navigate back to login page after success if needed
+                IntentUtil.startActivity(ForgotPasswordActivity.this, LoginActivity.class);
+            }
+        });
+
+        forgotPasswordViewModel.getForgotPasswordErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null) {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -54,8 +70,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             String email = forgotPasswordEmail.getText().toString();
 
             if (forgotPasswordViewModel.validateEmail(email)) {
-                // Proceed with email sending or notification
-                Toast.makeText(this, getString(R.string.email_notif), Toast.LENGTH_SHORT).show();
+                // Trigger the API call to reset the password
+                forgotPasswordViewModel.forgotPassword(email);
             }
         });
     }
