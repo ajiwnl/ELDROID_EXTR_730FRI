@@ -16,6 +16,4 @@ public interface ApiService {
 
     @POST("password/forgot")
     Call<mUser> forgotPassword(@Body mUser user);
-
-
 }
