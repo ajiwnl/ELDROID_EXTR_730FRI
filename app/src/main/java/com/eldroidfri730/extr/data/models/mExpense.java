@@ -1,9 +1,9 @@
-    package com.eldroidfri730.extr.data;
+    package com.eldroidfri730.extr.data.models;
 
     import java.text.SimpleDateFormat;
     import java.util.Date;
 
-    public class ExpenseModel {
+    public class mExpense {
         private String id;
         private String name;
         private String category;
@@ -11,7 +11,7 @@
         private Date date;
         private String desc;
 
-        public ExpenseModel(String name, String category, float amount, Date date, String desc) {
+        public mExpense(String name, String category, float amount, Date date, String desc) {
             this.name = name;
             this.category = category;
             this.amount = amount;
