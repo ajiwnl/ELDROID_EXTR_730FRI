@@ -5,26 +5,19 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.eldroidfri730.extr.R;
-import com.eldroidfri730.extr.data.CategoryModel;
-import com.eldroidfri730.extr.data.ExpenseModel;
 import com.eldroidfri730.extr.ui.home.HomeFragment;
 import com.eldroidfri730.extr.utils.IntentUtil;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ExpenseFragment extends Fragment {
 

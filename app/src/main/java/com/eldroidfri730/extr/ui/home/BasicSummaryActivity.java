@@ -1,15 +1,15 @@
 package com.eldroidfri730.extr.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
-
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.databinding.ActivityBasicSummaryBinding;
+import com.eldroidfri730.extr.ui.auth.LoginActivity;
 import com.eldroidfri730.extr.ui.exp_and_cat.ExpenseFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.eldroidfri730.extr.utils.IntentUtil;
@@ -31,10 +31,10 @@ public class BasicSummaryActivity extends AppCompatActivity {
 
         fabNavHome = findViewById(R.id.fab_nav_home);
         fabNavHome.setOnClickListener(v ->
-                IntentUtil.replaceFragment(R.id.layout_content,this, new HomeFragment(), "HomeFragment")
+                IntentUtil.replaceFragment(R.id.layout_content, this, new HomeFragment(), "HomeFragment")
         );
 
-        IntentUtil.replaceFragment(R.id.layout_content,this, new HomeFragment(), "HomeFragment");
+        IntentUtil.replaceFragment(R.id.layout_content, this, new HomeFragment(), "HomeFragment");
 
         setupBottomNavigation();
     }
@@ -58,7 +58,7 @@ public class BasicSummaryActivity extends AppCompatActivity {
 
         binding.bottomNavView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_expense) {
-                IntentUtil.replaceFragment(R.id.layout_content,this, new ExpenseFragment(), "ExpenseFragment");
+                IntentUtil.replaceFragment(R.id.layout_content, this, new ExpenseFragment(), "ExpenseFragment");
                 return true;
             } else if (item.getItemId() == R.id.nav_logout) {
                 showLogoutDialogueFragment();
@@ -71,7 +71,26 @@ public class BasicSummaryActivity extends AppCompatActivity {
     // Show the logout dialog fragment
     private void showLogoutDialogueFragment() {
         LogoutDialogueFragment dialogFragment = new LogoutDialogueFragment();
-        dialogFragment.setLogoutDialogListener(() -> finish());
+        dialogFragment.setLogoutDialogListener(() -> {
+            logout(); // Call logout method
+        });
         dialogFragment.show(getSupportFragmentManager(), "LogoutDialogFragment");
+    }
+
+    // Logout method
+    private void logout() {
+        clearLoginState();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Close BasicSummaryActivity
+    }
+
+    // Method to clear login state
+    private void clearLoginState() {
+        getSharedPreferences("app_prefs", MODE_PRIVATE)
+                .edit()
+                .putBoolean("is_logged_in", false)
+                .apply();
     }
 }

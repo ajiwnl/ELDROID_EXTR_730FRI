@@ -1,15 +1,20 @@
 package com.eldroidfri730.extr.data;
 
+import com.eldroidfri730.extr.data.models.mUser;
+import com.eldroidfri730.extr.data.response.LoginResponse;
+
 import retrofit2.Call;
-import retrofit2.http.GET;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
-import java.util.List;
 
 public interface ApiService {
 
-/*    @GET("users") //Change to actual API endpoint
-    Call<List<User>> getUsers();
+    @POST("register")
+    Call<mUser> registerUser(@Body mUser user);
 
-    @POST("users") //Change to actual API endpoint
-    Call<List<User>> postUsers();*/
+    @POST("login")
+    Call<LoginResponse> loginUser(@Body mUser user);
+
+    @POST("password/forgot")
+    Call<mUser> forgotPassword(@Body mUser user);
 }
