@@ -6,27 +6,27 @@ import android.widget.ArrayAdapter;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.AndroidViewModel;
 
 import com.eldroidfri730.extr.data.models.mCategory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryViewModel extends ViewModel {
+public class CategoryViewModel extends AndroidViewModel  {
+
     private final MutableLiveData<List<mCategory>> categories = new MutableLiveData<>();
 
-    private Application application;
-
     public CategoryViewModel(Application application) {
-        this.application = application;
+        super(application);
     }
+
     public LiveData<List<mCategory>> getCategories() {
         return categories;
     }
 
 
-    public void addCategory(String name, String desc) {
+    public void createCategory(String name, String desc) {
         List<mCategory> currentCategories = categories.getValue();
         if (currentCategories == null) {
             currentCategories = new ArrayList<>();

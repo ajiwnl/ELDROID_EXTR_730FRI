@@ -1,32 +1,41 @@
 package com.eldroidfri730.extr.ui.exp_and_cat;
 
+import android.app.Application;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.eldroidfri730.extr.R;
-import com.eldroidfri730.extr.ui.home.HomeFragment;
-import com.eldroidfri730.extr.utils.IntentUtil;
+import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
+import com.eldroidfri730.extr.utils.ExpenseCategoryValidation;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
+import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModelFactory;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
 
 public class ExpenseFragment extends Fragment {
 
-    private TextView expenseNameEditText, datePurchasedEditText, expenseAmountEditText, expenseDescEditText,noCategory;
+    private EditText expenseNameEditText,  expenseAmountEditText, expenseDescEditText;
+    private TextView datePurchasedEditText, noCategory;
     private Spinner categorySpinner;
     private ExpenseViewModel expenseViewModel;
+
+    private CategoryViewModelFactory categoryViewModelFactory;
     private CategoryViewModel categoryViewModel;
     private ImageButton backButton;
     private Button submitButton;
+
+    private Application app;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,9 +52,8 @@ public class ExpenseFragment extends Fragment {
         expenseDescEditText = rootView.findViewById(R.id.expensedescedittext);
         noCategory = rootView.findViewById(R.id.AddInitialCat);
 
-        expenseViewModel = new ViewModelProvider(requireActivity()).get(ExpenseViewModel.class);
-        categoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
-
+        expenseViewModel = ((BasicSummaryActivity) getActivity()).getExpenseViewModel();
+        categoryViewModel = ((BasicSummaryActivity) getActivity()).getCategoryViewModel();
 
         datePurchasedEditText.setOnClickListener(v -> {
             expenseViewModel.showDatePickerDialog(this);
@@ -56,30 +64,32 @@ public class ExpenseFragment extends Fragment {
         });
 
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
+            Log.d("Categories", categories.toString());
             if(!categories.isEmpty()){
                 categorySpinner.setAdapter(categoryViewModel.getCategoryAdapter(getContext()));
                 categorySpinner.setVisibility(View.VISIBLE);
                 noCategory.setVisibility(View.GONE);
             }
-
         });
 
-
-
         submitButton.setOnClickListener(v -> {
-            String name = expenseNameEditText.getText().toString();
-            String amountStr = expenseAmountEditText.getText().toString();
-            String desc = expenseDescEditText.getText().toString();
-            String dateStr = datePurchasedEditText.getText().toString();
-            String category = categorySpinner.getSelectedItem().toString();
+            String name = ExpenseCategoryValidation.isNotNullEditText(expenseNameEditText);
+            String amountStr = ExpenseCategoryValidation.isNotNullEditText(expenseAmountEditText);
+            String dateStr = ExpenseCategoryValidation.isNotNullTextView(datePurchasedEditText);
+            String category = ExpenseCategoryValidation.isNotNullSpinner(categorySpinner, rootView.getContext(), noCategory);
 
-            expenseViewModel.createExpense(name, amountStr, dateStr, category, desc, rootView.getContext());
-
-
+            if (name != null && amountStr != null && dateStr != null && category != null) {
+                expenseViewModel.createExpense(name, amountStr, dateStr, category, expenseDescEditText.getText().toString(), rootView.getContext());
+                expenseNameEditText.setText("");
+                expenseAmountEditText.setText("");
+                datePurchasedEditText.setText("");
+                expenseDescEditText.setText("");
+                categorySpinner.setSelection(0);
+            }
         });
 
         backButton.setOnClickListener(v -> {
-            IntentUtil.replaceFragment(R.id.layout_content, getActivity(), new HomeFragment(), "HomeFragment");
+            requireActivity().getSupportFragmentManager().popBackStack();
         });
 
         return rootView;
