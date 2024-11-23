@@ -8,10 +8,9 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.PATCH;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -24,16 +23,10 @@ public interface ApiService {
     @POST("password/forgot")
     Call<mUser> forgotPassword(@Body mUser user);
 
-    @POST("userCategories")
-    Call<List<mCategory>> getUserCategories(@Body mUser user);
-
     @POST("addCategory")
     Call<mCategory> addCategory(@Body mCategory category);
 
-    @PATCH("updateCategory/{categoryTitle}")
-    Call<mCategory> updateCategory(@Path("categoryTitle") String categoryTitle, @Body mCategory category);
-
-    @DELETE("deleteCategory/{categoryTitle}")
-    Call<mCategory> deleteCategory(@Path("categoryTitle") String categoryTitle, @Body mCategory category);
+    @GET("categories")
+    Call<List<mCategory>> getCategoriesByUserId(@Query("userId") String userId);
 
 }

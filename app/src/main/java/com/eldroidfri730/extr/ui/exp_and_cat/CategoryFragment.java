@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.utils.ExpenseCategoryValidation;
+import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
 
 import java.util.ArrayList;
@@ -33,35 +35,49 @@ public class CategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
-        //Views
+
+        // Views
         backButton = rootView.findViewById(R.id.categorybackbutton);
         submitButton = rootView.findViewById(R.id.categoriessubmitbutton);
         categoryRecyclerView = rootView.findViewById(R.id.CategoryRecyclerView);
         categoryNameEditText = rootView.findViewById(R.id.CategoryNameEditText);
-        categoryDescEditText = rootView.findViewById(R.id.CategoryDescEditText);
-        //ViewModels
+
+        // ViewModels
         categoryViewModel = ((BasicSummaryActivity) getActivity()).getCategoryViewModel();
-        //RecyclerView
+        LoginViewModel loginViewModel = ((BasicSummaryActivity) getActivity()).getLoginViewModel(); // Retrieve LoginViewModel
+
+        // RecyclerView
         categoryAdapter = new CategoryAdapter(new ArrayList<>());
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
 
+        // Observe categories LiveData and update the RecyclerView
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
             categoryAdapter.setCategoryList(categories);
         });
 
+        // Fetch categories for the logged-in user
+        String userId = loginViewModel.getUserId(); // Retrieve userId
+        if (userId != null) {
+            categoryViewModel.fetchCategoriesByUserId(userId);
+        } else {
+            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+        }
+
+        // Add category logic
         submitButton.setOnClickListener(v -> {
             String name = ExpenseCategoryValidation.isNotNullEditText(categoryNameEditText);
-            String desc = ExpenseCategoryValidation.isNotNullEditText(categoryDescEditText);
 
-            if (name != null && desc != null) {
-                categoryViewModel.createCategory(name, desc);
-
-                categoryNameEditText.setText("");
-                categoryDescEditText.setText("");
+            if (name != null) {
+                if (userId != null) {
+                    categoryViewModel.addCategory(userId, name); // Pass userId and name
+                    categoryNameEditText.setText("");
+                    categoryViewModel.fetchCategoriesByUserId(userId); // Refresh categories after adding
+                } else {
+                    Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
 
         backButton.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();
@@ -69,4 +85,6 @@ public class CategoryFragment extends Fragment {
 
         return rootView;
     }
+
 }
+

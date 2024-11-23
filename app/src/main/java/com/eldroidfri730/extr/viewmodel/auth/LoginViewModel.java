@@ -96,6 +96,9 @@ public class LoginViewModel extends ViewModel {
                         LoginResponse loginResponse = response.body();
                         mUser loggedInUser = loginResponse.getUser();
                         String userId = loggedInUser.getId();
+                        sharedPreferences.edit()
+                                .putString("user_id", userId) // Save userId
+                                .apply();
                         isLoggedIn.setValue(true);
                         saveLoginState(true);
                     } else if (response.code() == 404) {
@@ -116,4 +119,9 @@ public class LoginViewModel extends ViewModel {
             });
         }
     }
+
+    public String getUserId() {
+        return sharedPreferences.getString("user_id", null);
+    }
+
 }

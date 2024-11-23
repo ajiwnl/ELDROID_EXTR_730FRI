@@ -32,10 +32,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         mCategory category = categoryList.get(position);
 
-        holder.categoryNameTextView.setText(category.getName());
-        holder.categoryDescTextView.setText(category.getDesc());
+        holder.categoryNameTextView.setText(category.getCategoryTitle());
 
-        holder.categoryImageView.setImageResource(R.drawable.ic_profile_24);//change to dynamic getIcon()
     }
 
     @Override
@@ -44,16 +42,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
-        ImageView categoryImageView;
         TextView categoryNameTextView;
-        TextView categoryDescTextView;
 
         public CategoryViewHolder(View itemView) {
             super(itemView);
 
-            categoryImageView = itemView.findViewById(R.id.CategoryImageView);
             categoryNameTextView = itemView.findViewById(R.id.CategoryNameTextView);
-            categoryDescTextView = itemView.findViewById(R.id.CategoryDescTextView);
         }
     }
 
@@ -62,4 +56,3 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         notifyDataSetChanged();
     }
 }
-
