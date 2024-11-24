@@ -6,6 +6,7 @@ public class mUser {
     private String password;
     private boolean verified;
     private String id;
+    private String profileImage;
 
     // Constructor
     public mUser(String username, String email, String password, boolean verified) {
@@ -29,6 +30,15 @@ public class mUser {
         this.email = email;
         this.password = password;
         this.verified = verified;
+    }
+
+    public mUser(String id, String username, String email, String password, boolean verified,  String profileImage ) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.verified = verified;
+        this.profileImage = profileImage;
     }
 
     public String getId() {
@@ -69,6 +79,12 @@ public class mUser {
         this.verified = verified;
     }
 
+    public void setProfileImage(String profileImage) {
+     this.profileImage = profileImage;
+    }
 
+    public String getProfileImage() {
+        return profileImage;
+    }
 }
 
