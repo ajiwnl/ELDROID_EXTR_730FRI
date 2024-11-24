@@ -123,6 +123,7 @@
                 <EditText
                     android:id="@+id/profileoldpassword"
                     android:layout_width="match_parent"
+                    android:inputType="textPassword"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/layout_roundcornersnotfilled"
@@ -136,6 +137,7 @@
 
                 <EditText
                     android:id="@+id/profilenewpassword"
+                    android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -150,6 +152,7 @@
 
                 <EditText
                     android:id="@+id/profileconfirmpassword"
+                    android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -181,8 +184,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
-
-
-
 </FrameLayout>
