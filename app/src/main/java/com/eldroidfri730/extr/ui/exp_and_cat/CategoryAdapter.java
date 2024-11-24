@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.content.Context;
@@ -78,7 +79,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_category, null);
         Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogView);
-        dialog.getWindow().setLayout(700, 500);
+        dialog.getWindow().setLayout(800, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(false);
 
         // Get references to the dialog views

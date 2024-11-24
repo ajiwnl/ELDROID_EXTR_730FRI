@@ -155,7 +155,7 @@ public class ProfileFragment extends Fragment {
             String updatedNewPassword = !newPassword.isEmpty() ? newPassword : "";
             String updatedConfirmPassword = !confirmPassword.isEmpty() ? confirmPassword : "";
 
-            if (profileViewModel.validatePassword(updatedOldPassword, passRef , newPassword, updatedConfirmPassword)) {
+            if (!updatedOldPassword.isEmpty() && profileViewModel.validatePassword(updatedOldPassword, passRef , newPassword, updatedConfirmPassword)) {
                 if (updatedNewPassword.equals(updatedConfirmPassword)) {
                     profileViewModel.updateDetails(userId, null, null, updatedNewPassword, null);
                     clearPasswordFields();
@@ -167,6 +167,7 @@ public class ProfileFragment extends Fragment {
                 }
                 else if(updatedUsername != null && profileViewModel.validateUsername(updatedUsername)) {
                     profileViewModel.updateDetails(userId, updatedUsername, null, null, null);
+                    clearTextFields(updatedUsername, updatedEmail);
                 }
             }
         });
