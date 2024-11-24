@@ -9,5 +9,6 @@
     <color name="red">#FF0000</color>
     <color name="itembackgroundcolor">#15192B</color>
     <color name="green">#04AA6D</color>
+    <color name="extr_color">#8B1CC1</color>
 
 </resources>
