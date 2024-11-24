@@ -3,6 +3,7 @@ package com.eldroidfri730.extr.viewmodel.auth;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
@@ -97,10 +98,12 @@ public class LoginViewModel extends ViewModel {
                         String userId = loggedInUser.getId();
                         String username = loggedInUser.getUsername();
                         String email = loggedInUser.getEmail();
+                        String profileImage = loggedInUser.getProfileImage();
                         sharedPreferences.edit()
                                 .putString("user_id", userId)
                                 .putString("username", username)
                                 .putString("email", email)
+                                .putString("profileImage", profileImage)
                                 .apply();
                         isLoggedIn.setValue(true);
                         saveLoginState(true);

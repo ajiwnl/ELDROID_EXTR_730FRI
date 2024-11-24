@@ -1,6 +1,9 @@
 package com.eldroidfri730.extr.ui.prof_and_set;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
@@ -25,6 +29,8 @@ import com.eldroidfri730.extr.viewmodel.prof_and_set.ProfileViewModel;
 import com.eldroidfri730.extr.viewmodel.prof_and_set.ProfileViewModelFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,6 +40,12 @@ public class ProfileFragment extends Fragment {
     private CircleImageView profileImageView;
     private static final int PICK_IMAGE_REQUEST = 1;
     private String userId;
+    private EditText profileOldPassword;
+    private EditText profileNewPassword;
+    private EditText profileConfirmPassword;
+    private EditText profileEmail;
+    private EditText profileUsername;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -46,14 +58,27 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText profileUsername = view.findViewById(R.id.profileusername);
-        EditText profileEmail = view.findViewById(R.id.profileemail);
-        EditText profileOldPassword = view.findViewById(R.id.profileoldpassword);
-        EditText profileNewPassword = view.findViewById(R.id.profilenewpassword);
-        EditText profileConfirmPassword = view.findViewById(R.id.profileconfirmpassword);
+        profileUsername = view.findViewById(R.id.profileusername);
+        profileEmail = view.findViewById(R.id.profileemail);
+        profileOldPassword = view.findViewById(R.id.profileoldpassword);
+        profileNewPassword = view.findViewById(R.id.profilenewpassword);
+        profileConfirmPassword = view.findViewById(R.id.profileconfirmpassword);
         profileImageView = view.findViewById(R.id.profileimage);
         Button submitButton = view.findViewById(R.id.profilesubmitbutton);
 
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+
+        String profileImageUrl = sharedPreferences.getString("profileImage", null);
+
+        CircleImageView profileImageView = view.findViewById(R.id.profileimage);
+
+        if (profileImageUrl != null) {
+            Glide.with(this)
+                    .load(profileImageUrl)
+                    .placeholder(R.drawable.budgetbgimg)
+                    .error(R.drawable.budgetbgimg)
+                    .into(profileImageView);
+        }
 
         LoginViewModel loginViewModel = ((BasicSummaryActivity) getActivity()).getLoginViewModel(); // Retrieve LoginViewModel
         userId = loginViewModel.getUserId(); // Retrieve userId
@@ -91,57 +116,36 @@ public class ProfileFragment extends Fragment {
 
         submitButton.setOnClickListener(v -> {
             String username = profileUsername.getText().toString().trim();
-            String email = profileEmail.getText().toString();
-            String oldPassword = profileOldPassword.getText().toString();
-            String newPassword = profileNewPassword.getText().toString();
-            String confirmPassword = profileConfirmPassword.getText().toString();
+            String email = profileEmail.getText().toString().trim();
+            String oldPassword = profileOldPassword.getText().toString().trim();
+            String newPassword = profileNewPassword.getText().toString().trim();
+            String confirmPassword = profileConfirmPassword.getText().toString().trim();
 
-            if (!username.isEmpty()) {
-                profileViewModel.updateDetails(userId, username, null, null , null);
-                profileUsername.setText("");
-            }
-            else if(!email.isEmpty()) {
-                profileViewModel.updateDetails(userId, null, email, null , null);
-                profileEmail.setText("");
-            }
-            else if(!oldPassword.isEmpty() && !newPassword.isEmpty() && !confirmPassword.isEmpty()) {
-                if(newPassword.equals(confirmPassword)) {
-                    profileViewModel.updateDetails(userId, null, null, newPassword, null);
-                    profileOldPassword.setText("");
-                    profileNewPassword.setText("");
-                    profileConfirmPassword.setText("");
-                }
-                else if(!oldPassword.equals("Password From Logging In")) {
-                    Toast.makeText(requireContext(), getString(R.string.password_incorrect), Toast.LENGTH_SHORT).show();
-                }
-                else {
+            String updatedUsername = !username.isEmpty() ? username : null;
+            String updatedEmail = !email.isEmpty() ? email : null;
+            String updatedOldPassword = !oldPassword.isEmpty() ? oldPassword : null;
+            String updatedNewPassword = !newPassword.isEmpty() ? newPassword : null;
+            String updatedConfirmPassword = !confirmPassword.isEmpty() ? confirmPassword : null;
+
+            if (updatedOldPassword != null && updatedNewPassword != null && updatedConfirmPassword != null) {
+                if (updatedNewPassword.equals(updatedConfirmPassword)) {
+                    profileViewModel.updateDetails(userId, null, null, updatedNewPassword, null);
+                    clearPasswordFields();
+                } else {
                     Toast.makeText(requireContext(), getString(R.string.password_not_equal), Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                profileViewModel.updateDetails(userId, updatedUsername, updatedEmail, null, null);
+                clearTextFields(updatedUsername, updatedEmail);
             }
-            else {
-                //Toast.makeText(requireContext(), getString(R.string.details_not_empty), Toast.LENGTH_SHORT).show();
-            }
+
         });
 
         // TODO: Add more interaction logic to handle user input and call ViewModel methods
     }
 
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = requireContext().getContentResolver().query(contentUri, proj, null, null, null); // Use requireContext() here
-        if (cursor != null) {
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            String path = cursor.getString(columnIndex);
-            cursor.close();
-            return path;
-        }
-        return null;
-    }
-
-
     private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("image/*");
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
@@ -150,16 +154,31 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             Uri selectedImageUri = data.getData();
             if (selectedImageUri != null) {
-                String imagePath = getRealPathFromURI(selectedImageUri);
-                File profileImageFile = new File(imagePath);
+                try {
+                    InputStream inputStream = requireContext().getContentResolver().openInputStream(selectedImageUri);
+                    if (inputStream != null) {
+                        profileImageView.setImageURI(selectedImageUri);
 
-                profileImageView.setImageURI(selectedImageUri);
-
-                profileViewModel.uploadImage(profileImageFile, userId);
+                        profileViewModel.uploadImage(inputStream, userId);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    private void clearPasswordFields() {
+        profileOldPassword.setText("");
+        profileNewPassword.setText("");
+        profileConfirmPassword.setText("");
+    }
+
+    private void clearTextFields(String updatedUsername, String updatedEmail) {
+        if (updatedUsername != null) profileUsername.setText("");
+        if (updatedEmail != null) profileEmail.setText("");
     }
 }
