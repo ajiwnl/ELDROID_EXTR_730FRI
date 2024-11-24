@@ -87,5 +87,10 @@ please verify on your email.</string>
     <string name="not_verified">Please verify your email first to login!</string>
     <string name="log_fail">Login failed. Please try again.</string>
 
+    <!-- Profile values -->
+    <string name="old_passhint">Old Password</string>
+    <string name="new_passhint">New Password</string>
+    <string name="confirm_passhint">Confirm Password</string>
+
 
 </resources>

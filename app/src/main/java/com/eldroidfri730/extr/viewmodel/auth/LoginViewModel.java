@@ -96,8 +96,12 @@ public class LoginViewModel extends ViewModel {
                         LoginResponse loginResponse = response.body();
                         mUser loggedInUser = loginResponse.getUser();
                         String userId = loggedInUser.getId();
+                        String username = loggedInUser.getUsername();
+                        String email = loggedInUser.getEmail();
                         sharedPreferences.edit()
-                                .putString("user_id", userId) // Save userId
+                                .putString("user_id", userId)
+                                .putString("username", username)
+                                .putString("email", email)
                                 .apply();
                         isLoggedIn.setValue(true);
                         saveLoginState(true);
