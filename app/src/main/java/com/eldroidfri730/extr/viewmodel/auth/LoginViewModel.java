@@ -24,7 +24,6 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> passwordError = new MutableLiveData<>();
     private final MutableLiveData<String> loginSuccessMessage = new MutableLiveData<>();
     private final MutableLiveData<String> loginErrorMessage = new MutableLiveData<>();
-
     private final Application application;
     private final ApiService apiService;
     private final SharedPreferences sharedPreferences;
@@ -96,8 +95,12 @@ public class LoginViewModel extends ViewModel {
                         LoginResponse loginResponse = response.body();
                         mUser loggedInUser = loginResponse.getUser();
                         String userId = loggedInUser.getId();
+                        String username = loggedInUser.getUsername();
+                        String email = loggedInUser.getEmail();
                         sharedPreferences.edit()
-                                .putString("user_id", userId) // Save userId
+                                .putString("user_id", userId)
+                                .putString("username", username)
+                                .putString("email", email)
                                 .apply();
                         isLoggedIn.setValue(true);
                         saveLoginState(true);

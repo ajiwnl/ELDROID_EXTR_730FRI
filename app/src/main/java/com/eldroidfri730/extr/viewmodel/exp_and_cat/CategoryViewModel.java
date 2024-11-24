@@ -5,10 +5,12 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
 
+import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mCategory;
 import com.eldroidfri730.extr.utils.RetrofitClient;
@@ -20,52 +22,56 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryViewModel extends AndroidViewModel  {
+public class CategoryViewModel extends ViewModel {
 
     private final MutableLiveData<List<mCategory>> categories = new MutableLiveData<>();
+    private final MutableLiveData<String> categorySuccessMessage = new MutableLiveData<>();
+    private final MutableLiveData<String> categoryErrorMessage = new MutableLiveData<>();
+    private final Application application;
+    private final ApiService apiService;
+
 
     public CategoryViewModel(Application application) {
-        super(application);
+        this.application = application;
+        this.apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
     }
 
     public LiveData<List<mCategory>> getCategories() {
         return categories;
     }
 
-    public void addCategory(String userId, String categoryTitle) {
-        Log.d("CategoryViewModel", "addCategory called with userId: " + userId + ", categoryTitle: " + categoryTitle);
+    public LiveData<String> getCategorySuccessMessage() {
+        return categorySuccessMessage;
+    }
 
-        // Create the category object with userId and categoryTitle
+    public LiveData<String> getCategoryErrorMessage() {
+        return categoryErrorMessage;
+    }
+
+    public void addCategory(String userId, String categoryTitle) {
         mCategory newCategory = new mCategory(userId, categoryTitle);
 
-        // Log the payload being sent
-        Log.d("CategoryViewModel", "Created mCategory object: " + newCategory);
-
-        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         Call<mCategory> call = apiService.addCategory(newCategory);
-
-        Log.d("CategoryViewModel", "Initiating API call to addCategory...");
 
         call.enqueue(new Callback<mCategory>() {
             @Override
             public void onResponse(Call<mCategory> call, Response<mCategory> response) {
-                Log.d("CategoryViewModel", "API call successful. Response code: " + response.code());
-
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("CategoryViewModel", "Category added successfully. Response body: " + response.body());
-                    // Handle success as before
+                    categorySuccessMessage.postValue(application.getString(R.string.category_add));
+                } else if (response.code() == 409) {
+                    categoryErrorMessage.postValue(application.getString(R.string.category_dupe));
                 } else {
-                    Log.e("CategoryViewModel", "API call failed. Response message: " + response.message());
+                    categoryErrorMessage.postValue(application.getString(R.string.category_fail));
                 }
             }
 
             @Override
             public void onFailure(Call<mCategory> call, Throwable t) {
-                Log.e("CategoryViewModel", "API call failed due to network error or exception.", t);
+                categoryErrorMessage.postValue("Failed to add category due to network error.");
             }
         });
     }
-
 
     public ArrayAdapter<mCategory> getCategoryAdapter(Context context) {
         List<mCategory> categoryList = categories.getValue();
