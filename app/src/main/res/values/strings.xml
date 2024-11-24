@@ -127,4 +127,5 @@ please verify on your email.</string>
     <string name="password_not_equal">Password and Confirm Password Is Incorrect</string>
     <string name="password_incorrect">Incorrect Old Password</string>
     <string name="image_upload_error">Profile Image Failed To Upload</string>
+    <string name="password_not_matched">Passwords Do Not Match</string>
 </resources>
