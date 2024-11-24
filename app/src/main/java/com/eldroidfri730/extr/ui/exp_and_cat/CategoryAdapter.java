@@ -50,8 +50,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.itemView.setOnClickListener(v -> {
             showEditDialog(category);
         });
-
-
     }
 
     @Override
@@ -123,8 +121,4 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         dialog.show();
     }
-
-
-
-
 }

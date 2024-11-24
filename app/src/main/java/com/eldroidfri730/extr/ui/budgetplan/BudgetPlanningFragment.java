@@ -8,19 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eldroidfri730.extr.R;
-import com.eldroidfri730.extr.ui.budgetplan.adapter.ExpenseAdapter;
-import com.eldroidfri730.extr.ui.budgetplan.viewmodel.ExpenseViewModel;
-import com.eldroidfri730.extr.ui.budgetplan.viewmodel.ExpenseViewModelFactory;
+import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
+import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModelFactory;
 
 public class BudgetPlanningFragment extends Fragment {
 
@@ -90,7 +87,8 @@ public class BudgetPlanningFragment extends Fragment {
         });
     }
 
-    private void filterExpensesByCategory(String category) {
+    public void filterExpensesByCategory(String category) {
+        // Delegate filtering to ViewModel
         expenseViewModel.filterExpensesByCategory(category);
     }
 }

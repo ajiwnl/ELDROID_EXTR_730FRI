@@ -8,15 +8,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.data.models.mExpense;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
 
-    private List<ExpenseItem> expenseList;
+    private List<mExpense> expenseList;
 
-    public ExpenseAdapter(List<ExpenseItem> expenseList) {
-        this.expenseList = expenseList;
+    public ExpenseAdapter() {
+        this.expenseList = new ArrayList<>(); // Initialize with an empty list
     }
 
     @NonNull
@@ -28,15 +30,20 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 
     @Override
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
-        ExpenseItem expenseItem = expenseList.get(position);
-        holder.expenseName.setText(expenseItem.getExpenseName());
-        holder.expenseCost.setText(expenseItem.getExpenseCost());
-        holder.datePurchased.setText(expenseItem.getDatePurchased());
+        mExpense expense = expenseList.get(position);
+        holder.expenseName.setText(expense.getName()); // Corrected getter
+        holder.expenseCost.setText(String.valueOf(expense.getAmount())); // Corrected getter and type conversion
+        holder.datePurchased.setText(expense.getFormattedDate()); // Corrected getter for the formatted date
     }
 
     @Override
     public int getItemCount() {
-        return expenseList.size();
+        return expenseList != null ? expenseList.size() : 0;
+    }
+
+    public void setExpenseItems(List<mExpense> expenseList) {
+        this.expenseList = expenseList; // Update the list
+        notifyDataSetChanged();         // Notify RecyclerView to refresh
     }
 
     public static class ExpenseViewHolder extends RecyclerView.ViewHolder {

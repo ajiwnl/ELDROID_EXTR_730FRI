@@ -1,6 +1,8 @@
 package com.eldroidfri730.extr.data;
 
+import com.eldroidfri730.extr.data.models.mBudget;
 import com.eldroidfri730.extr.data.models.mCategory;
+import com.eldroidfri730.extr.data.models.mExpense;
 import com.eldroidfri730.extr.data.models.mUser;
 import com.eldroidfri730.extr.data.response.LoginResponse;
 
@@ -66,4 +68,11 @@ public interface ApiService {
             @Path("categoryTitle") String categoryTitle,
             @Query("userId") String userId
     );
+
+    @POST("addBudget")
+    Call<mBudget> addBudget(@Body mBudget expense);
+
+    @POST("addExpense")
+    Call<mExpense> addExpense(@Body mExpense expense);
+
 }

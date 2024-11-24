@@ -48,10 +48,11 @@ public class BasicSummaryActivity extends AppCompatActivity {
 
         // Create ViewModels scoped to the Activity
         categoryViewModel = new ViewModelProvider(this, categoryFactory).get(CategoryViewModel.class);
-        expenseViewModel = new ViewModelProvider(this, expenseFactory).get(ExpenseViewModel.class);
         loginViewModel = new ViewModelProvider(this, loginFactory).get(LoginViewModel.class);
         budgetViewModel = new ViewModelProvider(this, budgetFactory).get(BudgetViewModel.class);  // Create the BudgetViewModel
 
+
+        expenseViewModel = new ViewModelProvider(this, expenseFactory).get(ExpenseViewModel.class);
         // Set up view binding
         binding = ActivityBasicSummaryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
