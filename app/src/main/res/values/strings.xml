@@ -116,9 +116,14 @@ please verify on your email.</string>
     <string name="category_delete_neterror">Network error occurred while deleting the category.</string>
     <string name="cat_title_missing">Category title is missing.</string>
     <string name="cat_hint">Category Name</string>
-
-
-
-
-
+    <string name="username_too_short">Username Too Short</string>
+    <string name="username_already_exists">Username Already Exists</string>
+    <string name="update_success">Successfully Updated User Details</string>
+    <string name="user_not_found">User Was Not Found</string>
+    <string name="update_failed">Failed To Update User Details</string>
+    <string name="update_network_error">A Network Error Occurred While Updating</string>
+    <string name="check_network_error">Please Check Your Internet Connection</string>
+    <string name="details_not_empty">"Please Enter Your Details To Update"</string>
+    <string name="password_not_equal">Password and Confirm Password Is Incorrect</string>
+    <string name="password_incorrect">Incorrect Old Password</string>
 </resources>
