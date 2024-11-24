@@ -24,7 +24,6 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> passwordError = new MutableLiveData<>();
     private final MutableLiveData<String> loginSuccessMessage = new MutableLiveData<>();
     private final MutableLiveData<String> loginErrorMessage = new MutableLiveData<>();
-
     private final Application application;
     private final ApiService apiService;
     private final SharedPreferences sharedPreferences;

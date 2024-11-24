@@ -92,5 +92,12 @@ please verify on your email.</string>
     <string name="new_passhint">New Password</string>
     <string name="confirm_passhint">Confirm Password</string>
 
+    <!-- Category values -->
+    <string name="category_add">Category added successfully!</string>
+    <string name="category_dupe">Category already exists.</string>
+    <string name="req_field">This field is required.</string>
+    <string name="user_out">User not logged-in!</string>
+    <string name="category_fail">Failed to add category. Please try again!</string>
+
 
 </resources>

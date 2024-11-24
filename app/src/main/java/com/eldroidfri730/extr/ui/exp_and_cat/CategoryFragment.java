@@ -26,9 +26,11 @@ public class CategoryFragment extends Fragment {
     private ImageButton backButton;
     private Button submitButton;
     private RecyclerView categoryRecyclerView;
-    private EditText categoryNameEditText, categoryDescEditText;
+    private EditText categoryNameEditText;
     private CategoryAdapter categoryAdapter;
     private CategoryViewModel categoryViewModel;
+    private boolean isCategoriesFetched = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,8 +47,10 @@ public class CategoryFragment extends Fragment {
         // ViewModels
         categoryViewModel = ((BasicSummaryActivity) getActivity()).getCategoryViewModel();
         LoginViewModel loginViewModel = ((BasicSummaryActivity) getActivity()).getLoginViewModel(); // Retrieve LoginViewModel
+        String userId = loginViewModel.getUserId(); // Retrieve userId
 
-        // RecyclerView
+
+        // RecyclerView setup
         categoryAdapter = new CategoryAdapter(new ArrayList<>());
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
@@ -56,12 +60,24 @@ public class CategoryFragment extends Fragment {
             categoryAdapter.setCategoryList(categories);
         });
 
+        categoryViewModel.getCategorySuccessMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        categoryViewModel.getCategoryErrorMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Fetch categories for the logged-in user
-        String userId = loginViewModel.getUserId(); // Retrieve userId
-        if (userId != null) {
+        if (userId != null && !isCategoriesFetched) {
             categoryViewModel.fetchCategoriesByUserId(userId);
-        } else {
-            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+            isCategoriesFetched = true;  // Mark categories as fetched
+        }else {
+            Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
         }
 
         // Add category logic
@@ -72,19 +88,18 @@ public class CategoryFragment extends Fragment {
                 if (userId != null) {
                     categoryViewModel.addCategory(userId, name); // Pass userId and name
                     categoryNameEditText.setText("");
-                    categoryViewModel.fetchCategoriesByUserId(userId); // Refresh categories after adding
+                    categoryViewModel.fetchCategoriesByUserId(userId);
                 } else {
-                    Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        // Back button logic
         backButton.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().popBackStack();
         });
 
         return rootView;
     }
-
 }
-

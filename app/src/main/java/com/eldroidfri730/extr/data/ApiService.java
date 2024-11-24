@@ -26,7 +26,7 @@ public interface ApiService {
     @POST("addCategory")
     Call<mCategory> addCategory(@Body mCategory category);
 
-    @GET("categories")
+    @POST("userCategories")
     Call<List<mCategory>> getCategoriesByUserId(@Query("userId") String userId);
 
 }
