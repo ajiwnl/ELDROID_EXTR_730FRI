@@ -2,6 +2,7 @@ package com.eldroidfri730.extr.ui.exp_and_cat;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,9 +52,11 @@ public class CategoryFragment extends Fragment {
 
 
         // RecyclerView setup
+        categoryRecyclerView = rootView.findViewById(R.id.CategoryRecyclerView);
+        categoryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2)); // 2 items per row
         categoryAdapter = new CategoryAdapter(new ArrayList<>());
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
+
 
         // Observe categories LiveData and update the RecyclerView
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
