@@ -1,5 +1,9 @@
 package com.eldroidfri730.extr.viewmodel.prof_and_set;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
+import static java.security.AccessController.getContext;
+
 import android.app.Application;
 import android.util.Log;
 
@@ -14,6 +18,11 @@ import com.eldroidfri730.extr.utils.RetrofitClient;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -90,12 +99,24 @@ public class ProfileViewModel extends ViewModel {
         }
     }
 
-
     private void performUpdate(String userId, String newUsername, String email, String newPassword, File profileImageFile) {
         RequestBody usernameBody = newUsername != null ? RequestBody.create(MediaType.parse("text/plain"), newUsername) : null;
         RequestBody emailBody = email != null ? RequestBody.create(MediaType.parse("text/plain"), email) : null;
         RequestBody passwordBody = newPassword != null ? RequestBody.create(MediaType.parse("text/plain"), newPassword) : null;
-        MultipartBody.Part imagePart = profileImageFile != null ? prepareFilePart("profileImage", profileImageFile) : null;
+
+        // Convert File to InputStream
+        InputStream profileImageInputStream = null;
+        if (profileImageFile != null) {
+            try {
+                profileImageInputStream = new FileInputStream(profileImageFile);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Create the image part using the InputStream
+        MultipartBody.Part imagePart = profileImageInputStream != null ?
+                prepareFilePart("profileImage", profileImageInputStream) : null;
 
         Call<mUser> updateCall = apiService.updateUser(userId, usernameBody, imagePart, emailBody, passwordBody, passwordBody);
         updateCall.enqueue(new Callback<mUser>() {
@@ -119,32 +140,77 @@ public class ProfileViewModel extends ViewModel {
         });
     }
 
-    public void uploadImage(File profileImageFile, String userId) {
-        if (profileImageFile != null) {
-            MultipartBody.Part imagePart = prepareFilePart("profileImage", profileImageFile);
+    public void uploadImage(InputStream imageInputStream, String userId) {
+        if (imageInputStream != null) {
+            try {
+                File tempFile = File.createTempFile("image", ".jpg");
+                FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
 
-            Call<mUser> updateCall = apiService.updateUser(userId, null, imagePart, null, null, null);
-            updateCall.enqueue(new Callback<mUser>() {
-                @Override
-                public void onResponse(Call<mUser> call, Response<mUser> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        profileSuccessMessage.postValue(application.getString(R.string.update_success));
-                    } else {
-                        profileErrorMessage.postValue(application.getString(R.string.update_failed));
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = imageInputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, length);
+                }
+
+                fileOutputStream.flush();
+                fileOutputStream.close();
+
+                MultipartBody.Part imagePart = prepareFilePart("profileImage", tempFile);
+
+                Call<mUser> updateCall = apiService.updateUser(userId, null, imagePart, null, null, null);
+
+                updateCall.enqueue(new Callback<mUser>() {
+                    @Override
+                    public void onResponse(Call<mUser> call, Response<mUser> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            profileSuccessMessage.postValue(application.getString(R.string.update_success));
+                        } else {
+                            profileErrorMessage.postValue(application.getString(R.string.update_failed));
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<mUser> call, Throwable t) {
-                    profileErrorMessage.postValue(application.getString(R.string.update_network_error));
-                }
-            });
+                    @Override
+                    public void onFailure(Call<mUser> call, Throwable t) {
+                        Log.e("ProfileUpdateError", "Failed to update profile", t);
+                        profileErrorMessage.postValue(application.getString(R.string.update_network_error));
+                    }
+                });
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                profileErrorMessage.postValue(application.getString(R.string.image_upload_error));
+            }
         }
     }
 
-    private MultipartBody.Part prepareFilePart(String partName, File file) {
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+    private MultipartBody.Part prepareFilePart(String partName, Object fileObject) {
+        RequestBody requestFile = null;
 
-        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+        if (fileObject instanceof File) {
+            File file = (File) fileObject;
+            requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+        }
+        else if (fileObject instanceof InputStream) {
+            InputStream inputStream = (InputStream) fileObject;
+            try {
+                File tempFile = File.createTempFile("image", ".jpg");
+                FileOutputStream fileOutputStream = new FileOutputStream(tempFile);
+
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, length);
+                }
+
+                fileOutputStream.flush();
+                fileOutputStream.close();
+
+                requestFile = RequestBody.create(MediaType.parse("image/*"), tempFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return requestFile != null ? MultipartBody.Part.createFormData(partName, ((File) fileObject).getName(), requestFile) : null;
     }
 }
