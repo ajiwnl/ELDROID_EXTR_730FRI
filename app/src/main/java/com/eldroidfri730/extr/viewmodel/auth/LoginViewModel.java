@@ -102,6 +102,7 @@ public class LoginViewModel extends ViewModel {
                         sharedPreferences.edit()
                                 .putString("user_id", userId)
                                 .putString("username", username)
+                                .putString("password", password)
                                 .putString("email", email)
                                 .putString("profileImage", profileImage)
                                 .apply();
