@@ -72,7 +72,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/layout_roundcornersnotfilled"
-                    android:hint="Cake"
+                    android:hint="@string/frag_exp_exmp_exp_name"
+                    android:singleLine="true"
                     android:maxLines="1"
                     android:maxLength="30"
                     android:padding="12dp"
@@ -125,7 +126,8 @@
                     android:background="@drawable/layout_roundcornersnotfilled"
                     android:drawableLeft="@drawable/ic_peso"
                     android:drawablePadding="10dp"
-                    android:hint="0.00"
+                    android:hint="@string/frag_exp_exmp_amount"
+                    android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:maxLength="18"
@@ -148,13 +150,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/layout_roundcornersnotfilled"
-                    android:drawableEnd="@drawable/ic_calendar_24"
                     android:gravity="center_vertical|start"
-                    android:hint="1/1/2024"
-                    android:inputType="date"
+                    android:hint="@string/frag_exp_exmp_date"
                     android:padding="12dp"
                     android:textColorHint="@color/grey"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:drawableEndCompat="@drawable/ic_calendar_24" />
 
 
                 <TextView

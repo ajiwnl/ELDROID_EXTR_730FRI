@@ -94,6 +94,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/layout_roundcornersnotfilled"
                     android:hint="@string/cat_hint"
+                    android:imeOptions="actionDone"
                     android:textColorHint="@color/grey"
                     android:padding="12dp"
                     android:textSize="12sp" />

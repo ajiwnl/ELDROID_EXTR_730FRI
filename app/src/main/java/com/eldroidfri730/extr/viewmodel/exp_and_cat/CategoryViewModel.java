@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CategoryViewModel extends ViewModel {
@@ -48,6 +49,7 @@ public class CategoryViewModel extends ViewModel {
     public LiveData<String> getCategoryErrorMessage() {
         return categoryErrorMessage;
     }
+
 
     public void addCategory(String userId, String categoryTitle) {
 
@@ -78,16 +80,6 @@ public class CategoryViewModel extends ViewModel {
         });
     }
 
-    public ArrayAdapter<mCategory> getCategoryAdapter(Context context) {
-        List<mCategory> categoryList = categories.getValue();
-        if (categoryList == null) {
-            categoryList = new ArrayList<>();
-        }
-        ArrayAdapter<mCategory> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, categoryList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        return adapter;
-    }
 
     public void fetchCategoriesByUserId(String userId) {
         Log.d("CategoryViewModel", "Fetching categories for userId: " + userId);
