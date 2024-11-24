@@ -116,9 +116,10 @@ please verify on your email.</string>
     <string name="category_delete_neterror">Network error occurred while deleting the category.</string>
     <string name="cat_title_missing">Category title is missing.</string>
     <string name="cat_hint">Category Name</string>
-
-
-
+    <string name="vmExpenseReqTypeErr">Invalid request type</string>
+    <string name="frag_exp_exmp_exp_name">Cake</string>
+    <string name="frag_exp_exmp_amount">0.00</string>
+    <string name="frag_exp_exmp_date">1/1/2024</string>
 
 
 </resources>

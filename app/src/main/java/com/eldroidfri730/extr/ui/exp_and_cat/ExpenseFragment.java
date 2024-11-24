@@ -5,34 +5,47 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.data.models.mCategory;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.utils.ExpenseCategoryValidation;
+import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModelFactory;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExpenseFragment extends Fragment {
 
     private EditText expenseNameEditText,  expenseAmountEditText, expenseDescEditText;
     private TextView datePurchasedEditText, noCategory;
     private Spinner categorySpinner;
-    private ExpenseViewModel expenseViewModel;
-
-    private CategoryViewModelFactory categoryViewModelFactory;
-    private CategoryViewModel categoryViewModel;
     private ImageButton backButton;
     private Button submitButton;
+
+    private ExpenseViewModel expenseViewModel;
+    private CategoryViewModel categoryViewModel;
+
+    private String userId;
+    private boolean isCategoriesFetched = false;
 
     private Application app;
 
@@ -52,46 +65,132 @@ public class ExpenseFragment extends Fragment {
         expenseDescEditText = rootView.findViewById(R.id.expensedescedittext);
         noCategory = rootView.findViewById(R.id.AddInitialCat);
 
+        LoginViewModel loginViewModel = ((BasicSummaryActivity) getActivity()).getLoginViewModel();
+        userId = loginViewModel.getUserId();
+
         expenseViewModel = ((BasicSummaryActivity) getActivity()).getExpenseViewModel();
         categoryViewModel = ((BasicSummaryActivity) getActivity()).getCategoryViewModel();
 
-        datePurchasedEditText.setOnClickListener(v -> {
-            expenseViewModel.showDatePickerDialog(this);
-        });
+        if (userId != null && !isCategoriesFetched) {
+            categoryViewModel.fetchCategoriesByUserId(userId);
+            isCategoriesFetched = true;
+        } else {
+            Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
+        }
 
-        expenseViewModel.getSelectedDate().observe(getViewLifecycleOwner(), date -> {
-            datePurchasedEditText.setText(date);
-        });
+        expenseViewModel.clearExpenseValue();
 
-        categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
-            Log.d("Categories", categories.toString());
-            if(!categories.isEmpty()){
-                categorySpinner.setAdapter(categoryViewModel.getCategoryAdapter(getContext()));
-                categorySpinner.setVisibility(View.VISIBLE);
-                noCategory.setVisibility(View.GONE);
-            }
-        });
+        setupBtnListeners();
 
-        submitButton.setOnClickListener(v -> {
-            String name = ExpenseCategoryValidation.isNotNullEditText(expenseNameEditText);
-            String amountStr = ExpenseCategoryValidation.isNotNullEditText(expenseAmountEditText);
-            String dateStr = ExpenseCategoryValidation.isNotNullTextView(datePurchasedEditText);
-            String category = ExpenseCategoryValidation.isNotNullSpinner(categorySpinner, rootView.getContext(), noCategory);
-
-            if (name != null && amountStr != null && dateStr != null && category != null) {
-                expenseViewModel.createExpense(name, amountStr, dateStr, category, expenseDescEditText.getText().toString(), rootView.getContext());
-                expenseNameEditText.setText("");
-                expenseAmountEditText.setText("");
-                datePurchasedEditText.setText("");
-                expenseDescEditText.setText("");
-                categorySpinner.setSelection(0);
-            }
-        });
-
-        backButton.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().popBackStack();
-        });
+        setupObservers();
 
         return rootView;
     }
+
+    private void setupBtnListeners() {
+        datePurchasedEditText.setOnClickListener(v -> expenseViewModel.showDatePickerDialog(this));
+
+        submitButton.setOnClickListener(v -> {
+            expenseViewModel.createExpenseModel(
+                expenseViewModel.getExpenseName().getValue(),
+                expenseViewModel.getExpenseAmount().getValue(),
+                expenseViewModel.getSelectedDate().getValue(),
+                expenseViewModel.getExpenseCategory().getValue(),
+                expenseViewModel.getExpenseDescription().getValue(),
+                getContext(),
+                userId,
+                0);
+                clearEditTextField();
+        }
+        );
+
+        backButton.setOnClickListener(v -> {
+            expenseViewModel.clearExpenseValue();
+            clearEditTextField();
+            requireActivity().getSupportFragmentManager().popBackStack();
+        });
+    }
+
+    private void setupObservers() {
+        expenseViewModel.getSelectedDate().observe(getViewLifecycleOwner(), date -> datePurchasedEditText.setText(date));
+
+        expenseViewModel.isFormValid().observe(getViewLifecycleOwner(), isValid -> submitButton.setEnabled(isValid));
+
+        categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
+            List<String> categoryList = new ArrayList<>();
+            if (categories != null && !categories.isEmpty()) {
+                for (mCategory category : categories) {
+                    categoryList.add(category.getCategoryTitle());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                        android.R.layout.simple_spinner_item, categoryList);
+                categorySpinner.setAdapter(adapter);
+                categorySpinner.setVisibility(View.VISIBLE);
+                noCategory.setVisibility(View.GONE);
+            } else {
+                categorySpinner.setVisibility(View.GONE);
+                noCategory.setVisibility(View.VISIBLE);
+            }
+        });
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedCategory = parentView.getItemAtPosition(position).toString();
+                expenseViewModel.updateExpenseCategory(selectedCategory);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {}
+        });
+
+        expenseNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                expenseViewModel.updateExpenseName(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        expenseAmountEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                expenseViewModel.updateExpenseAmount(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        expenseDescEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                expenseViewModel.updateExpenseDescription(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+
+    }
+
+    public void clearEditTextField(){
+        expenseNameEditText.setText(null);
+        expenseAmountEditText.setText(null);
+        expenseDescEditText.setText(null);
+        categorySpinner.setSelection(0);
+    }
+
 }

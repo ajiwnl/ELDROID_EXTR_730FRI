@@ -84,8 +84,8 @@ public class CategoryFragment extends Fragment {
 
         // Add category logic
         submitButton.setOnClickListener(v -> {
-            String name = ExpenseCategoryValidation.isNotNullEditText(categoryNameEditText);
-
+            String name = categoryNameEditText.getText().toString();
+            //Fix this later
             if (name != null) {
                 if (userId != null) {
                     categoryViewModel.addCategory(userId, name); // Pass userId and name
