@@ -1,6 +1,7 @@
 package com.eldroidfri730.extr.ui.prof_and_set;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,8 @@ import com.bumptech.glide.Glide;
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
+import com.eldroidfri730.extr.viewmodel.auth.RegisterViewModel;
+import com.eldroidfri730.extr.viewmodel.auth.RegisterViewModelFactory;
 import com.eldroidfri730.extr.viewmodel.prof_and_set.ProfileViewModel;
 import com.eldroidfri730.extr.viewmodel.prof_and_set.ProfileViewModelFactory;
 
@@ -64,11 +67,18 @@ public class ProfileFragment extends Fragment {
         profileNewPassword = view.findViewById(R.id.profilenewpassword);
         profileConfirmPassword = view.findViewById(R.id.profileconfirmpassword);
         profileImageView = view.findViewById(R.id.profileimage);
+        profileUsername = view.findViewById(R.id.profileusername);
         Button submitButton = view.findViewById(R.id.profilesubmitbutton);
 
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
 
         String profileImageUrl = sharedPreferences.getString("profileImage", null);
+        String usernamePref = sharedPreferences.getString("username", null);
+        String emailPref = sharedPreferences.getString("email", null);
+        String passRef = sharedPreferences.getString("password", null);
+
+        profileUsername.setHint(usernamePref);
+        profileEmail.setHint(emailPref);
 
         CircleImageView profileImageView = view.findViewById(R.id.profileimage);
 
@@ -90,13 +100,31 @@ public class ProfileFragment extends Fragment {
         // Observe LiveData for changes and update the UI accordingly
         profileViewModel.getEmailError().observe(getViewLifecycleOwner(), emailError -> {
             if (emailError != null) {
-                // Handle email error (e.g., show a toast or set an error on an EditText)
+                profileEmail.setError(emailError);
             }
         });
 
         profileViewModel.getUsernameError().observe(getViewLifecycleOwner(), usernameError -> {
             if (usernameError != null) {
-                // Handle username error (e.g., show a toast or set an error on an EditText)
+                profileUsername.setError(usernameError);
+            }
+        });
+
+        profileViewModel.getOldPasswordError().observe(getViewLifecycleOwner(), passwordError -> {
+            if(passwordError != null) {
+                profileOldPassword.setError(passwordError);
+            }
+        });
+
+        profileViewModel.getNewPasswordError().observe(getViewLifecycleOwner(), passwordError -> {
+            if(passwordError != null) {
+                profileNewPassword.setError(passwordError);
+            }
+        });
+
+        profileViewModel.getConfirmPasswordError().observe(getViewLifecycleOwner(), passwordError -> {
+            if(passwordError != null) {
+                profileConfirmPassword.setError(passwordError);
             }
         });
 
@@ -123,24 +151,26 @@ public class ProfileFragment extends Fragment {
 
             String updatedUsername = !username.isEmpty() ? username : null;
             String updatedEmail = !email.isEmpty() ? email : null;
-            String updatedOldPassword = !oldPassword.isEmpty() ? oldPassword : null;
-            String updatedNewPassword = !newPassword.isEmpty() ? newPassword : null;
-            String updatedConfirmPassword = !confirmPassword.isEmpty() ? confirmPassword : null;
+            String updatedOldPassword = !oldPassword.isEmpty() ? oldPassword : "";
+            String updatedNewPassword = !newPassword.isEmpty() ? newPassword : "";
+            String updatedConfirmPassword = !confirmPassword.isEmpty() ? confirmPassword : "";
 
-            if (updatedOldPassword != null && updatedNewPassword != null && updatedConfirmPassword != null) {
+            if (!updatedOldPassword.isEmpty() && profileViewModel.validatePassword(updatedOldPassword, passRef , newPassword, updatedConfirmPassword)) {
                 if (updatedNewPassword.equals(updatedConfirmPassword)) {
                     profileViewModel.updateDetails(userId, null, null, updatedNewPassword, null);
                     clearPasswordFields();
-                } else {
-                    Toast.makeText(requireContext(), getString(R.string.password_not_equal), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                profileViewModel.updateDetails(userId, updatedUsername, updatedEmail, null, null);
-                clearTextFields(updatedUsername, updatedEmail);
+                if(updatedEmail != null && profileViewModel.validateEmail(updatedEmail)) {
+                    profileViewModel.updateDetails(userId, null, updatedEmail, null, null);
+                    clearTextFields(updatedUsername, updatedEmail);
+                }
+                else if(updatedUsername != null && profileViewModel.validateUsername(updatedUsername)) {
+                    profileViewModel.updateDetails(userId, updatedUsername, null, null, null);
+                    clearTextFields(updatedUsername, updatedEmail);
+                }
             }
-
         });
-
         // TODO: Add more interaction logic to handle user input and call ViewModel methods
     }
 
@@ -175,6 +205,7 @@ public class ProfileFragment extends Fragment {
         profileOldPassword.setText("");
         profileNewPassword.setText("");
         profileConfirmPassword.setText("");
+        profileNewPassword.setError(null);
     }
 
     private void clearTextFields(String updatedUsername, String updatedEmail) {

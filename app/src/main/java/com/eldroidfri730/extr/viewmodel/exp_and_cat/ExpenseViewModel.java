@@ -16,12 +16,18 @@ import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mExpense;
 import com.eldroidfri730.extr.utils.ExpenseCategoryValidation;
 import com.eldroidfri730.extr.utils.RetrofitClient;
+import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ExpenseViewModel extends AndroidViewModel {
@@ -36,10 +42,12 @@ public class ExpenseViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> isFormValid = new MutableLiveData<>(false);
 
     private final ApiService apiService;
-    
-    public ExpenseViewModel(Application application){
+    private final LoginViewModel loginViewModel; // Add LoginViewModel reference
+
+    public ExpenseViewModel(Application application, LoginViewModel loginViewModel){
         super(application);
         this.apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        this.loginViewModel = loginViewModel;  // Initialize loginViewModel
     }
 
     //Setter and Update if nullers
@@ -100,7 +108,6 @@ public class ExpenseViewModel extends AndroidViewModel {
                 !expenseCategory.getValue().trim().isEmpty();
 
         isFormValid.setValue(isValid);
-
     }
 
     public void clearExpenseValue(){
@@ -114,41 +121,45 @@ public class ExpenseViewModel extends AndroidViewModel {
     //Crude Section
 
     public void createExpenseModel(String name, String amountStr, String dateStr, String category, String desc, Context context, String userId, int requestId) {
-        final int ADD_EXP_REQ = 0;
-        final int UP_EXP_REQ = 1;
-        final int DEL_EXP_REQ = 2;
+        try {
+            float amount = Float.parseFloat(amountStr);
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(dateStr);
 
-        mExpense newExpense = new mExpense(
-                name,
-                category,
-                Float.parseFloat(amountStr),
-                ExpenseCategoryValidation.parseDate(dateStr),
-                desc == null ? "" : desc
-        );
+            mExpense newExpense = new mExpense(name, category, amount, date, desc, userId);
 
-        switch (requestId) {
-            case ADD_EXP_REQ:
-                addExpense(userId, newExpense);
-                break;
-
-            case UP_EXP_REQ:
-                updateExpense(userId, newExpense);
-                break;
-
-            case DEL_EXP_REQ:
-                deleteExpense(userId, newExpense);
-                break;
-
-            default:
-                Toast.makeText(context, R.string.vmExpenseReqTypeErr, Toast.LENGTH_SHORT).show();
-                break;
+            if (requestId == 0) {
+                addExpense(newExpense);
+            } else {
+                Log.e("ExpenseViewModel", "Invalid request ID");
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "Invalid input data", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 
-    public void addExpense(String userId, mExpense expense) {
-        //Add Request
-        Log.d("ExpenseAction", "Adding expense for user: " + userId + ", Expense " +expense.getName()+" "+expense.getCategory()+" "+expense.getAmount()+" "+expense.getDesc()+" "+expense.getFormattedDate()+expense.getDesc());
+
+    public void addExpense(mExpense expense) {
+        apiService.addExpense(expense).enqueue(new Callback<mExpense>() {
+            @Override
+            public void onResponse(Call<mExpense> call, Response<mExpense> response) {
+                if (response.isSuccessful()) {
+                    Log.d("ExpenseViewModel", "Expense added successfully: " + response.body());
+                    Toast.makeText(getApplication(), "Expense added successfully!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("ExpenseViewModel", "Error: " + response.message());
+                    Toast.makeText(getApplication(), "Failed to add expense.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<mExpense> call, Throwable t) {
+                Log.e("ExpenseViewModel", "Network error: " + t.getMessage());
+                Toast.makeText(getApplication(), "Network error. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     public void updateExpense(String userId, mExpense expense) {
         //Update Request
@@ -181,5 +192,22 @@ public class ExpenseViewModel extends AndroidViewModel {
         datePickerDialog.show();
     }
 
+    public void filterExpensesByCategory(String category) {
+        // Get the current list of expenses
+        List<mExpense> allExpenses = expenses.getValue();
+        if (allExpenses == null) {
+            return;
+        }
 
+        // Filter the expenses by the given category
+        List<mExpense> filteredExpenses = new ArrayList<>();
+        for (mExpense expense : allExpenses) {
+            if (expense.getCategory().equalsIgnoreCase(category)) {
+                filteredExpenses.add(expense);
+            }
+        }
+
+        // Update the MutableLiveData with the filtered list
+        expenses.setValue(filteredExpenses);
+    }
 }

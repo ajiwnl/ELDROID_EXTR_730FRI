@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mUser;
+import com.eldroidfri730.extr.utils.InputValidator;
 import com.eldroidfri730.extr.utils.RetrofitClient;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 
@@ -39,6 +40,11 @@ public class ProfileViewModel extends ViewModel {
     private final MutableLiveData<String> username = new MutableLiveData<>();
     private final MutableLiveData<String> emailError = new MutableLiveData<>();
     private final MutableLiveData<String> usernameError = new MutableLiveData<>();
+    private final MutableLiveData<String> oldPasswordError = new MutableLiveData<>();
+
+    private final MutableLiveData<String> newPasswordError = new MutableLiveData<>();
+    private final MutableLiveData<String> confirmPasswordError = new MutableLiveData<>();
+
     private final MutableLiveData<String> profileSuccessMessage = new MutableLiveData<>();
     private final MutableLiveData<String> profileErrorMessage = new MutableLiveData<>();
     private Application application;
@@ -52,7 +58,15 @@ public class ProfileViewModel extends ViewModel {
     public LiveData<String> getEmailError() {
         return emailError;
     }
-
+    public LiveData<String> getOldPasswordError() {
+        return oldPasswordError;
+    }
+    public LiveData<String> getNewPasswordError() {
+        return newPasswordError;
+    }
+    public LiveData<String> getConfirmPasswordError() {
+        return confirmPasswordError;
+    }
     public LiveData<String> getUsernameError() {
         return usernameError;
     }
@@ -63,6 +77,55 @@ public class ProfileViewModel extends ViewModel {
 
     public LiveData<String> getProfileErrorMessage() {
         return profileErrorMessage;
+    }
+
+    public boolean validateEmail(String email) {
+        boolean isValid = true;
+
+        if (!InputValidator.isValidEmail(email)) {
+            emailError.setValue(application.getString(R.string.invalid_email));
+            isValid = false;
+        } else {
+            emailError.setValue(null); // Clear error
+        }
+        return isValid;
+
+    }
+
+    public boolean validateUsername(String updatedUsername) {
+        boolean isValid = true;
+        if (!InputValidator.isValidUsername(updatedUsername)) {
+            usernameError.setValue(application.getString(R.string.username_check));
+            isValid = false;
+        }
+        else {
+            usernameError.setValue(null); // Clear error
+        }
+
+        return isValid;
+    }
+
+    public boolean validatePassword(String oldPassword, String inputOldPassword, String newPassword, String updatedConfirmPassword) {
+        boolean isValid = true;
+        if(!oldPassword.equals(inputOldPassword) || inputOldPassword.isEmpty()) {
+            oldPasswordError.setValue(application.getString(R.string.password_incorrect));
+            isValid = false;
+        }
+        else if (!InputValidator.isValidPassword(newPassword)) {
+            newPasswordError.setValue(application.getString(R.string.password_min));
+            isValid = false;
+        }
+        else if(!newPassword.equals(updatedConfirmPassword)) {
+            newPasswordError.setValue(application.getString(R.string.password_not_matched));
+            confirmPasswordError.setValue(application.getString(R.string.password_not_matched));
+            isValid = false;
+        }
+        else {
+            oldPasswordError.setValue(null);
+            newPasswordError.setValue(null);
+            confirmPasswordError.setValue(null);
+        }
+        return isValid;
     }
 
     public void updateDetails(String userId, String newUsername, String email, String newPassword, File profileImageFile) {

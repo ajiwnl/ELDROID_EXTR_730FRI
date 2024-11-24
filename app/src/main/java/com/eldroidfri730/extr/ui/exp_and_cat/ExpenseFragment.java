@@ -91,18 +91,15 @@ public class ExpenseFragment extends Fragment {
         datePurchasedEditText.setOnClickListener(v -> expenseViewModel.showDatePickerDialog(this));
 
         submitButton.setOnClickListener(v -> {
-            expenseViewModel.createExpenseModel(
-                expenseViewModel.getExpenseName().getValue(),
-                expenseViewModel.getExpenseAmount().getValue(),
-                expenseViewModel.getSelectedDate().getValue(),
-                expenseViewModel.getExpenseCategory().getValue(),
-                expenseViewModel.getExpenseDescription().getValue(),
-                getContext(),
-                userId,
-                0);
-                clearEditTextField();
-        }
-        );
+            String name = expenseNameEditText.getText().toString();
+            String amount = expenseAmountEditText.getText().toString();
+            String date = datePurchasedEditText.getText().toString();
+            String category = expenseViewModel.getExpenseCategory().getValue();
+            String desc = expenseDescEditText.getText().toString();
+
+            expenseViewModel.createExpenseModel(name, amount, date, category, desc, getContext(), userId, 0);
+        });
+
 
         backButton.setOnClickListener(v -> {
             expenseViewModel.clearExpenseValue();
@@ -182,8 +179,6 @@ public class ExpenseFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
-
-
     }
 
     public void clearEditTextField(){

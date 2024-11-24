@@ -21,6 +21,8 @@ import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModelFactory;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModelFactory;
+import com.eldroidfri730.extr.viewmodel.budget.BudgetViewModel;  // Import the BudgetViewModel
+import com.eldroidfri730.extr.viewmodel.budget.BudgetViewModelFactory; // Import the BudgetViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.eldroidfri730.extr.utils.IntentUtil;
 
@@ -31,6 +33,7 @@ public class BasicSummaryActivity extends AppCompatActivity {
     private CategoryViewModel categoryViewModel;
     private ExpenseViewModel expenseViewModel;
     private LoginViewModel loginViewModel;
+    private BudgetViewModel budgetViewModel;  // Declare the BudgetViewModel
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +44,15 @@ public class BasicSummaryActivity extends AppCompatActivity {
         CategoryViewModelFactory categoryFactory = new CategoryViewModelFactory(getApplication());
         ExpenseViewModelFactory expenseFactory = new ExpenseViewModelFactory(getApplication());
         LoginViewModelFactory loginFactory = new LoginViewModelFactory(getApplication());
+        BudgetViewModelFactory budgetFactory = new BudgetViewModelFactory(getApplication());  // Initialize the BudgetViewModelFactory
 
         // Create ViewModels scoped to the Activity
         categoryViewModel = new ViewModelProvider(this, categoryFactory).get(CategoryViewModel.class);
-        expenseViewModel = new ViewModelProvider(this, expenseFactory).get(ExpenseViewModel.class);
-        loginViewModel = new ViewModelProvider(this, loginFactory).get(LoginViewModel.class); // Corrected ViewModel type
+        loginViewModel = new ViewModelProvider(this, loginFactory).get(LoginViewModel.class);
+        budgetViewModel = new ViewModelProvider(this, budgetFactory).get(BudgetViewModel.class);  // Create the BudgetViewModel
 
+
+        expenseViewModel = new ViewModelProvider(this, expenseFactory).get(ExpenseViewModel.class);
         // Set up view binding
         binding = ActivityBasicSummaryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -80,6 +86,10 @@ public class BasicSummaryActivity extends AppCompatActivity {
 
     public LoginViewModel getLoginViewModel() {
         return loginViewModel;
+    }
+
+    public BudgetViewModel getBudgetViewModel() {  // Method to access the BudgetViewModel
+        return budgetViewModel;
     }
 
     // Adjust the system insets (status and navigation bars)
