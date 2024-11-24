@@ -1,11 +1,15 @@
 package com.eldroidfri730.extr.ui.home;
+import com.bumptech.glide.Glide;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +24,34 @@ import com.eldroidfri730.extr.ui.exp_and_cat.CategoryFragment;
 import com.eldroidfri730.extr.ui.exp_and_cat.ExpenseFragment;
 import com.eldroidfri730.extr.utils.IntentUtil;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomeFragment extends Fragment {
 
     private LinearLayout budgetOption, expenseOption, categoryOption;
     private TextSwitcher textSwitcher;
     private String[] texts = {"This week", "Last week", "Next week"};
     private int currentIndex = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+
+        String profileImageUrl = sharedPreferences.getString("profileImage", null);
+
+        CircleImageView profileImageView = rootView.findViewById(R.id.userprofileimageholder);
+
+        if (profileImageUrl != null) {
+            Glide.with(this)
+                    .load(profileImageUrl)
+                    .placeholder(R.drawable.budgetbgimg)
+                    .error(R.drawable.budgetbgimg)
+                    .into(profileImageView);
+        }
 
         budgetOption = rootView.findViewById(R.id.opt_budget);
         expenseOption = rootView.findViewById(R.id.opt_expense);

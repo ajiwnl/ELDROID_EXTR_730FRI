@@ -121,5 +121,15 @@ please verify on your email.</string>
     <string name="frag_exp_exmp_amount">0.00</string>
     <string name="frag_exp_exmp_date">1/1/2024</string>
 
-
+    <string name="username_too_short">Username Too Short</string>
+    <string name="username_already_exists">Username Already Exists</string>
+    <string name="update_success">Successfully Updated User Details</string>
+    <string name="user_not_found">User Was Not Found</string>
+    <string name="update_failed">Failed To Update User Details</string>
+    <string name="update_network_error">A Network Error Occurred While Updating</string>
+    <string name="check_network_error">Please Check Your Internet Connection</string>
+    <string name="details_not_empty">"Please Enter Your Details To Update"</string>
+    <string name="password_not_equal">Password and Confirm Password Is Incorrect</string>
+    <string name="password_incorrect">Incorrect Old Password</string>
+    <string name="image_upload_error">Profile Image Failed To Upload</string>
 </resources>
