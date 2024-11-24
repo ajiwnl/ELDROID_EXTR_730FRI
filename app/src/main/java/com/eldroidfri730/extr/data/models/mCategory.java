@@ -1,61 +1,19 @@
 package com.eldroidfri730.extr.data.models;
 
 public class mCategory {
-    private String id;
-    private String icon;
-    private String name;
-    private String desc;
+    private String userId;        // Should match "userId" in JSON
+    private String categoryTitle; // Should match "categoryTitle" in JSON
 
-    public mCategory(String icon, String name, String desc) {
-        this.icon = icon;
-        this.name = name;
-        this.desc = desc;
+    // Constructor
+    public mCategory(String userId, String categoryTitle) {
+        this.userId = userId;
+        this.categoryTitle = categoryTitle;
     }
 
-    public mCategory(String name, String desc) {
-        this.name = name;
-        this.desc = desc;
-    }
+    // Getters and Setters
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
 
-    public mCategory(String name) {
-        this.name = name;
-    }
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
+    public String getCategoryTitle() { return categoryTitle; }
+    public void setCategoryTitle(String categoryTitle) { this.categoryTitle = categoryTitle; }
 }

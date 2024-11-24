@@ -1,11 +1,22 @@
 package com.eldroidfri730.extr.data;
 
+import com.eldroidfri730.extr.data.models.mCategory;
 import com.eldroidfri730.extr.data.models.mUser;
 import com.eldroidfri730.extr.data.response.LoginResponse;
 
+import java.util.List;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -17,4 +28,28 @@ public interface ApiService {
 
     @POST("password/forgot")
     Call<mUser> forgotPassword(@Body mUser user);
+
+    @POST("addCategory")
+    Call<mCategory> addCategory(@Body mCategory category);
+
+    @POST("userCategories")
+    Call<List<mCategory>> getCategoriesByUserId(@Query("userId") String userId);
+
+    @FormUrlEncoded
+    @PATCH("updateCategory/{categoryTitle}")
+    Call<mCategory> patchCategory(
+            @Path("categoryTitle") String categoryTitle,
+            @Field("userId") String userId,
+            @Field("categoryTitle") String newCategoryTitle
+
+    );
+
+    @DELETE("deleteCategory/{categoryTitle}")
+    Call<mCategory> deleteCategory(
+            @Path("categoryTitle") String categoryTitle,
+            @Query("userId") String userId
+    );
+
+
+
 }

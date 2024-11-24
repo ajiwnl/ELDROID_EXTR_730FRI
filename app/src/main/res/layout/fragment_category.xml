@@ -89,37 +89,17 @@
                     android:id="@+id/CategoryNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
+                    android:singleLine="true"
                     android:maxLength="30"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/layout_roundcornersnotfilled"
-                    android:hint="Food Expense"
+                    android:hint="@string/cat_hint"
                     android:textColorHint="@color/grey"
                     android:padding="12dp"
                     android:textSize="12sp" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:text="@string/FragCatLabelCatDesc"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/CategoryDescEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="2"
-                    android:maxLength="200"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/layout_roundcornersnotfilled"
-                    android:hint="Food Expense"
-                    android:textColorHint="@color/grey"
-                    android:padding="12dp"
-                    android:textSize="12sp" />
 
 
                 <Button

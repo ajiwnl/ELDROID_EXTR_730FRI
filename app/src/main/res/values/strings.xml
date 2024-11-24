@@ -87,5 +87,38 @@ please verify on your email.</string>
     <string name="not_verified">Please verify your email first to login!</string>
     <string name="log_fail">Login failed. Please try again.</string>
 
+    <!-- Profile values -->
+    <string name="old_passhint">Old Password</string>
+    <string name="new_passhint">New Password</string>
+    <string name="confirm_passhint">Confirm Password</string>
+
+    <!-- Category values -->
+    <string name="category_add">Category added successfully!</string>
+    <string name="category_edit">Edit Category</string>
+    <string name="category_dupe">Category already exists.</string>
+    <string name="req_field">This field is required.</string>
+    <string name="user_out">User not logged-in!</string>
+    <string name="category_fail">Failed to add category. Please try again!</string>
+    <string name="cat_edit_success">Category edited successfully!</string>
+    <string name="cat_fail_success">Failed to edit category. Please try again!</string>
+    <string name="cat_not_found">Category not found.</string>
+    <string name="cat_add_neterror">Failed to add category due to network error.</string>
+    <string name="cat_fetch_neterror">Failed to fetch categories due to network error or exception.</string>
+    <string name="cat_upt_neterror">Failed to update category due to network error.</string>
+    <string name="cat_fetchdupe_neterror">Failed to fetch categories to check for duplicates.</string>
+    <string name="cat_checkdupe_neterror">Failed to check for duplicate category titles due to network error.</string>
+    <string name="save_txt">SAVE</string>
+    <string name="delete_txt">DELETE</string>
+    <string name="cat_title_short">Category title must be at least 3 characters long.</string>
+    <string name="category_deleted_success">Category deleted successfully.</string>
+    <string name="category_not_found">Category not found.</string>
+    <string name="category_delete_fail">Failed to delete category.</string>
+    <string name="category_delete_neterror">Network error occurred while deleting the category.</string>
+    <string name="cat_title_missing">Category title is missing.</string>
+    <string name="cat_hint">Category Name</string>
+
+
+
+
 
 </resources>
