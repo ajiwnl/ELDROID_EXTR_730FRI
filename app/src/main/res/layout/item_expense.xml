@@ -9,30 +9,50 @@
     <TextView
         android:id="@+id/expense_name"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Expense Name"
+        android:text="@string/item_exp_ph_name"
         android:textSize="13sp"
-        android:textColor="@android:color/black"/>
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/expense_cost"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Expense Cost"
+        android:text="@string/item_exp_ph_amount"
         android:textSize="13sp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@android:color/black"
         android:gravity="center"/>
 
     <TextView
         android:id="@+id/date_purchased"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Date Purchased"
+        android:text="@string/item_exp_ph_date"
         android:textSize="13sp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@android:color/black"
-        android:gravity="end"/>
+        android:gravity="center"/>
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_edit"/>
+    <ImageButton
+        android:id="@+id/delete_button"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_delete"/>
 
 </LinearLayout>
