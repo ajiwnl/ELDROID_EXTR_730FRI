@@ -8,5 +8,6 @@
     <color name="grey">#DADADA</color>
     <color name="red">#FF0000</color>
     <color name="itembackgroundcolor">#15192B</color>
+    <color name="green">#04AA6D</color>
 
 </resources>

@@ -39,24 +39,23 @@ public class CategoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_category, container, false);
 
-        // Views
+        // Views initialization
         backButton = rootView.findViewById(R.id.categorybackbutton);
         submitButton = rootView.findViewById(R.id.categoriessubmitbutton);
         categoryRecyclerView = rootView.findViewById(R.id.CategoryRecyclerView);
         categoryNameEditText = rootView.findViewById(R.id.CategoryNameEditText);
 
-        // ViewModels
+        // Initialize CategoryAdapter and set it to the RecyclerView
         categoryViewModel = ((BasicSummaryActivity) getActivity()).getCategoryViewModel();
+        categoryAdapter = new CategoryAdapter(categoryViewModel, new ArrayList<>(), getContext());  // Pass CategoryViewModel to the adapter
+        categoryRecyclerView.setAdapter(categoryAdapter);
+
+        // ViewModels
         LoginViewModel loginViewModel = ((BasicSummaryActivity) getActivity()).getLoginViewModel(); // Retrieve LoginViewModel
         String userId = loginViewModel.getUserId(); // Retrieve userId
 
-
         // RecyclerView setup
-        categoryRecyclerView = rootView.findViewById(R.id.CategoryRecyclerView);
         categoryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2)); // 2 items per row
-        categoryAdapter = new CategoryAdapter(new ArrayList<>());
-        categoryRecyclerView.setAdapter(categoryAdapter);
-
 
         // Observe categories LiveData and update the RecyclerView
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
@@ -79,7 +78,7 @@ public class CategoryFragment extends Fragment {
         if (userId != null && !isCategoriesFetched) {
             categoryViewModel.fetchCategoriesByUserId(userId);
             isCategoriesFetched = true;  // Mark categories as fetched
-        }else {
+        } else {
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
         }
 

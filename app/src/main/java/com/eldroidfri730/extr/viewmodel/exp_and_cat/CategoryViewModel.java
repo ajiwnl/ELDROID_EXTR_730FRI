@@ -50,8 +50,13 @@ public class CategoryViewModel extends ViewModel {
     }
 
     public void addCategory(String userId, String categoryTitle) {
-        mCategory newCategory = new mCategory(userId, categoryTitle);
 
+        if (categoryTitle == null || categoryTitle.length() < 3) {
+            categoryErrorMessage.postValue(application.getString(R.string.cat_title_short));
+            return;
+        }
+
+        mCategory newCategory = new mCategory(userId, categoryTitle);
         Call<mCategory> call = apiService.addCategory(newCategory);
 
         call.enqueue(new Callback<mCategory>() {
@@ -68,7 +73,7 @@ public class CategoryViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<mCategory> call, Throwable t) {
-                categoryErrorMessage.postValue("Failed to add category due to network error.");
+                categoryErrorMessage.postValue(application.getString(R.string.cat_add_neterror));
             }
         });
     }
@@ -104,7 +109,97 @@ public class CategoryViewModel extends ViewModel {
             @Override
             public void onFailure(Call<List<mCategory>> call, Throwable t) {
                 Log.e("CategoryViewModel", "Failed to fetch categories due to network error or exception.", t);
+                categoryErrorMessage.postValue(application.getString(R.string.cat_fetch_neterror));
+
             }
         });
     }
+
+    public void updateCategoryTitle(String oldCategoryTitle, String newCategoryTitle, String userId) {
+        if (newCategoryTitle == null || newCategoryTitle.length() < 3) {
+            categoryErrorMessage.postValue(application.getString(R.string.cat_title_short));
+            return;
+        }
+        Call<List<mCategory>> checkCategoryCall = apiService.getCategoriesByUserId(userId);
+        checkCategoryCall.enqueue(new Callback<List<mCategory>>() {
+            @Override
+            public void onResponse(Call<List<mCategory>> call, Response<List<mCategory>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Check if the new category title already exists
+                    for (mCategory category : response.body()) {
+                        if (category.getCategoryTitle().equals(newCategoryTitle)) {
+                            categoryErrorMessage.postValue(application.getString(R.string.category_dupe));
+                            return;
+                        }
+                    }
+
+                    Call<mCategory> updateCall = apiService.patchCategory(oldCategoryTitle, userId, newCategoryTitle);
+                    updateCall.enqueue(new Callback<mCategory>() {
+                        @Override
+                        public void onResponse(Call<mCategory> call, Response<mCategory> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                // Successfully updated the category
+                                categorySuccessMessage.postValue(application.getString(R.string.cat_edit_success));
+                                fetchCategoriesByUserId(userId);
+                            } else {
+                                // Handle the 404 response (Category not found)
+                                if (response.code() == 404) {
+                                    categoryErrorMessage.postValue(application.getString(R.string.cat_not_found));
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<mCategory> call, Throwable t) {
+                            categoryErrorMessage.postValue(application.getString(R.string.cat_upt_neterror));
+                        }
+                    });
+
+                } else {
+                    Log.e("CategoryViewModel", "Failed to fetch categories. Response code: " + response.code());
+                    categoryErrorMessage.postValue(application.getString(R.string.cat_fetchdupe_neterror));
+                }
+            }
+            @Override
+            public void onFailure(Call<List<mCategory>> call, Throwable t) {
+                categoryErrorMessage.postValue(application.getString(R.string.cat_checkdupe_neterror));
+            }
+        });
+    }
+
+    public void deleteCategory(String userId, String categoryTitle) {
+        if (categoryTitle == null || categoryTitle.isEmpty()) {
+            categoryErrorMessage.postValue(application.getString(R.string.cat_title_missing));
+            return;
+        }
+
+        Call<mCategory> call = apiService.deleteCategory(categoryTitle, userId);
+
+        call.enqueue(new Callback<mCategory>() {
+            @Override
+            public void onResponse(Call<mCategory> call, Response<mCategory> response) {
+                if (response.isSuccessful()) {
+                    // Successfully deleted category
+                    categorySuccessMessage.postValue(application.getString(R.string.category_deleted_success));
+                    fetchCategoriesByUserId(userId); // Refresh the categories list
+                } else if (response.code() == 404) {
+                    // Category not found
+                    categoryErrorMessage.postValue(application.getString(R.string.category_not_found));
+                } else {
+                    // Other failure
+                    categoryErrorMessage.postValue(application.getString(R.string.category_delete_fail));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<mCategory> call, Throwable t) {
+                // Network error or other failure
+                categoryErrorMessage.postValue(application.getString(R.string.category_delete_neterror));
+            }
+        });
+    }
+
+
+
+
 }
