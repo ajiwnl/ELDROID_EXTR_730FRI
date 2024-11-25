@@ -2,85 +2,71 @@ package com.eldroidfri730.extr.data.models;
 
 import androidx.annotation.Nullable;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class mExpense {
-    @SerializedName("expenseName")
-    private String name;
-
-    @SerializedName("expenseDescription")
-    private String desc;
-
-    @SerializedName("amount")
-    private float amount;
-
-    @SerializedName("date")
-    private Date date;
-
-    @SerializedName("userId")
     private String userId;
+    private String expenseName;
+    private String categoryTitle;
+    private String expenseDescription;
+    private float amount;
+    private Date date;
 
     // Default constructor
     public mExpense() {
     }
 
     // Constructor with all fields
-    public mExpense(String name, String category, float amount, Date date, @Nullable String desc, String userId) {
-        this.name = name;
-        //this.category = category;
+    public mExpense(String expenseName, String categoryTitle, float amount, Date date, @Nullable String expenseDescription, String userId) {
+        this.expenseName = expenseName;
+        this.categoryTitle = categoryTitle;
         this.amount = amount;
         this.date = date;
-        this.desc = desc;
+        this.expenseDescription = expenseDescription;
         this.userId = userId;
     }
 
-    // Add the setter for userId
+    // Getter and Setter methods
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    // Getter for userId
-    public String getUserId() {
-        return userId;
+    public String getCategoryTitle() {
+        return categoryTitle;
     }
 
-    public String getName() {
-        return name;
+    public void setCategoryTitle(String categoryTitle) {
+        this.categoryTitle = categoryTitle;
     }
-
-    /*public String getCategory() {
-        return category;
-    }*/
 
     public float getAmount() {
         return amount;
     }
 
-    public String getDesc() {
-        return desc != null ? desc : "";  // Return empty string if desc is null
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public String getExpenseDescription() {
+        return expenseDescription != null ? expenseDescription : ""; // Return empty string if desc is null
+    }
+
+    public void setExpenseDescription(String expenseDescription) {
+        this.expenseDescription = expenseDescription;
     }
 
     public Date getDate() {
         return date;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    // Method to get formatted date
     public String getFormattedDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(date);
-    }
-
-    // Optional: A method to display a readable version of the expense
-    public String toString() {
-        return "Expense{" +
-                "name='" + name + '\'' +
-               /* ", category='" + category*/ + '\'' +
-                ", amount=" + amount +
-                ", date=" + getFormattedDate() +
-                ", desc='" + getDesc() + '\'' +
-                ", userId='" + userId + '\'' +
-                '}';
     }
 }

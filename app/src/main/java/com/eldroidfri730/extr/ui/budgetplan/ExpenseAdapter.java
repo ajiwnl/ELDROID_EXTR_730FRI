@@ -31,10 +31,10 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     @Override
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
         mExpense expense = expenseList.get(position);
-        holder.expenseName.setText(expense.getName()); // Corrected getter
-        holder.expenseCost.setText(String.valueOf(expense.getAmount())); // Corrected getter and type conversion
-        holder.datePurchased.setText(expense.getFormattedDate()); // Corrected getter for the formatted date
+        holder.expenseCost.setText(String.valueOf(expense.getAmount()));
+        holder.datePurchased.setText(expense.getFormattedDate());
     }
+
 
     @Override
     public int getItemCount() {
