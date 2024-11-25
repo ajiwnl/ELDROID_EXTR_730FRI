@@ -32,7 +32,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
         mExpense expense = expenseList.get(position);
         holder.expenseCost.setText(String.valueOf(expense.getAmount()));
-        holder.datePurchased.setText(expense.getFormattedDate());
+        //holder.datePurchased.setText(expense.getFormattedDate());
     }
 
 

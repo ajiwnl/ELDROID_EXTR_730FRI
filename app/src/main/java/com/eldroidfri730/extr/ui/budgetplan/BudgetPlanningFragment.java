@@ -1,6 +1,7 @@
 package com.eldroidfri730.extr.ui.budgetplan;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -60,9 +61,9 @@ public class BudgetPlanningFragment extends Fragment {
     private BudgetViewModel budgetViewModel;
     private CategoryViewModel categoryViewModel;
     private String userId;
-    private TextView totalBudgetView, userbudgetdisplay, userexpensedisplay;
-    private boolean isCategoriesFetched = false;
-    private boolean isBudgetFetched = false;
+    private TextView totalBudgetView, userbudgetdisplay, userexpensedisplay, removableerrormessage;
+    private boolean isCategoriesFetched = false, isBudgetFetched = false, isExpenseFetched = false;
+
 
 
 
@@ -92,9 +93,11 @@ public class BudgetPlanningFragment extends Fragment {
 
         budgetViewModel = ((BasicSummaryActivity) getActivity()).getBudgetViewModel();
 
-        if (userId != null && !isCategoriesFetched && !isBudgetFetched) {
+        if (userId != null && !isCategoriesFetched && !isBudgetFetched && !isExpenseFetched) {
             categoryViewModel.fetchCategoriesByUserId(userId);
             budgetViewModel.fetchBudgetByUserId(userId);
+            expenseViewModel.fetchExpensesByUserId(userId);
+
             isCategoriesFetched = true;
         } else {
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
@@ -136,8 +139,11 @@ public class BudgetPlanningFragment extends Fragment {
         totalBudgetView = rootView.findViewById(R.id.userbudgettotaldisplay);
         userbudgetdisplay = rootView.findViewById(R.id.userbudgetdisplay);
         userexpensedisplay = rootView.findViewById(R.id.userexpensedisplay);
+        removableerrormessage = rootView.findViewById(R.id.removableerrormessage);
 
         rootView.findViewById(R.id.add_budget).setOnClickListener(v -> showAddBudgetDialog());
+
+        rootView.findViewById(R.id.edit_budget).setOnClickListener(v -> showUpdateBudgetDialog());
 
         return rootView;
     }
@@ -187,12 +193,81 @@ public class BudgetPlanningFragment extends Fragment {
                 .show();
     }
 
+    private void showUpdateBudgetDialog() {
+        // Inflate the dialog layout
+        View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_edit_budget, null);
+
+        Spinner categorySpinner = dialogView.findViewById(R.id.category_spinner);
+        EditText budgetInput = dialogView.findViewById(R.id.budget_input);
+        TextView noCategory = dialogView.findViewById(R.id.add_category);
+
+        // Observe and populate Spinner with categories
+        categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
+            List<String> categoryList = new ArrayList<>();
+            if (categories != null && !categories.isEmpty()) {
+                for (mCategory category : categories) {
+                    categoryList.add(category.getCategoryTitle());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                        android.R.layout.simple_spinner_item, categoryList);
+                categorySpinner.setAdapter(adapter);
+                categorySpinner.setVisibility(View.VISIBLE);
+                noCategory.setVisibility(View.GONE);
+            } else {
+                categorySpinner.setVisibility(View.GONE);
+                noCategory.setVisibility(View.VISIBLE);
+            }
+        });
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Edit Budget")
+                .setView(dialogView)
+                .setPositiveButton("Edit", (dialog, which) -> {
+                    String selectedCategory = categorySpinner.getSelectedItem().toString();
+                    String budgetStr = budgetInput.getText().toString().trim();
+
+                    if (budgetStr.isEmpty()) {
+                        Toast.makeText(requireContext(), "Please enter a budget", Toast.LENGTH_SHORT).show();
+                    } else {
+                        double addedBudget = Double.parseDouble(budgetStr);
+                        updateBudget(selectedCategory, addedBudget);
+                    }
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
     private void addBudgetToCategory(String category, double budget) {
         mBudget newBudget = new mBudget(userId, category, budget);
 
         budgetViewModel.addBudget(newBudget);
     }
 
+    private void updateBudget(String category, double addedBudget) {
+        // Fetch the current budget for the category
+        budgetViewModel.getBudgets().observe(getViewLifecycleOwner(), budgets -> {
+            if (budgets != null && !budgets.isEmpty()) {
+                for (mBudget budget : budgets) {
+                    if (budget.getCategoryTitle().equals(category)) {
+                        // Increment the existing budget
+                        double newBudget = budget.getBudget() + addedBudget;
+
+                        // Create the updated mBudget object
+                        mBudget updatedBudget = new mBudget(budget.getUserId(), category, newBudget);
+
+                        // Call ViewModel to update the budget
+                        budgetViewModel.updateBudget(updatedBudget);
+
+                        // Optionally, show a success message
+                        Toast.makeText(requireContext(), "Budget updated successfully!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            }
+            // If category not found, show an error
+            Toast.makeText(requireContext(), "Category not found!", Toast.LENGTH_SHORT).show();
+        });
+    }
 
     private void setupTextSwitcher() {
         textSwitcher.setFactory(() -> {
@@ -271,8 +346,19 @@ public class BudgetPlanningFragment extends Fragment {
             double expenseTotal
     ) {
         textSwitcher.setText(categoryTitle);
-        userbudgetdisplay.setText(String.format(Locale.getDefault(), "%.2f", budget));
-        userexpensedisplay.setText(String.format(Locale.getDefault(), "%.2f", expenseTotal));
+        userbudgetdisplay.setText(String.format(Locale.getDefault(), "Php " + "%.2f", budget));
+        userexpensedisplay.setText(String.format(Locale.getDefault(), "Php " + "%.2f", expenseTotal));
+
+        // Compare expense with budget and set text color
+        if (expenseTotal > budget) {
+            userbudgetdisplay.setTextColor(Color.RED); // Red color
+            userexpensedisplay.setTextColor(Color.RED); // Red color
+            removableerrormessage.setVisibility(View.VISIBLE);
+        } else {
+            userbudgetdisplay.setTextColor(Color.WHITE); // White color
+            userexpensedisplay.setTextColor(Color.WHITE); // White color
+            removableerrormessage.setVisibility(View.GONE);
+        }
     }
 
     private void observeExpenseData() {
