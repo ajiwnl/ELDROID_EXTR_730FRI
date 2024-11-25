@@ -20,12 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.ui.auth.LoginActivity;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
+import com.eldroidfri730.extr.utils.IntentUtil;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 import com.eldroidfri730.extr.viewmodel.auth.RegisterViewModel;
 import com.eldroidfri730.extr.viewmodel.auth.RegisterViewModelFactory;
@@ -50,6 +52,8 @@ public class ProfileFragment extends Fragment {
     private EditText profileEmail;
     private EditText profileUsername;
 
+    private ImageButton backButton;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -69,7 +73,12 @@ public class ProfileFragment extends Fragment {
         profileConfirmPassword = view.findViewById(R.id.profileconfirmpassword);
         profileImageView = view.findViewById(R.id.profileimage);
         profileUsername = view.findViewById(R.id.profileusername);
+
+        backButton = view.findViewById(R.id.profilebackbutton);
+
         Button submitButton = view.findViewById(R.id.profilesubmitbutton);
+
+        backButton.setOnClickListener(v -> IntentUtil.popBackStack(requireActivity()));
 
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
 
