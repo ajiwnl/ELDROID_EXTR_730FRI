@@ -25,6 +25,7 @@ import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mBudget;
 import com.eldroidfri730.extr.data.models.mCategory;
+import com.eldroidfri730.extr.data.models.mExpense;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.utils.RetrofitClient;
 import com.eldroidfri730.extr.viewmodel.budget.BudgetViewModel;
@@ -202,44 +203,76 @@ public class BudgetPlanningFragment extends Fragment {
             return textView;
         });
 
-        // Observe categories and budgets
+        // Observe categories, budgets, and expenses
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
             budgetViewModel.getBudgets().observe(getViewLifecycleOwner(), budgets -> {
-                if (categories != null && !categories.isEmpty() && budgets != null) {
-                    // Map budgets to categories
-                    Map<String, Double> categoryBudgetMap = new HashMap<>();
-                    for (mBudget budget : budgets) {
-                        categoryBudgetMap.put(budget.getCategoryTitle(), budget.getBudget());
-                    }
+                expenseViewModel.getExpenses().observe(getViewLifecycleOwner(), expenses -> {
+                    if (categories != null && !categories.isEmpty() && budgets != null && expenses != null) {
+                        // Map budgets to categories
+                        Map<String, Double> categoryBudgetMap = new HashMap<>();
+                        for (mBudget budget : budgets) {
+                            categoryBudgetMap.put(budget.getCategoryTitle(), budget.getBudget());
+                        }
 
-                    // Populate category and budget lists
-                    List<String> categoryList = new ArrayList<>();
-                    List<Double> budgetList = new ArrayList<>();
-                    for (mCategory category : categories) {
-                        categoryList.add(category.getCategoryTitle());
-                        // Fetch the budget for the current category, defaulting to 0.0
-                        budgetList.add(categoryBudgetMap.getOrDefault(category.getCategoryTitle(), 0.0));
-                    }
+                        // Accumulate expenses by category
+                        Map<String, Double> categoryExpenseTotals = new HashMap<>();
+                        for (mExpense expense : expenses) {
+                            String categoryTitle = expense.getCategoryTitle();
+                            double amount = expense.getAmount(); // Assuming getAmount() exists
+                            categoryExpenseTotals.put(
+                                    categoryTitle,
+                                    categoryExpenseTotals.getOrDefault(categoryTitle, 0.0) + amount
+                            );
+                        }
 
-                    // Display the first category and budget
-                    if (!categoryList.isEmpty()) {
-                        textSwitcher.setText(categoryList.get(currentIndex));
-                        userbudgetdisplay.setText(String.format(Locale.getDefault(), "%.2f", budgetList.get(currentIndex)));
+                        // Populate category and budget lists
+                        List<String> categoryList = new ArrayList<>();
+                        List<Double> budgetList = new ArrayList<>();
+                        List<Double> expenseTotalsList = new ArrayList<>();
+                        for (mCategory category : categories) {
+                            String categoryTitle = category.getCategoryTitle();
+                            categoryList.add(categoryTitle);
+                            budgetList.add(categoryBudgetMap.getOrDefault(categoryTitle, 0.0));
+                            expenseTotalsList.add(categoryExpenseTotals.getOrDefault(categoryTitle, 0.0));
+                        }
 
-                        textSwitcher.setOnClickListener(v -> {
-                            // Cycle through the categories
-                            currentIndex = (currentIndex + 1) % categoryList.size();
-                            textSwitcher.setText(categoryList.get(currentIndex));
-                            userbudgetdisplay.setText(String.format(Locale.getDefault(), "%.2f", budgetList.get(currentIndex)));
-                            filterExpensesByCategory(categoryList.get(currentIndex));
-                        });
+                        // Display the first category, budget, and accumulated expenses
+                        if (!categoryList.isEmpty()) {
+                            updateUIForCategory(
+                                    categoryList.get(currentIndex),
+                                    budgetList.get(currentIndex),
+                                    expenseTotalsList.get(currentIndex)
+                            );
+
+                            textSwitcher.setOnClickListener(v -> {
+                                // Cycle through the categories
+                                currentIndex = (currentIndex + 1) % categoryList.size();
+                                updateUIForCategory(
+                                        categoryList.get(currentIndex),
+                                        budgetList.get(currentIndex),
+                                        expenseTotalsList.get(currentIndex)
+                                );
+                            });
+                        }
+                    } else {
+                        textSwitcher.setText("No Categories Available");
+                        userbudgetdisplay.setText("0.00");
+                        userexpensedisplay.setText("0.00");
                     }
-                } else {
-                    textSwitcher.setText("No Categories Available");
-                    userbudgetdisplay.setText("0.00");
-                }
+                });
             });
         });
+    }
+
+    // Helper method to update UI for the selected category
+    private void updateUIForCategory(
+            String categoryTitle,
+            double budget,
+            double expenseTotal
+    ) {
+        textSwitcher.setText(categoryTitle);
+        userbudgetdisplay.setText(String.format(Locale.getDefault(), "%.2f", budget));
+        userexpensedisplay.setText(String.format(Locale.getDefault(), "%.2f", expenseTotal));
     }
 
     private void observeExpenseData() {
