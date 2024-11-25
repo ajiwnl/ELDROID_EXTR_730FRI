@@ -25,6 +25,7 @@ import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mBudget;
 import com.eldroidfri730.extr.data.models.mCategory;
+import com.eldroidfri730.extr.data.models.mExpense;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.utils.RetrofitClient;
 import com.eldroidfri730.extr.viewmodel.budget.BudgetViewModel;
@@ -35,8 +36,13 @@ import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModelFactory;
 
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,6 +60,7 @@ public class BudgetPlanningFragment extends Fragment {
     private BudgetViewModel budgetViewModel;
     private CategoryViewModel categoryViewModel;
     private String userId;
+    private TextView totalBudgetView, userbudgetdisplay, userexpensedisplay;
     private boolean isCategoriesFetched = false;
     private boolean isBudgetFetched = false;
 
@@ -93,6 +100,26 @@ public class BudgetPlanningFragment extends Fragment {
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
         }
 
+        budgetViewModel.getTotalBudget().observe(getViewLifecycleOwner(), total -> {
+            if (total != null) {
+                totalBudgetView.setText(String.format(Locale.getDefault(), "%.2f", total));
+            } else {
+                totalBudgetView.setText("0.00");
+            }
+        });
+
+        budgetViewModel.getBudgetSuccessMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        budgetViewModel.getBudgetErrorMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Observe expense data
         observeExpenseData();
 
@@ -106,8 +133,11 @@ public class BudgetPlanningFragment extends Fragment {
             requireActivity().getSupportFragmentManager().popBackStack();
         });
 
-        rootView.findViewById(R.id.add_budget).setOnClickListener(v -> showAddBudgetDialog());
+        totalBudgetView = rootView.findViewById(R.id.userbudgettotaldisplay);
+        userbudgetdisplay = rootView.findViewById(R.id.userbudgetdisplay);
+        userexpensedisplay = rootView.findViewById(R.id.userexpensedisplay);
 
+        rootView.findViewById(R.id.add_budget).setOnClickListener(v -> showAddBudgetDialog());
 
         return rootView;
     }
@@ -161,7 +191,6 @@ public class BudgetPlanningFragment extends Fragment {
         mBudget newBudget = new mBudget(userId, category, budget);
 
         budgetViewModel.addBudget(newBudget);
-        Toast.makeText(requireContext(), "Budget added successfully", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -174,29 +203,76 @@ public class BudgetPlanningFragment extends Fragment {
             return textView;
         });
 
-        // Observe categories from ViewModel
+        // Observe categories, budgets, and expenses
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
-            if (categories != null && !categories.isEmpty()) {
-                categoryList.clear();
-                for (mCategory category : categories) {
-                    categoryList.add(category.getCategoryTitle()); // Assuming category has getCategoryTitle() method
-                }
+            budgetViewModel.getBudgets().observe(getViewLifecycleOwner(), budgets -> {
+                expenseViewModel.getExpenses().observe(getViewLifecycleOwner(), expenses -> {
+                    if (categories != null && !categories.isEmpty() && budgets != null && expenses != null) {
+                        // Map budgets to categories
+                        Map<String, Double> categoryBudgetMap = new HashMap<>();
+                        for (mBudget budget : budgets) {
+                            categoryBudgetMap.put(budget.getCategoryTitle(), budget.getBudget());
+                        }
 
-                // Update the TextSwitcher with the first category
-                if (!categoryList.isEmpty()) {
-                    textSwitcher.setText(categoryList.get(currentIndex));
-                }
+                        // Accumulate expenses by category
+                        Map<String, Double> categoryExpenseTotals = new HashMap<>();
+                        for (mExpense expense : expenses) {
+                            String categoryTitle = expense.getCategoryTitle();
+                            double amount = expense.getAmount(); // Assuming getAmount() exists
+                            categoryExpenseTotals.put(
+                                    categoryTitle,
+                                    categoryExpenseTotals.getOrDefault(categoryTitle, 0.0) + amount
+                            );
+                        }
 
-                textSwitcher.setOnClickListener(v -> {
-                    // Update index to cycle through the categories
-                    currentIndex = (currentIndex + 1) % categoryList.size();
-                    textSwitcher.setText(categoryList.get(currentIndex));
-                    filterExpensesByCategory(categoryList.get(currentIndex));
+                        // Populate category and budget lists
+                        List<String> categoryList = new ArrayList<>();
+                        List<Double> budgetList = new ArrayList<>();
+                        List<Double> expenseTotalsList = new ArrayList<>();
+                        for (mCategory category : categories) {
+                            String categoryTitle = category.getCategoryTitle();
+                            categoryList.add(categoryTitle);
+                            budgetList.add(categoryBudgetMap.getOrDefault(categoryTitle, 0.0));
+                            expenseTotalsList.add(categoryExpenseTotals.getOrDefault(categoryTitle, 0.0));
+                        }
+
+                        // Display the first category, budget, and accumulated expenses
+                        if (!categoryList.isEmpty()) {
+                            updateUIForCategory(
+                                    categoryList.get(currentIndex),
+                                    budgetList.get(currentIndex),
+                                    expenseTotalsList.get(currentIndex)
+                            );
+
+                            textSwitcher.setOnClickListener(v -> {
+                                // Cycle through the categories
+                                currentIndex = (currentIndex + 1) % categoryList.size();
+                                updateUIForCategory(
+                                        categoryList.get(currentIndex),
+                                        budgetList.get(currentIndex),
+                                        expenseTotalsList.get(currentIndex)
+                                );
+                            });
+                        }
+                    } else {
+                        textSwitcher.setText("No Categories Available");
+                        userbudgetdisplay.setText("0.00");
+                        userexpensedisplay.setText("0.00");
+                    }
                 });
-            } else {
-                textSwitcher.setText("No Categories Available");
-            }
+            });
         });
+    }
+
+    // Helper method to update UI for the selected category
+    private void updateUIForCategory(
+            String categoryTitle,
+            double budget,
+            double expenseTotal
+    ) {
+        textSwitcher.setText(categoryTitle);
+        userbudgetdisplay.setText(String.format(Locale.getDefault(), "%.2f", budget));
+        userexpensedisplay.setText(String.format(Locale.getDefault(), "%.2f", expenseTotal));
     }
 
     private void observeExpenseData() {
