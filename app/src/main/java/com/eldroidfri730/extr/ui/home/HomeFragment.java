@@ -70,15 +70,12 @@ public class HomeFragment extends Fragment {
             IntentUtil.replaceFragment(R.id.layout_content, requireActivity(), new CategoryFragment(), "CategoryFragment");
         });
 
-        textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-            @Override
-            public View makeView() {
-                TextView textView = new TextView(getContext());
-                textView.setTextSize(10);
-                textView.setTextColor(getResources().getColor(R.color.black));
-                textView.setText(texts[currentIndex]);
-                return textView;
-            }
+        textSwitcher.setFactory(() -> {
+            TextView textView = new TextView(getContext());
+            textView.setTextSize(10);
+            textView.setTextColor(getResources().getColor(R.color.black));
+            textView.setText(texts[currentIndex]);
+            return textView;
         });
 
         textSwitcher.setOnClickListener(v -> {
@@ -86,8 +83,30 @@ public class HomeFragment extends Fragment {
             textSwitcher.setText(texts[currentIndex]);
         });
 
+        // Add hide/show expense functionality
+        TextView expenseCurrency = rootView.findViewById(R.id.expense_currency);
+        TextView expenseTotal = rootView.findViewById(R.id.expense_total);
+        View hideExpenseButton = rootView.findViewById(R.id.hide_expense);
+
+        final boolean[] isExpenseHidden = {false}; // State to track toggle
+
+        hideExpenseButton.setOnClickListener(v -> {
+            if (isExpenseHidden[0]) {
+                // Show the actual expense
+                expenseCurrency.setVisibility(View.VISIBLE);
+                expenseTotal.setText("200,000.00"); // Replace with actual amount
+                isExpenseHidden[0] = false;
+            } else {
+                // Hide the expense
+                expenseCurrency.setVisibility(View.INVISIBLE);
+                expenseTotal.setText("******");
+                isExpenseHidden[0] = true;
+            }
+        });
+
         return rootView;
     }
+
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
