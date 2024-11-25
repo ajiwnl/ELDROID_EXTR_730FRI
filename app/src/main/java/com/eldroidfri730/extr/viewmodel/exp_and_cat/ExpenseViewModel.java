@@ -132,7 +132,7 @@ public class ExpenseViewModel extends AndroidViewModel {
         Log.d("ExpenseViewModel", "User ID: " + userId);
 
         // Create mExpense object with Date type (don't convert the date here)
-        mExpense expense = new mExpense(name, category, amount, date, desc, userId);
+        mExpense expense = new mExpense(name, category, amount, formattedDate, desc, userId);
 
         // Make the API call
         apiService.addExpense(expense).enqueue(new Callback<mExpense>() {

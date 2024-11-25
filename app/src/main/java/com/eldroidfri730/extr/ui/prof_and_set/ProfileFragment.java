@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.eldroidfri730.extr.R;
+import com.eldroidfri730.extr.ui.auth.LoginActivity;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 import com.eldroidfri730.extr.viewmodel.auth.RegisterViewModel;
@@ -104,6 +105,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        profileViewModel.getUsername().observe(getViewLifecycleOwner(), updatedUsername -> {
+            if (updatedUsername != null) {
+                profileUsername.setText(updatedUsername);
+            }
+        });
+
+
         profileViewModel.getUsernameError().observe(getViewLifecycleOwner(), usernameError -> {
             if (usernameError != null) {
                 profileUsername.setError(usernameError);
@@ -159,19 +167,38 @@ public class ProfileFragment extends Fragment {
                 if (updatedNewPassword.equals(updatedConfirmPassword)) {
                     profileViewModel.updateDetails(userId, null, null, updatedNewPassword, null);
                     clearPasswordFields();
+
                 }
             } else {
                 if(updatedEmail != null && profileViewModel.validateEmail(updatedEmail)) {
                     profileViewModel.updateDetails(userId, null, updatedEmail, null, null);
                     clearTextFields(updatedUsername, updatedEmail);
+                    clearLoginState();
                 }
                 else if(updatedUsername != null && profileViewModel.validateUsername(updatedUsername)) {
                     profileViewModel.updateDetails(userId, updatedUsername, null, null, null);
                     clearTextFields(updatedUsername, updatedEmail);
+                    updateSharedPreferences(updatedUsername, updatedEmail);  // Update SharedPreferences with new username
+
                 }
             }
         });
         // TODO: Add more interaction logic to handle user input and call ViewModel methods
+    }
+
+    private void updateSharedPreferences(String username, String email) {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (username != null) {
+            editor.putString("username", username);  // Update username
+        }
+
+        if (email != null) {
+            editor.putString("email", email);  // Update email
+        }
+        // Commit the changes
+        editor.apply();
     }
 
     private void openImagePicker() {
@@ -212,4 +239,20 @@ public class ProfileFragment extends Fragment {
         if (updatedUsername != null) profileUsername.setText("");
         if (updatedEmail != null) profileEmail.setText("");
     }
+
+    private void clearLoginState() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("is_logged_in", false); // Mark user as logged out
+        editor.remove("user_id"); // Remove user ID to ensure a fresh login
+        editor.apply();
+
+        Toast.makeText(requireContext(), getString(R.string.email_verification_message), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        requireActivity().finish(); // Close the ProfileFragment and return to the LoginActivity
+    }
+
 }

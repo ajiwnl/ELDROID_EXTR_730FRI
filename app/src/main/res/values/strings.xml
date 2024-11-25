@@ -33,6 +33,8 @@ please verify on your email.</string>
     <string name="login_fail">Login failed.</string>
     <string name="email_notif">Email sent!</string>
     <string name="create_acct">Register</string>
+    <string name="email_verification_message">Please check your old email. For the verification of the new email.</string>
+
 
 
     <!-- BudgetPlanningFragment Layout Strings -->
@@ -40,7 +42,7 @@ please verify on your email.</string>
     <string name="budget_set">Budget Set</string>
     <string name="currency_symbol">₱</string>
     <string name="total_budget">21,000.00</string>
-    <string name="for_this_month">For this month</string>
+    <string name="for_this_month">Total Budget Planned</string>
     <string name="overview">Overview</string>
     <string name="day">Day</string>
     <string name="user_budget">Php 700</string>
@@ -129,7 +131,7 @@ please verify on your email.</string>
 
     <string name="username_too_short">Username Too Short</string>
     <string name="username_already_exists">Username Already Exists</string>
-    <string name="update_success">Successfully Updated User Details</string>
+    <string name="update_success">Successfully updated the user details</string>
     <string name="user_not_found">User Was Not Found</string>
     <string name="update_failed">Failed To Update User Details</string>
     <string name="update_network_error">A Network Error Occurred While Updating</string>
