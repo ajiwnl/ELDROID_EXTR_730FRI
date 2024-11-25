@@ -161,6 +161,36 @@ public class ExpenseViewModel extends AndroidViewModel {
         });
     }
 
+    public void fetchExpensesByUserId(String userId) {
+        Log.d("ExpenseViewModel", "Fetching expenses for user ID: " + userId);
+
+        apiService.getExpensesByUserId(userId).enqueue(new Callback<List<mExpense>>() {
+            @Override
+            public void onResponse(Call<List<mExpense>> call, Response<List<mExpense>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<mExpense> fetchedExpenses = response.body();
+                    // Update the MutableLiveData
+                    expenses.setValue(fetchedExpenses);
+
+                    // Log each expense
+                    for (mExpense expense : fetchedExpenses) {
+                        Log.d("ExpenseViewModel", "Fetched Expense: " + expense.toString());
+                    }
+                } else {
+                    Log.e("ExpenseViewModel", "Server error: " + response.code() + ", " + response.message());
+                    Log.e("ExpenseViewModel", "Response Body: " + (response.body() != null ? response.body().toString() : "null"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<mExpense>> call, Throwable t) {
+                Log.e("ExpenseViewModel", "Network error while fetching expenses: " + t.getMessage());
+                Log.e("ExpenseViewModel", "Error: ", t);
+            }
+        });
+    }
+
+
 
     public void showDatePickerDialog(Fragment fragment) {
         final Calendar calendar = Calendar.getInstance();
