@@ -107,9 +107,11 @@ public class ExpenseFragment extends Fragment {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                 Date date = sdf.parse(dateStr);
 
-                // Call ViewModel's addExpense directly with parameters
                 Log.d("ExpenseFragment", "User ID: " + userId);  // Log userId
                 expenseViewModel.addExpense(name, category, amount, date, desc, userId);
+
+                clearEditTextField();
+                Toast.makeText(getContext(), "Expense added successfully.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 // Log the exception to find out what went wrong
                 Log.e("ExpenseFragment", "Error in submit button: " + e.getMessage(), e);
@@ -204,6 +206,7 @@ public class ExpenseFragment extends Fragment {
         expenseAmountEditText.setText(null);
         expenseDescEditText.setText(null);
         categorySpinner.setSelection(0);
+        datePurchasedEditText.setText(null);
     }
 
 }
