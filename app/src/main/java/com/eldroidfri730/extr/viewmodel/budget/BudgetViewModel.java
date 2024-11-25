@@ -79,6 +79,32 @@ public class BudgetViewModel extends ViewModel {
         });
     }
 
+    public void updateBudget(mBudget budget) {
+        apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
+        Call<mBudget> call = apiService.patchBudget(
+                budget.getCategoryTitle(),
+                budget.getUserId(),
+                String.valueOf(budget.getBudget())
+        );
+
+        call.enqueue(new Callback<mBudget>() {
+            @Override
+            public void onResponse(Call<mBudget> call, Response<mBudget> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Budget Update", "Budget updated successfully: " + response.body());
+                } else {
+                    Log.e("Budget Update", "Failed to update budget. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<mBudget> call, Throwable t) {
+                Log.e("Budget Update", "API call failed.", t);
+            }
+        });
+    }
+
     public void fetchBudgetByUserId(String userId) {
         Log.d("BudgetViewModel", "Fetching Budget for userId: " + userId);
 
