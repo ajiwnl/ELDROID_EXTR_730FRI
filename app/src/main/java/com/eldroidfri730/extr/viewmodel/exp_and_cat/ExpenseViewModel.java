@@ -42,12 +42,10 @@ public class ExpenseViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> isFormValid = new MutableLiveData<>(false);
 
     private final ApiService apiService;
-    private final LoginViewModel loginViewModel; // Add LoginViewModel reference
 
-    public ExpenseViewModel(Application application, LoginViewModel loginViewModel){
+    public ExpenseViewModel(Application application){
         super(application);
         this.apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        this.loginViewModel = loginViewModel;  // Initialize loginViewModel
     }
 
     //Setter and Update if nullers
@@ -81,9 +79,10 @@ public class ExpenseViewModel extends AndroidViewModel {
     }
 
     public void updateExpenseName(String name) {
-        expenseName.setValue(name);
+        expenseName.setValue(name != null ? name.trim() : ""); // Handle null gracefully
         validateForm();
     }
+
 
     public void updateExpenseAmount(String amount) {
         expenseAmount.setValue(amount);
@@ -118,60 +117,50 @@ public class ExpenseViewModel extends AndroidViewModel {
         updateSelectedDate(null);
     }
 
-    //Crude Section
+    public void addExpense(String name, String category, float amount, Date date, String desc, String userId) {
+        // Convert Date to String in the required format for the API request
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        String formattedDate = sdf.format(date);
 
-    public void createExpenseModel(String name, String amountStr, String dateStr, String category, String desc, Context context, String userId, int requestId) {
-        try {
-            float amount = Float.parseFloat(amountStr);
-            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(dateStr);
+        // Log the expense details before making the API call
+        Log.d("ExpenseViewModel", "Adding expense with the following details:");
+        Log.d("ExpenseViewModel", "Expense Name: " + name);
+        Log.d("ExpenseViewModel", "Category: " + category);
+        Log.d("ExpenseViewModel", "Amount: " + amount);
+        Log.d("ExpenseViewModel", "Date: " + formattedDate);
+        Log.d("ExpenseViewModel", "Description: " + desc);
+        Log.d("ExpenseViewModel", "User ID: " + userId);
 
-            mExpense newExpense = new mExpense(name, category, amount, date, desc, userId);
+        // Create mExpense object with Date type (don't convert the date here)
+        mExpense expense = new mExpense(name, category, amount, date, desc, userId);
 
-            if (requestId == 0) {
-                addExpense(newExpense);
-            } else {
-                Log.e("ExpenseViewModel", "Invalid request ID");
-            }
-        } catch (Exception e) {
-            Toast.makeText(context, "Invalid input data", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-    }
-
-
-    public void addExpense(mExpense expense) {
+        // Make the API call
         apiService.addExpense(expense).enqueue(new Callback<mExpense>() {
             @Override
             public void onResponse(Call<mExpense> call, Response<mExpense> response) {
-                if (response.isSuccessful()) {
+                // Log response details
+                if (response.isSuccessful() && response.body() != null) {
                     Log.d("ExpenseViewModel", "Expense added successfully: " + response.body());
+                    Log.d("ExpenseViewModel", "Response Code: " + response.code());
+                    Log.d("ExpenseViewModel", "Response Message: " + response.message());
                     Toast.makeText(getApplication(), "Expense added successfully!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e("ExpenseViewModel", "Error: " + response.message());
-                    Toast.makeText(getApplication(), "Failed to add expense.", Toast.LENGTH_SHORT).show();
+                    Log.e("ExpenseViewModel", "Server error: " + response.code() + ", " + response.message());
+                    Log.e("ExpenseViewModel", "Response Body: " + (response.body() != null ? response.body().toString() : "null"));
+                    Toast.makeText(getApplication(), "Failed to add expense: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<mExpense> call, Throwable t) {
+                // Log failure details
                 Log.e("ExpenseViewModel", "Network error: " + t.getMessage());
+                Log.e("ExpenseViewModel", "Error: ", t);  // Log the full stack trace
                 Toast.makeText(getApplication(), "Network error. Please try again.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-    public void updateExpense(String userId, mExpense expense) {
-        //Update Request
-        Log.d("ExpenseAction", "Updating expense for user: " + userId + ", Expense: " + expense.getName()+" "+expense.getCategory()+" "+expense.getAmount()+" "+expense.getDesc()+" "+expense.getFormattedDate()+expense.getDesc());
-    }
-
-    public void deleteExpense(String userId, mExpense expense) {
-        //Delete Request
-        Log.d("ExpenseAction", "Deleting expense for user: " + userId + ", Expense " + " " + expense.getName()+" "+expense.getCategory()+" "+expense.getAmount()+" "+expense.getDesc()+" "+expense.getFormattedDate()+" "+expense.getDesc());
-    }
-
-    //Date
 
     public void showDatePickerDialog(Fragment fragment) {
         final Calendar calendar = Calendar.getInstance();
@@ -202,7 +191,7 @@ public class ExpenseViewModel extends AndroidViewModel {
         // Filter the expenses by the given category
         List<mExpense> filteredExpenses = new ArrayList<>();
         for (mExpense expense : allExpenses) {
-            if (expense.getCategory().equalsIgnoreCase(category)) {
+            if (expense.getCategoryTitle().equalsIgnoreCase(category)) {
                 filteredExpenses.add(expense);
             }
         }

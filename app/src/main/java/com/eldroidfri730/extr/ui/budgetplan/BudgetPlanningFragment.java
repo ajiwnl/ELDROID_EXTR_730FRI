@@ -19,6 +19,8 @@ import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModelFactory;
 
+import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
+
 public class BudgetPlanningFragment extends Fragment {
 
     private ImageButton backButton;
@@ -42,7 +44,10 @@ public class BudgetPlanningFragment extends Fragment {
         expenseAdapter = new ExpenseAdapter();
         recyclerView.setAdapter(expenseAdapter);
 
-        // Initialize ViewModel
+        // Initialize LoginViewModel
+        LoginViewModel loginViewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
+
+        // Initialize ExpenseViewModel
         ExpenseViewModelFactory factory = new ExpenseViewModelFactory(requireActivity().getApplication());
         expenseViewModel = new ViewModelProvider(this, factory).get(ExpenseViewModel.class);
 
