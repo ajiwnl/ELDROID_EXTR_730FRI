@@ -34,9 +34,13 @@ A user-friendly mobile application designed to help users effectively monitor an
 
 [EXTR Testcases Documentation](https://docs.google.com/document/d/1DnOizLAk7B-m5pID0SRbnKqakzEq-Cv1-M2_ePGiamw/edit?usp=sharing)
 
+## Documentation v1
+
+[EXTR Documentation](https://docs.google.com/document/d/13_XFvjMy-EvWEGbCuuIFWNnsSVNGCSdF-5YcDfk65iY/edit?usp=sharing)
+
 ## Routes Documentation
 
-[EXTR Documentation](Routes_Documentation.md)
+[EXTR Routes Documentation](Routes_Documentation.md)
 
 ## Programming Languages and Platforms
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white) ![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white) ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -52,4 +56,3 @@ A user-friendly mobile application designed to help users effectively monitor an
 
 ## Tools and Deployment
 ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white) ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
-
