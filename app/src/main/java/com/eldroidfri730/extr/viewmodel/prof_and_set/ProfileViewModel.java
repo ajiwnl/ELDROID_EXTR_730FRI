@@ -70,6 +70,10 @@ public class ProfileViewModel extends ViewModel {
     public LiveData<String> getUsernameError() {
         return usernameError;
     }
+    public LiveData<String> getUsername() {
+        return username; // assuming usernameLiveData is a LiveData holding the username
+    }
+
 
     public LiveData<String> getProfileSuccessMessage() {
         return profileSuccessMessage;
@@ -166,6 +170,10 @@ public class ProfileViewModel extends ViewModel {
         RequestBody usernameBody = newUsername != null ? RequestBody.create(MediaType.parse("text/plain"), newUsername) : null;
         RequestBody emailBody = email != null ? RequestBody.create(MediaType.parse("text/plain"), email) : null;
         RequestBody passwordBody = newPassword != null ? RequestBody.create(MediaType.parse("text/plain"), newPassword) : null;
+
+        if (newUsername != null) {
+            username.setValue(newUsername);  // Update LiveData dynamically
+        }
 
         // Convert File to InputStream
         InputStream profileImageInputStream = null;

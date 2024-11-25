@@ -108,6 +108,7 @@ public class LoginViewModel extends ViewModel {
                                 .apply();
                         isLoggedIn.setValue(true);
                         saveLoginState(true);
+                        loginSuccessMessage.setValue(application.getString(R.string.login_success));
                     } else if (response.code() == 404) {
                         usernameError.setValue(application.getString(R.string.no_user));
                     } else if (response.code() == 401) {
