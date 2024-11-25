@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mBudget;
+import com.eldroidfri730.extr.data.models.mCategory;
 import com.eldroidfri730.extr.utils.RetrofitClient;
 
 import java.util.List;
@@ -23,7 +24,10 @@ public class BudgetViewModel extends ViewModel {
 
     private final MutableLiveData<mBudget> addBudgetResponse;
     private final MutableLiveData<List<mBudget>> budget = new MutableLiveData<List<mBudget>>();
+    private final MutableLiveData<String> budgetSuccessMessage = new MutableLiveData<>();
     private final MutableLiveData<String> budgetErrorMessage = new MutableLiveData<>();
+    private final MutableLiveData<Double> totalBudget = new MutableLiveData<>(0.0);
+
     private ApiService apiService;
     private final Application application;
 
@@ -32,9 +36,22 @@ public class BudgetViewModel extends ViewModel {
         this.apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         addBudgetResponse = new MutableLiveData<>();
     }
+    public LiveData<String> getBudgetSuccessMessage() {
+        return budgetSuccessMessage;
+    }
 
+    public LiveData<String> getBudgetErrorMessage() {
+        return budgetErrorMessage;
+    }
+    public LiveData<List<mBudget>> getBudgets() {
+        return budget;
+    }
     public LiveData<mBudget> getAddBudgetResponse() {
         return addBudgetResponse;
+    }
+
+    public LiveData<Double> getTotalBudget() {
+        return totalBudget;
     }
 
     public void addBudget(mBudget budget) {
@@ -45,9 +62,13 @@ public class BudgetViewModel extends ViewModel {
             @Override
             public void onResponse(Call<mBudget> call, Response<mBudget> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    addBudgetResponse.setValue(response.body()); // Set the response as the budget
-                } else {
-                    addBudgetResponse.setValue(null); // Handle failure
+                    budgetSuccessMessage.postValue(application.getString(R.string.budget_add));
+                }
+                else if (response.code() == 409) {
+                    budgetErrorMessage.postValue(application.getString(R.string.budget_dupe));
+                }
+                else {
+                    budgetErrorMessage.postValue(application.getString(R.string.category_fail));
                 }
             }
 
@@ -68,16 +89,28 @@ public class BudgetViewModel extends ViewModel {
             @Override
             public void onResponse(Call<List<mBudget>> call, Response<List<mBudget>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("CategoryViewModel", "Budgets fetched successfully. Count: " + response.body().size());
-                    budget.postValue(response.body());
+                    Log.d("BudgetViewModel", "Budgets fetched successfully. Count: " + response.body().size());
+                    List<mBudget> budgets = response.body();
+
+                    // Post the budgets to the LiveData
+                    budget.postValue(budgets);
+
+                    // Calculate the total budget
+                    double total = 0.0;
+                    for (mBudget budget : budgets) {
+                        total += budget.getBudget(); // Assuming mBudget has a getAmount() method
+                    }
+
+                    // Update the total budget LiveData
+                    totalBudget.postValue(total);
                 } else {
-                    Log.e("CategoryViewModel", "Failed to fetch budgets. Response code: " + response.code());
+                    Log.e("BudgetViewModel", "Failed to fetch budgets. Response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<mBudget>> call, Throwable t) {
-                Log.e("CategoryViewModel", "Failed to fetch categories due to network error or exception.", t);
+                Log.e("BudgetViewModel", "Failed to fetch budgets due to network error or exception.", t);
                 budgetErrorMessage.postValue(application.getString(R.string.cat_fetch_neterror));
             }
         });
