@@ -22,6 +22,7 @@ import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.ui.budgetplan.BudgetPlanningFragment;
 import com.eldroidfri730.extr.ui.exp_and_cat.CategoryFragment;
 import com.eldroidfri730.extr.ui.exp_and_cat.ExpenseFragment;
+import com.eldroidfri730.extr.ui.prof_and_set.ProfileFragment;
 import com.eldroidfri730.extr.utils.IntentUtil;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -43,7 +44,7 @@ public class HomeFragment extends Fragment {
 
         String profileImageUrl = sharedPreferences.getString("profileImage", null);
 
-        CircleImageView profileImageView = rootView.findViewById(R.id.userprofileimageholder);
+        CircleImageView profileImageView = rootView.findViewById(R.id.user_profile_image_holder);
 
         if (profileImageUrl != null) {
             Glide.with(this)
@@ -52,6 +53,17 @@ public class HomeFragment extends Fragment {
                     .error(R.drawable.budgetbgimg)
                     .into(profileImageView);
         }
+
+        // Set click listener for profile image
+        profileImageView.setOnClickListener(v -> {
+            // Replace the current fragment with ProfileFragment
+            IntentUtil.replaceFragment(
+                    R.id.layout_content, // Container view ID
+                    requireActivity(),
+                    new ProfileFragment(), // Replace with your actual ProfileFragment class
+                    "ProfileFragment" // Tag for backstack
+            );
+        });
 
         budgetOption = rootView.findViewById(R.id.opt_budget);
         expenseOption = rootView.findViewById(R.id.opt_expense);

@@ -12,16 +12,16 @@
         android:layout_height="match_parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userprofileimageholder"
+            android:id="@+id/user_profile_image_holder"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_margin="20dp"
             android:elevation="10dp"
             android:src="@drawable/budgetbgimg"
+            android:clickable="true"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/expense_title"
@@ -33,7 +33,7 @@
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userprofileimageholder" />
+            app:layout_constraintTop_toBottomOf="@+id/user_profile_image_holder" />
 
         <TextView
             android:id="@+id/expense_currency"
