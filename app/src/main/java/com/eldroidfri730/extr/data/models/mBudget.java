@@ -3,10 +3,10 @@ package com.eldroidfri730.extr.data.models;
 public class mBudget {
     private String userId;         // Should match "userId" in JSON
     private String categoryTitle;  // Should match "categoryTitle" in JSON
-    private int budget;            // Should match "budget" in JSON
+    private double budget;            // Should match "budget" in JSON
 
     // Constructor
-    public mBudget(String userId, String categoryTitle, int budget) {
+    public mBudget(String userId, String categoryTitle, double budget) {
         this.userId = userId;
         this.categoryTitle = categoryTitle;
         this.budget = budget;
@@ -29,11 +29,11 @@ public class mBudget {
         this.categoryTitle = categoryTitle;
     }
 
-    public int getBudget() {
+    public double getBudget() {
         return budget;
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(double budget) {
         this.budget = budget;
     }
 }
