@@ -86,6 +86,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Observe error messages related to login
+        loginViewModel.getLoginErrorMessage().observe(this, errorMessage -> {
+            if (errorMessage != null) {
+                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Observe error messages
         loginViewModel.getUsernameError().observe(this, error -> {
             if (error != null) {
