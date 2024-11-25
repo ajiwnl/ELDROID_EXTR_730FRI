@@ -99,9 +99,9 @@ public class BasicSummaryActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Remove bottom padding for BottomAppBar
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation, (v, insets) -> {
-            v.setPadding(0, 0, 0, insets.getInsets(WindowInsetsCompat.Type.systemBars()).bottom);
-            return insets;
+            return insets; // Do nothing here, so no padding is applied to the BottomAppBar
         });
     }
 
