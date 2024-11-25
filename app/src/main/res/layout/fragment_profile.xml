@@ -20,6 +20,7 @@
                 android:layout_width="44dp"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginStart="15dp"
+                android:clickable="true"
                 android:src="@drawable/ic_back_24"
                 android:background="@android:color/transparent"
                 app:layout_constraintStart_toStartOf="parent"
