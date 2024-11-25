@@ -77,6 +77,8 @@ public class ExpenseFragment extends Fragment {
 
         if (userId != null && !isCategoriesFetched) {
             categoryViewModel.fetchCategoriesByUserId(userId);
+            expenseViewModel.fetchExpensesByUserId(userId);
+
             isCategoriesFetched = true;
         } else {
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();

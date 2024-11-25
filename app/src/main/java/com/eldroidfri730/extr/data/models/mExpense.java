@@ -69,4 +69,16 @@ public class mExpense {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(date);
     }
+
+    @Override
+    public String toString() {
+        return "mExpense{" +
+                "name='" + expenseName + '\'' +
+                ", categoryTitle='" + categoryTitle + '\'' +
+                ", amount=" + amount +
+                ", dateCreated='" + date + '\'' +
+                ", description='" + expenseDescription + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
