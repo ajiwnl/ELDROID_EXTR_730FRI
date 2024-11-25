@@ -10,5 +10,5 @@
     <color name="itembackgroundcolor">#15192B</color>
     <color name="green">#04AA6D</color>
     <color name="extr_color">#8B1CC1</color>
-
+    <color name="item_homebg_color">#15192B</color>
 </resources>
