@@ -143,4 +143,16 @@ please verify on your email.</string>
     <string name="password_not_matched">Passwords Do Not Match</string>
     <string name="home_curandval_placeholder">₱ 10,000</string>
     <string name="home_cat_title_placeholder">Category Title</string>
+    <string name="dialoglist_expname">Expense</string>
+    <string name="dialoglist_expcost">Cost</string>
+    <string name="dialoglist_expdate">Date</string>
+    <string name="dialoglist_expact">Action</string>
+    <string name="set_label_darkmode">Dark Mode</string>
+    <string name="profile_label_userinfo">User Information</string>
+    <string name="profile_label_pass">Password</string>
+    <string name="home_label_reportgen">Report Generation</string>
+    <string name="home_label_meni_budget">Budget</string>
+    <string name="home_label_menu_expenses">Expense</string>
+    <string name="home_label_cat">Category</string>
+    <string name="home_label_expsum">Expense Summary</string>
 </resources>

@@ -27,6 +27,10 @@ public class mExpense {
         this.userId = userId;
     }
 
+    public String getExpenseName() {
+        return expenseName;
+    }
+
     // Getter and Setter methods
     public void setUserId(String userId) {
         this.userId = userId;
@@ -69,4 +73,12 @@ public class mExpense {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(date);
     }
+    public String toString() {
+        return "mExpense{" + expenseName+
+                "id='" + userId + '\'' +
+                ", amount=" + amount +
+                ", categoryTitle='" + categoryTitle + '\'' +
+                '}';
+    }
+
 }

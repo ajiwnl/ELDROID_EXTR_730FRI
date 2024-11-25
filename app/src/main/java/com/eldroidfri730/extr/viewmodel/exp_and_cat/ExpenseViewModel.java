@@ -4,6 +4,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Transformations;
 
 import android.app.Application;
 import android.app.DatePickerDialog;
@@ -11,24 +12,23 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
 import com.eldroidfri730.extr.data.models.mExpense;
 import com.eldroidfri730.extr.utils.ExpenseCategoryValidation;
 import com.eldroidfri730.extr.utils.RetrofitClient;
-import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ExpenseViewModel extends AndroidViewModel {
 
@@ -40,6 +40,11 @@ public class ExpenseViewModel extends AndroidViewModel {
     private final MutableLiveData<String> expenseDescription = new MutableLiveData<>();
     private final MutableLiveData<String> expenseCategory = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isFormValid = new MutableLiveData<>(false);
+
+    private final MutableLiveData<List<mExpense>> filteredExpenses = new MutableLiveData<>(new ArrayList<>());
+    public LiveData<List<mExpense>> getFilteredExpenses() {
+        return Transformations.distinctUntilChanged(filteredExpenses);
+    }
 
     private final ApiService apiService;
 
@@ -79,7 +84,7 @@ public class ExpenseViewModel extends AndroidViewModel {
     }
 
     public void updateExpenseName(String name) {
-        expenseName.setValue(name != null ? name.trim() : ""); // Handle null gracefully
+        expenseName.setValue(name != null ? name.trim() : "");
         validateForm();
     }
 
@@ -161,6 +166,31 @@ public class ExpenseViewModel extends AndroidViewModel {
         });
     }
 
+    public void fetchExpensesByUserId(String userId) {
+        Log.d("ExpenseViewModel", "Fetching expenses for userId: " + userId);
+
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<List<mExpense>> call = apiService.getExpensesByUserId(userId);
+
+        call.enqueue(new Callback<List<mExpense>>() {
+            @Override
+            public void onResponse(Call<List<mExpense>> call, Response<List<mExpense>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("ExpenseViewModel", "Expenses fetched successfully. Count: " + response.body().size());
+                    expenses.postValue(response.body());
+                } else {
+                    Log.e("ExpenseViewModel", "Failed to fetch expenses. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<mExpense>> call, Throwable t) {
+                Log.e("ExpenseViewModel", "Failed to fetch expenses due to network error or exception.", t);
+            }
+        });
+    }
+
+
 
     public void showDatePickerDialog(Fragment fragment) {
         final Calendar calendar = Calendar.getInstance();
@@ -182,21 +212,38 @@ public class ExpenseViewModel extends AndroidViewModel {
     }
 
     public void filterExpensesByCategory(String category) {
-        // Get the current list of expenses
         List<mExpense> allExpenses = expenses.getValue();
-        if (allExpenses == null) {
+        if (allExpenses == null || category == null || category.isEmpty()) {
+            filteredExpenses.postValue(new ArrayList<>());
             return;
         }
 
-        // Filter the expenses by the given category
-        List<mExpense> filteredExpenses = new ArrayList<>();
+        List<mExpense> filteredList = new ArrayList<>();
         for (mExpense expense : allExpenses) {
-            if (expense.getCategoryTitle().equalsIgnoreCase(category)) {
-                filteredExpenses.add(expense);
+            if (expense.getCategoryTitle() != null && expense.getCategoryTitle().equalsIgnoreCase(category)) {
+                filteredList.add(expense);
             }
         }
 
-        // Update the MutableLiveData with the filtered list
-        expenses.setValue(filteredExpenses);
+        filteredExpenses.postValue(filteredList);
     }
+
+
+    public Map<String, Float> calculateTotalExpensesByCategory() {
+        Map<String, Float> categoryTotals = new HashMap<>();
+        List<mExpense> allExpenses = expenses.getValue();
+
+        if (allExpenses == null || allExpenses.isEmpty()) return categoryTotals;
+
+        for (mExpense expense : allExpenses) {
+            String category = expense.getCategoryTitle();
+            float amount = expense.getAmount();
+            categoryTotals.put(category, categoryTotals.getOrDefault(category, 0f) + amount);
+        }
+
+        return categoryTotals;
+    }
+
+
+
 }
