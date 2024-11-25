@@ -72,6 +72,9 @@ public interface ApiService {
     @POST("addBudget")
     Call<mBudget> addBudget(@Body mBudget expense);
 
+    @POST("userBudgets")
+    Call<List<mBudget>> getBudgetByUserId(@Query("userId") String userId);
+
     @POST("addExpense")
     Call<mExpense> addExpense(@Body mExpense expense);
 

@@ -40,7 +40,7 @@ please verify on your email.</string>
     <string name="budget_set">Budget Set</string>
     <string name="currency_symbol">₱</string>
     <string name="total_budget">21,000.00</string>
-    <string name="for_this_month">For this month</string>
+    <string name="for_this_month">Total Budget Planned</string>
     <string name="overview">Overview</string>
     <string name="day">Day</string>
     <string name="user_budget">Php 700</string>
