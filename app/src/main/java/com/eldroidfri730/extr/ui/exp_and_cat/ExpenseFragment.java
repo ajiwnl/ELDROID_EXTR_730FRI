@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.models.mCategory;
+import com.eldroidfri730.extr.data.models.mExpense;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
 import com.eldroidfri730.extr.utils.ExpenseCategoryValidation;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
@@ -30,8 +31,11 @@ import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModelFactory;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ExpenseFragment extends Fragment {
 
@@ -91,13 +95,27 @@ public class ExpenseFragment extends Fragment {
         datePurchasedEditText.setOnClickListener(v -> expenseViewModel.showDatePickerDialog(this));
 
         submitButton.setOnClickListener(v -> {
-            String name = expenseNameEditText.getText().toString();
-            String amount = expenseAmountEditText.getText().toString();
-            String date = datePurchasedEditText.getText().toString();
-            String category = expenseViewModel.getExpenseCategory().getValue();
-            String desc = expenseDescEditText.getText().toString();
+            try {
+                // Get input values
+                String name = expenseNameEditText.getText().toString();
+                float amount = Float.parseFloat(expenseAmountEditText.getText().toString());
+                String dateStr = datePurchasedEditText.getText().toString();
+                String category = expenseViewModel.getExpenseCategory().getValue();
+                String desc = expenseDescEditText.getText().toString();
 
-            expenseViewModel.createExpenseModel(name, amount, date, category, desc, getContext(), userId, 0);
+                // Parse date from string
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                Date date = sdf.parse(dateStr);
+
+                // Call ViewModel's addExpense directly with parameters
+                Log.d("ExpenseFragment", "User ID: " + userId);  // Log userId
+                expenseViewModel.addExpense(name, category, amount, date, desc, userId);
+            } catch (Exception e) {
+                // Log the exception to find out what went wrong
+                Log.e("ExpenseFragment", "Error in submit button: " + e.getMessage(), e);
+                Toast.makeText(getContext(), "Invalid input. Please check your fields.", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
         });
 
 
