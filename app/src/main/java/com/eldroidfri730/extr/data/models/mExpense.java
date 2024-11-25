@@ -11,14 +11,14 @@ public class mExpense {
     private String categoryTitle;
     private String expenseDescription;
     private float amount;
-    private Date date;
+    private String date;
 
     // Default constructor
     public mExpense() {
     }
 
     // Constructor with all fields
-    public mExpense(String expenseName, String categoryTitle, float amount, Date date, @Nullable String expenseDescription, String userId) {
+    public mExpense(String expenseName, String categoryTitle, float amount, String date, @Nullable String expenseDescription, String userId) {
         this.expenseName = expenseName;
         this.categoryTitle = categoryTitle;
         this.amount = amount;
@@ -56,11 +56,11 @@ public class mExpense {
         this.expenseDescription = expenseDescription;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
