@@ -185,7 +185,7 @@ public class BudgetPlanningFragment extends Fragment {
                     if (budgetStr.isEmpty()) {
                         Toast.makeText(requireContext(), "Please enter a budget", Toast.LENGTH_SHORT).show();
                     } else {
-                        double budget = Integer.parseInt(budgetStr);
+                        double budget = Double.parseDouble(budgetStr);  // Correct conversion to double
                         addBudgetToCategory(selectedCategory, budget);
                     }
                 })
