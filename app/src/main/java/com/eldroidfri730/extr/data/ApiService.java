@@ -69,6 +69,7 @@ public interface ApiService {
             @Query("userId") String userId
     );
 
+
     @POST("addBudget")
     Call<mBudget> addBudget(@Body mBudget expense);
 
@@ -81,6 +82,15 @@ public interface ApiService {
             @Body mBudget budget
     );
 
+<<<<<<< HEAD
+=======
+    @DELETE("deleteBudget/{categoryTitle}")
+    Call<mBudget> deleteBudget(
+            @Path("categoryTitle") String categoryTitle,
+            @Query("userId") String userId
+    );
+
+>>>>>>> 21624750a7dc14155d209b80d24f55c47a0201d2
 
     @POST("addExpense")
     Call<mExpense> addExpense(@Body mExpense expense);

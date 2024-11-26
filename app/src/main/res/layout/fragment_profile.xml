@@ -20,6 +20,7 @@
                 android:layout_width="44dp"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginStart="15dp"
+                android:clickable="true"
                 android:src="@drawable/ic_back_24"
                 android:background="@android:color/transparent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="User Information"
+                    android:text="@string/profile_label_userinfo"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -115,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Password"
+                    android:text="@string/profile_label_pass"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -176,7 +177,7 @@
                     android:paddingTop="10dp"
                     android:paddingEnd="50dp"
                     android:paddingBottom="10dp"
-                    android:text="Submit"
+                    android:text="@string/FragExpBtnTextSubmit"
                     android:textSize="12dp" />
 
             </LinearLayout>

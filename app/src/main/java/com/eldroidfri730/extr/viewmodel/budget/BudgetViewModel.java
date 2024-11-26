@@ -141,4 +141,36 @@ public class BudgetViewModel extends ViewModel {
             }
         });
     }
+
+    public void deleteBudget(String categoryTitle, String userId) {
+        // Creating the Retrofit API service
+        apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
+        // Making the DELETE request
+        Call<mBudget> call = apiService.deleteBudget(categoryTitle, userId);
+
+        // Enqueue the request to be executed asynchronously
+        call.enqueue(new Callback<mBudget>() {
+            @Override
+            public void onResponse(Call<mBudget> call, Response<mBudget> response) {
+                if (response.isSuccessful()) {
+                    // Successfully deleted the budget
+                    Log.d("Budget Delete", "Budget deleted successfully for category: " + categoryTitle);
+                    budgetSuccessMessage.postValue(application.getString(R.string.budget_deleted)); // Show success message
+                } else {
+                    // Error in deleting the budget
+                    Log.e("Budget Delete", "Failed to delete budget. Response code: " + response.code());
+                    budgetErrorMessage.postValue(application.getString(R.string.budget_delete_fail)); // Show failure message
+                }
+            }
+
+            @Override
+            public void onFailure(Call<mBudget> call, Throwable t) {
+                // Network or API failure
+                Log.e("Budget Delete", "API call failed.", t);
+                budgetErrorMessage.postValue(application.getString(R.string.cat_fetch_neterror)); // Show network error message
+            }
+        });
+    }
+
 }
