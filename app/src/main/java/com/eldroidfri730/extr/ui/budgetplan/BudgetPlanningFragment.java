@@ -97,7 +97,9 @@ public class BudgetPlanningFragment extends Fragment {
 
             isCategoriesFetched = true;
         } else {
+/*
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
+*/
         }
 
         budgetViewModel.getTotalBudget().observe(getViewLifecycleOwner(), total -> {
