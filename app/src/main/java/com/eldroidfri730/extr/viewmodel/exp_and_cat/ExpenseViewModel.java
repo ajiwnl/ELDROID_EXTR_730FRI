@@ -196,10 +196,30 @@ public class ExpenseViewModel extends AndroidViewModel {
         });
     }
 
-    public void updateExpense(){
+    public void updateExpense(String expenseName, mExpense expense) {
+        Call<mExpense> call = apiService.patchExpense(expenseName, expense);
 
+        call.enqueue(new Callback<mExpense>() {
+            @Override
+            public void onResponse(Call<mExpense> call, Response<mExpense> response) {
+                if (response.isSuccessful()) {
+                    // Successfully updated the expense
+                    mExpense updatedExpense = response.body();
+                    Log.d("ExpenseViewModel", "Expense updated: " + updatedExpense);
+                    fetchExpensesByUserId(expense.getUserId());
+                } else {
+                    // Handle error response
+                    Log.e("ExpenseViewModel", "Failed to update expense. Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<mExpense> call, Throwable t) {
+                // Handle failure (e.g., network error)
+                Log.e("ExpenseViewModel", "Error updating expense", t);
+            }
+        });
     }
-
 
     public void deleteExpense(String userId, String expenseName) {
         if (expenseName == null || expenseName.isEmpty()) {

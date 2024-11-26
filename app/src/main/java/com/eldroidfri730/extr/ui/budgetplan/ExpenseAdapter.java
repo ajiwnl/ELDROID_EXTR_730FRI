@@ -92,33 +92,36 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 
     // Method to display edit dialog
     private void showEditExpenseDialog(mExpense expense) {
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_expense, null);
-//        Dialog dialog = new Dialog(context);
-//        dialog.setContentView(dialogView);
-//        dialog.getWindow().setLayout(800, WindowManager.LayoutParams.WRAP_CONTENT);
-//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//        dialog.setCancelable(true);
-//
-//        TextView expenseName = dialogView.findViewById(R.id.edit_expense_name);
-//        TextView expenseAmount = dialogView.findViewById(R.id.edit_expense_amount);
-//
-//        expenseName.setText(expense.getExpenseName());
-//        expenseAmount.setText(String.valueOf(expense.getAmount()));
-//
-//        // Example save button logic
-//        dialogView.findViewById(R.id.save_button).setOnClickListener(v -> {
-//            Toast.makeText(context, "Expense Updated!", Toast.LENGTH_SHORT).show();
-//            dialog.dismiss();
-//        });
-//
-//        dialog.show();
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_expense, null);
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(dialogView);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCancelable(true);
+
+
+        // Example save button logic
+        dialogView.findViewById(R.id.saveButton).setOnClickListener(v -> {
+            Toast.makeText(context, "Expense Updated!", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        dialogView.findViewById(R.id.closeButton).setOnClickListener( v->{
+            dialog.dismiss();
+        });
+
+        dialogView.findViewById(R.id.deleteButton).setOnClickListener( v->{
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     // Method to display delete confirmation dialog
 
     private void showDeleteConfirmationDialog(mExpense expense) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Are you sure you want to delete " + expense.getExpenseName() + " ?")
+        builder.setMessage("Are you sure you want to delete " + expense.getExpenseName() + "?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
