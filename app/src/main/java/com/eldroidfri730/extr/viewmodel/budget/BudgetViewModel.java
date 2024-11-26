@@ -54,7 +54,7 @@ public class BudgetViewModel extends ViewModel {
         return totalBudget;
     }
 
-    public void addBudget(mBudget budget) {
+    public void addBudget(mBudget budget, String userId) {
         apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         Call<mBudget> call = apiService.addBudget(budget);
 
@@ -63,6 +63,7 @@ public class BudgetViewModel extends ViewModel {
             public void onResponse(Call<mBudget> call, Response<mBudget> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     budgetSuccessMessage.postValue(application.getString(R.string.budget_add));
+                    fetchBudgetByUserId(userId);
                 }
                 else if (response.code() == 409) {
                     budgetErrorMessage.postValue(application.getString(R.string.budget_dupe));
@@ -99,11 +100,33 @@ public class BudgetViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<mBudget> call, Throwable t) {
-                budgetErrorMessage.postValue(application.getString(R.string.cat_fetch_neterror));
+                Log.e("API Call", "Failed: " + t.getMessage());
             }
         });
     }
 
+    public void deleteBudget(String category, String userId) {
+        apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
+        Call<mBudget> call = apiService.deleteBudget(category, userId);
+
+        call.enqueue(new Callback<mBudget>() {
+            @Override
+            public void onResponse(Call<mBudget> call, Response<mBudget> response) {
+                if (response.isSuccessful()) {
+                    budgetSuccessMessage.postValue(application.getString(R.string.budget_delete_success));
+                    fetchBudgetByUserId(userId);
+                } else {
+                    budgetErrorMessage.postValue(application.getString(R.string.budget_delete_error));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<mBudget> call, Throwable t) {
+                budgetErrorMessage.postValue(application.getString(R.string.budget_delete_error));
+            }
+        });
+    }
 
     public void fetchBudgetByUserId(String userId) {
         Log.d("BudgetViewModel", "Fetching Budget for userId: " + userId);
@@ -141,36 +164,4 @@ public class BudgetViewModel extends ViewModel {
             }
         });
     }
-
-    public void deleteBudget(String categoryTitle, String userId) {
-        // Creating the Retrofit API service
-        apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-
-        // Making the DELETE request
-        Call<mBudget> call = apiService.deleteBudget(categoryTitle, userId);
-
-        // Enqueue the request to be executed asynchronously
-        call.enqueue(new Callback<mBudget>() {
-            @Override
-            public void onResponse(Call<mBudget> call, Response<mBudget> response) {
-                if (response.isSuccessful()) {
-                    // Successfully deleted the budget
-                    Log.d("Budget Delete", "Budget deleted successfully for category: " + categoryTitle);
-                    budgetSuccessMessage.postValue(application.getString(R.string.budget_deleted)); // Show success message
-                } else {
-                    // Error in deleting the budget
-                    Log.e("Budget Delete", "Failed to delete budget. Response code: " + response.code());
-                    budgetErrorMessage.postValue(application.getString(R.string.budget_delete_fail)); // Show failure message
-                }
-            }
-
-            @Override
-            public void onFailure(Call<mBudget> call, Throwable t) {
-                // Network or API failure
-                Log.e("Budget Delete", "API call failed.", t);
-                budgetErrorMessage.postValue(application.getString(R.string.cat_fetch_neterror)); // Show network error message
-            }
-        });
-    }
-
 }
