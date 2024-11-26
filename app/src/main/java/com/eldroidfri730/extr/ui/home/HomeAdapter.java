@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -109,17 +110,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_listexpense, null);
         Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogView);
-        dialog.getWindow().setLayout(800, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setCancelable(false);
 
         TextView dialogTitle = dialogView.findViewById(R.id.dialog_title);
         RecyclerView expenseListRecyclerView = dialogView.findViewById(R.id.expenseList);
-        CardView listDialogMain = dialogView.findViewById(R.id.listDialogMain);
+        ImageButton closeBtn = dialogView.findViewById(R.id.closeButton);
 
         dialogTitle.setText(categoryItem.getCategoryTitle());
 
-        ExpenseAdapter expenseAdapter = new ExpenseAdapter(context);
+        ExpenseAdapter expenseAdapter = new ExpenseAdapter(context,expenseViewModel);
         expenseListRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         expenseListRecyclerView.setAdapter(expenseAdapter);
 
@@ -139,7 +140,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {
             }
         });
 
-        listDialogMain.setOnClickListener(v -> {
+        closeBtn.setOnClickListener(v -> {
            dialog.dismiss();
         });
 

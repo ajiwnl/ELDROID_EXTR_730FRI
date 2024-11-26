@@ -36,6 +36,10 @@ public class mExpense {
         this.userId = userId;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     public String getCategoryTitle() {
         return categoryTitle;
     }

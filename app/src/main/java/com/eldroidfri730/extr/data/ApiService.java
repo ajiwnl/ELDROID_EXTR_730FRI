@@ -94,4 +94,14 @@ public interface ApiService {
     @POST("userExpenses")
     Call<List<mExpense>> getExpensesByUserId(@Query("userId") String userId);
 
+//    @PATCH("updateExpense/{expenseName}")
+//    Call<mExpense> patchExpense(
+//            @Path("")
+//    );
+
+    @DELETE("deleteExpense/{expenseName}")
+    Call<mExpense> deleteExpense(
+      @Path("expenseName") String expenseName,
+      @Query("userId") String userId
+    );
 }

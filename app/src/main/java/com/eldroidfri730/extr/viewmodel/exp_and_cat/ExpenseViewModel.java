@@ -12,7 +12,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.ApiService;
+import com.eldroidfri730.extr.data.models.mCategory;
 import com.eldroidfri730.extr.data.models.mExpense;
 import com.eldroidfri730.extr.utils.ExpenseCategoryValidation;
 import com.eldroidfri730.extr.utils.RetrofitClient;
@@ -194,6 +196,44 @@ public class ExpenseViewModel extends AndroidViewModel {
         });
     }
 
+    public void updateExpense(){
+
+    }
+
+
+    public void deleteExpense(String userId, String expenseName) {
+        if (expenseName == null || expenseName.isEmpty()) {
+            Log.e("deleteExpense", "Expense name is null or empty");
+            return;
+        }
+
+        Log.d("deleteExpense", "Attempting to delete expense: " + expenseName + " for user: " + userId);
+
+        Call<mExpense> call = apiService.deleteExpense(expenseName,userId);
+
+        call.enqueue(new Callback<mExpense>() {
+            @Override
+            public void onResponse(Call<mExpense> call, Response<mExpense> response) {
+                if (response.isSuccessful()) {
+                    // Successfully deleted expense
+                    Log.d("deleteExpense", "Expense deleted successfully for user: " + userId + ", expense: " + expenseName);
+                    fetchExpensesByUserId(userId);
+                } else if (response.code() == 404) {
+                    // expense not found
+                    Log.e("deleteExpense", "Expense not found: " + expenseName + " for user: " + userId + response.body().toString());
+                } else {
+                    // Other failure
+                    Log.e("deleteExpense", "Failed to delete expense. Response code: " + response.code() + ", message: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<mExpense> call, Throwable t) {
+                // Network error or other failure
+                Log.e("deleteExpense", "Error occurred while deleting expense: " + expenseName + " for user: " + userId, t);
+            }
+        });
+    }
 
 
     public void showDatePickerDialog(Fragment fragment) {
