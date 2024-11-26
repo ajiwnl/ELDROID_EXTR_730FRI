@@ -30,6 +30,7 @@ import com.eldroidfri730.extr.ui.exp_and_cat.ExpenseFragment;
 import com.eldroidfri730.extr.ui.prof_and_set.ProfileFragment;
 import com.eldroidfri730.extr.utils.IntentUtil;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
+import com.eldroidfri730.extr.viewmodel.budget.BudgetViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
 
@@ -52,11 +53,26 @@ public class HomeFragment extends Fragment {
     private HomeAdapter homeAdapter;
     private RecyclerView repRecyclerView;
 
+    private boolean isBudgetHidden = false; // State to track toggle
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        TextView budgetTotalView = rootView.findViewById(R.id.expense_total);
+        View hideBudgetButton = rootView.findViewById(R.id.hide_expense);
+
+
+        BudgetViewModel budgetViewModel = ((BasicSummaryActivity) getActivity()).getBudgetViewModel();
+        budgetViewModel.getTotalBudget().observe(getViewLifecycleOwner(), totalBudget -> {
+            if (!isBudgetHidden) {
+                budgetTotalView.setText(String.format("%,.2f", totalBudget));
+            }
+        });
+
 
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
 
@@ -154,24 +170,18 @@ public class HomeFragment extends Fragment {
             textSwitcher.setText(texts[currentIndex]);
         });
 
-        // Add hide/show expense functionality
-        TextView expenseCurrency = rootView.findViewById(R.id.expense_currency);
-        TextView expenseTotal = rootView.findViewById(R.id.expense_total);
-        View hideExpenseButton = rootView.findViewById(R.id.hide_expense);
-
         final boolean[] isExpenseHidden = {false}; // State to track toggle
 
-        hideExpenseButton.setOnClickListener(v -> {
-            if (isExpenseHidden[0]) {
-                // Show the actual expense
-                expenseCurrency.setVisibility(View.VISIBLE);
-                expenseTotal.setText("200,000.00"); // Replace with actual amount
-                isExpenseHidden[0] = false;
+        hideBudgetButton.setOnClickListener(v -> {
+            if (isBudgetHidden) {
+                // Show the total budget with a peso sign
+                budgetTotalView.setVisibility(View.VISIBLE);
+                budgetTotalView.setText(String.format("₱%,.2f", budgetViewModel.getTotalBudget().getValue())); // Update with actual total
+                isBudgetHidden = false;
             } else {
-                // Hide the expense
-                expenseCurrency.setVisibility(View.INVISIBLE);
-                expenseTotal.setText("******");
-                isExpenseHidden[0] = true;
+                // Hide the total budget
+                budgetTotalView.setText("₱******");
+                isBudgetHidden = true;
             }
         });
 

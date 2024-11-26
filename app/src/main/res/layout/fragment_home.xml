@@ -54,6 +54,7 @@
             android:layout_height="44dp"
             android:padding="10dp"
             android:src="@drawable/ic_showexpense_24"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="@+id/expense_total"
             app:layout_constraintStart_toEndOf="@+id/expense_total"
             app:layout_constraintTop_toBottomOf="@+id/expense_title" />
