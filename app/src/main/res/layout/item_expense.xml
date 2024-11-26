@@ -15,7 +15,7 @@
         android:textSize="13sp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:gravity="center"/>
 
     <TextView
@@ -27,7 +27,7 @@
         android:textSize="13sp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:gravity="center"/>
 
     <TextView
@@ -39,7 +39,7 @@
         android:textSize="13sp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:gravity="center"/>
 
     <ImageButton

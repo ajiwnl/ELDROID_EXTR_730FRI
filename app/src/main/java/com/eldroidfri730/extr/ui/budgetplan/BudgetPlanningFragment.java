@@ -64,9 +64,6 @@ public class BudgetPlanningFragment extends Fragment {
     private TextView totalBudgetView, userbudgetdisplay, userexpensedisplay, removableerrormessage;
     private boolean isCategoriesFetched = false, isBudgetFetched = false, isExpenseFetched = false;
 
-
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -264,13 +261,16 @@ public class BudgetPlanningFragment extends Fragment {
 
                         // Call ViewModel to update the budget
                         budgetViewModel.updateBudget(updatedBudget);
-                        budgetViewModel.fetchBudgetByUserId(userId);
+                        if(!isBudgetFetched) {
+                            budgetViewModel.fetchBudgetByUserId(userId);
+                            isBudgetFetched = true;
+                        }
                         return;
                     }
                 }
             }
             // If category not found, show an error
-            Toast.makeText(requireContext(), "Category not found!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(requireContext(), "Please Add A Budget First Before Managing!", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -367,12 +367,26 @@ public class BudgetPlanningFragment extends Fragment {
     }
 
     private void observeExpenseData() {
-        expenseViewModel.getExpenses().observe(getViewLifecycleOwner(), expenseList -> {
-            if (expenseList != null) {
-                expenseAdapter.setExpenseItems(expenseList);
+        expenseViewModel.getExpenses().observe(getViewLifecycleOwner(), allExpenses -> {
+            if (allExpenses != null && !allExpenses.isEmpty()) {
+                // Sort the expenses by amount in descending order
+                List<mExpense> sortedExpenses = new ArrayList<>(allExpenses);
+                sortedExpenses.sort((e1, e2) -> Double.compare(e2.getAmount(), e1.getAmount()));
+
+                // Take the top 3 most expensive expenses
+                List<mExpense> top3Expenses = sortedExpenses.size() > 3
+                        ? sortedExpenses.subList(0, 3)
+                        : sortedExpenses;
+
+                // Pass the filtered data to the adapter
+                expenseAdapter.setExpenseItems(top3Expenses);
+            } else {
+                // Handle the case where there are no expenses
+                expenseAdapter.setExpenseItems(new ArrayList<>());
             }
         });
     }
+
 
     public void filterExpensesByCategory(String category) {
         // Delegate filtering to ViewModel
