@@ -82,13 +82,17 @@ public class HomeFragment extends Fragment {
             categoryViewModel.fetchCategoriesByUserId(userId);
             isCategoriesFetched = true;
         } else {
+/*
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
+*/
         }
         if (userId != null && !isExpensesFetched) {
             expenseViewModel.fetchExpensesByUserId(userId);
             isExpensesFetched = true;
         } else {
+/*
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
+*/
         }
         //observer
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
