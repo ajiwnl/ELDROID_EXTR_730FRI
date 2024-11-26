@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.ui.home.BasicSummaryActivity;
@@ -31,6 +33,8 @@ public class CategoryFragment extends Fragment {
     private CategoryAdapter categoryAdapter;
     private CategoryViewModel categoryViewModel;
     private boolean isCategoriesFetched = false;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
 
     @Override
@@ -44,6 +48,8 @@ public class CategoryFragment extends Fragment {
         submitButton = rootView.findViewById(R.id.categoriessubmitbutton);
         categoryRecyclerView = rootView.findViewById(R.id.CategoryRecyclerView);
         categoryNameEditText = rootView.findViewById(R.id.CategoryNameEditText);
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout);
+
 
         // Initialize CategoryAdapter and set it to the RecyclerView
         categoryViewModel = ((BasicSummaryActivity) getActivity()).getCategoryViewModel();
@@ -60,7 +66,21 @@ public class CategoryFragment extends Fragment {
         // Observe categories LiveData and update the RecyclerView
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categories -> {
             categoryAdapter.setCategoryList(categories);
+            swipeRefreshLayout.setRefreshing(false); // Stop refreshing when data is loaded
+
         });
+
+        // Swipe-to-refresh listener
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            if (categoryViewModel != null && userId != null) {
+                // Start the refreshing animation
+                swipeRefreshLayout.setRefreshing(true);
+
+                // Fetch categories when user pulls to refresh
+                categoryViewModel.fetchCategoriesByUserId(userId);  // Replace with actual userId
+            }
+        });
+
 
         categoryViewModel.getCategorySuccessMessage().observe(getViewLifecycleOwner(), message -> {
             if (message != null) {
