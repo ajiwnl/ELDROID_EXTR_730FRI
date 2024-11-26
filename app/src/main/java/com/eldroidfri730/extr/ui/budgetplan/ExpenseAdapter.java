@@ -1,7 +1,9 @@
 package com.eldroidfri730.extr.ui.budgetplan;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eldroidfri730.extr.R;
 import com.eldroidfri730.extr.data.models.mExpense;
+import com.eldroidfri730.extr.viewmodel.exp_and_cat.ExpenseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseViewHolder> {
 
+    private ExpenseViewModel expenseViewModel;
     private List<mExpense> expenseList;
     private Context context;
 
-    public ExpenseAdapter(Context context) {
+    public ExpenseAdapter(Context context,ExpenseViewModel expenseViewModel) {
         this.context = context;
         this.expenseList = new ArrayList<>();
+        this.expenseViewModel = expenseViewModel;
     }
 
     @NonNull
@@ -87,51 +92,54 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
 
     // Method to display edit dialog
     private void showEditExpenseDialog(mExpense expense) {
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_expense, null);
-//        Dialog dialog = new Dialog(context);
-//        dialog.setContentView(dialogView);
-//        dialog.getWindow().setLayout(800, WindowManager.LayoutParams.WRAP_CONTENT);
-//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//        dialog.setCancelable(true);
-//
-//        TextView expenseName = dialogView.findViewById(R.id.edit_expense_name);
-//        TextView expenseAmount = dialogView.findViewById(R.id.edit_expense_amount);
-//
-//        expenseName.setText(expense.getExpenseName());
-//        expenseAmount.setText(String.valueOf(expense.getAmount()));
-//
-//        // Example save button logic
-//        dialogView.findViewById(R.id.save_button).setOnClickListener(v -> {
-//            Toast.makeText(context, "Expense Updated!", Toast.LENGTH_SHORT).show();
-//            dialog.dismiss();
-//        });
-//
-//        dialog.show();
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_expense, null);
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(dialogView);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setCancelable(true);
+
+
+        // Example save button logic
+        dialogView.findViewById(R.id.saveButton).setOnClickListener(v -> {
+            Toast.makeText(context, "Expense Updated!", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        });
+
+        dialogView.findViewById(R.id.closeButton).setOnClickListener( v->{
+            dialog.dismiss();
+        });
+
+        dialogView.findViewById(R.id.deleteButton).setOnClickListener( v->{
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     // Method to display delete confirmation dialog
+
     private void showDeleteConfirmationDialog(mExpense expense) {
-//        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_delete_confirmation, null);
-//        Dialog dialog = new Dialog(context);
-//        dialog.setContentView(dialogView);
-//        dialog.getWindow().setLayout(800, WindowManager.LayoutParams.WRAP_CONTENT);
-//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//        dialog.setCancelable(true);
-//
-//        TextView confirmationText = dialogView.findViewById(R.id.confirmation_text);
-//        confirmationText.setText("Are you sure you want to delete " + expense.getExpenseName() + "?");
-//
-//        // Delete button logic
-//        dialogView.findViewById(R.id.delete_button).setOnClickListener(v -> {
-//            expenseList.remove(expense);
-//            notifyDataSetChanged();
-//            Toast.makeText(context, "Expense Deleted!", Toast.LENGTH_SHORT).show();
-//            dialog.dismiss();
-//        });
-//
-//        // Cancel button logic
-//        dialogView.findViewById(R.id.cancel_button).setOnClickListener(v -> dialog.dismiss());
-//
-//        dialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Are you sure you want to delete " + expense.getExpenseName() + "?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        expenseViewModel.deleteExpense(expense.getUserId(), expense.getExpenseName());
+                        Toast.makeText(context, "Expense Deleted!" , Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Dismiss the dialog without doing anything
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
+
 }
