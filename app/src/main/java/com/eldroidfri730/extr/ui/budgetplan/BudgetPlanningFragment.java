@@ -77,7 +77,7 @@ public class BudgetPlanningFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.expensivecostlistview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        expenseAdapter = new ExpenseAdapter();
+        expenseAdapter = new ExpenseAdapter(getContext());
         recyclerView.setAdapter(expenseAdapter);
 
         // Initialize LoginViewModel
