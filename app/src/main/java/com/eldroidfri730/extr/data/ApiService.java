@@ -75,14 +75,12 @@ public interface ApiService {
     @POST("userBudgets")
     Call<List<mBudget>> getBudgetByUserId(@Query("userId") String userId);
 
-    @FormUrlEncoded
     @PATCH("updateBudget/{categoryTitle}")
     Call<mBudget> patchBudget(
             @Path("categoryTitle") String categoryTitle,
-            @Field("userId") String userId,
-            @Field("amount") String addAmount
-
+            @Body mBudget budget
     );
+
 
     @POST("addExpense")
     Call<mExpense> addExpense(@Body mExpense expense);
