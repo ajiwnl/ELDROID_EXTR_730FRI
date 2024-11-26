@@ -219,8 +219,9 @@ public class BudgetPlanningFragment extends Fragment {
             }
         });
 
+        // Create the AlertDialog
         new AlertDialog.Builder(requireContext())
-                .setTitle("Edit Budget")
+                .setTitle("Edit or Delete Budget")
                 .setView(dialogView)
                 .setPositiveButton("Edit", (dialog, which) -> {
                     String selectedCategory = categorySpinner.getSelectedItem().toString();
@@ -234,13 +235,17 @@ public class BudgetPlanningFragment extends Fragment {
                     }
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .setNeutralButton("Delete", (dialog, which) -> {
+                    String selectedCategory = categorySpinner.getSelectedItem().toString();
+                    budgetViewModel.deleteBudget(selectedCategory, userId);
+                })
                 .show();
     }
 
     private void addBudgetToCategory(String category, double budget) {
         mBudget newBudget = new mBudget(userId, category, budget);
 
-        budgetViewModel.addBudget(newBudget);
+        budgetViewModel.addBudget(newBudget, userId);
     }
 
     private void updateBudget(String category, double addedBudget) {
@@ -255,11 +260,11 @@ public class BudgetPlanningFragment extends Fragment {
                         // Create the updated mBudget object
                         mBudget updatedBudget = new mBudget(budget.getUserId(), category, newBudget);
 
+                        Toast.makeText(requireContext(), "Successfully Updated Balance", Toast.LENGTH_SHORT).show();
+
                         // Call ViewModel to update the budget
                         budgetViewModel.updateBudget(updatedBudget);
-
-                        // Optionally, show a success message
-                        Toast.makeText(requireContext(), "Budget updated successfully!", Toast.LENGTH_SHORT).show();
+                        budgetViewModel.fetchBudgetByUserId(userId);
                         return;
                     }
                 }
