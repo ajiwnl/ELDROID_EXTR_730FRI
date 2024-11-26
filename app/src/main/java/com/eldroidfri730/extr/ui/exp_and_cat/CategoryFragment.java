@@ -99,7 +99,9 @@ public class CategoryFragment extends Fragment {
             categoryViewModel.fetchCategoriesByUserId(userId);
             isCategoriesFetched = true;  // Mark categories as fetched
         } else {
+/*
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
+*/
         }
 
         // Add category logic
@@ -112,7 +114,9 @@ public class CategoryFragment extends Fragment {
                     categoryNameEditText.setText("");
                     categoryViewModel.fetchCategoriesByUserId(userId);
                 } else {
+/*
                     Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
+*/
                 }
             }
         });
