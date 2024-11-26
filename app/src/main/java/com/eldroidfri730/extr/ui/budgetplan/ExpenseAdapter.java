@@ -39,7 +39,6 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ExpenseV
     @Override
     public void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position) {
         mExpense expense = expenseList.get(position);
-
         // Bind data to the views
         holder.expenseName.setText(expense.getExpenseName());
         holder.expenseCost.setText(String.format("₱ %.2f", expense.getAmount()));

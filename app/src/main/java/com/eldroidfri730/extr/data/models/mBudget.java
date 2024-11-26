@@ -4,6 +4,7 @@ public class mBudget {
     private String userId;         // Should match "userId" in JSON
     private String categoryTitle;  // Should match "categoryTitle" in JSON
     private double budget;            // Should match "budget" in JSON
+    private String id;
 
     // Constructor
     public mBudget(String userId, String categoryTitle, double budget) {
@@ -36,4 +37,5 @@ public class mBudget {
     public void setBudget(double budget) {
         this.budget = budget;
     }
+
 }

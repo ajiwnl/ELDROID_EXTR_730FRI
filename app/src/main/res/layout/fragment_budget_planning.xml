@@ -216,7 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_budget"
-                        android:textColor="@color/red"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -250,7 +250,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/user_expense"
-                        android:textColor="@color/red"
+                        android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -282,6 +282,7 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:drawableLeft="@drawable/ic_warning_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

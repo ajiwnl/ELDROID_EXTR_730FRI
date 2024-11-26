@@ -45,9 +45,9 @@ please verify on your email.</string>
     <string name="for_this_month">Total Budget Planned</string>
     <string name="overview">Overview</string>
     <string name="day">Day</string>
-    <string name="user_budget">Php 700</string>
+    <string name="user_budget">Php 0</string>
     <string name="budget">Budget</string>
-    <string name="user_expense">Php 800</string>
+    <string name="user_expense">Php 0</string>
     <string name="expense">Expense</string>
     <string name="exceeded_budget_message">You\'ve Exceeded For Today\'s Budget!</string>
     <string name="expensive_costs">Expensive Costs</string>
@@ -141,6 +141,11 @@ please verify on your email.</string>
     <string name="password_incorrect">Incorrect Old Password</string>
     <string name="image_upload_error">Profile Image Failed To Upload</string>
     <string name="password_not_matched">Passwords Do Not Match</string>
+  
+    <string name="budget_add">Budget Category added successfully!</string>
+    <string name="budget_dupe">Budget Category already exists.</string>
+    <string name="budget_fail">Failed to add budget. Please try again!</string>
+  
     <string name="home_curandval_placeholder">₱ 10,000</string>
     <string name="home_cat_title_placeholder">Category Title</string>
     <string name="dialoglist_expname">Expense</string>

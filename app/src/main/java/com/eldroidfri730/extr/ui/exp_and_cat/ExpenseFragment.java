@@ -77,6 +77,8 @@ public class ExpenseFragment extends Fragment {
 
         if (userId != null && !isCategoriesFetched) {
             categoryViewModel.fetchCategoriesByUserId(userId);
+            expenseViewModel.fetchExpensesByUserId(userId);
+
             isCategoriesFetched = true;
         } else {
             Toast.makeText(getContext(), getString(R.string.user_out), Toast.LENGTH_SHORT).show();
@@ -109,9 +111,7 @@ public class ExpenseFragment extends Fragment {
 
                 Log.d("ExpenseFragment", "User ID: " + userId);  // Log userId
                 expenseViewModel.addExpense(name, category, amount, date, desc, userId);
-
                 clearEditTextField();
-                Toast.makeText(getContext(), "Expense added successfully.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 // Log the exception to find out what went wrong
                 Log.e("ExpenseFragment", "Error in submit button: " + e.getMessage(), e);

@@ -27,6 +27,7 @@ import com.eldroidfri730.extr.data.models.mCategory;
 import com.eldroidfri730.extr.ui.budgetplan.BudgetPlanningFragment;
 import com.eldroidfri730.extr.ui.exp_and_cat.CategoryFragment;
 import com.eldroidfri730.extr.ui.exp_and_cat.ExpenseFragment;
+import com.eldroidfri730.extr.ui.prof_and_set.ProfileFragment;
 import com.eldroidfri730.extr.utils.IntentUtil;
 import com.eldroidfri730.extr.viewmodel.auth.LoginViewModel;
 import com.eldroidfri730.extr.viewmodel.exp_and_cat.CategoryViewModel;
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment {
 
         String profileImageUrl = sharedPreferences.getString("profileImage", null);
 
-        CircleImageView profileImageView = rootView.findViewById(R.id.userprofileimageholder);
+        CircleImageView profileImageView = rootView.findViewById(R.id.user_profile_image_holder);
 
 
         expenseViewModel = ((BasicSummaryActivity) getActivity()).getExpenseViewModel();
@@ -112,6 +113,17 @@ public class HomeFragment extends Fragment {
                     .into(profileImageView);
         }
 
+        // Set click listener for profile image
+        profileImageView.setOnClickListener(v -> {
+            // Replace the current fragment with ProfileFragment
+            IntentUtil.replaceFragment(
+                    R.id.layout_content, // Container view ID
+                    requireActivity(),
+                    new ProfileFragment(), // Replace with your actual ProfileFragment class
+                    "ProfileFragment" // Tag for backstack
+            );
+        });
+
         budgetOption = rootView.findViewById(R.id.opt_budget);
         expenseOption = rootView.findViewById(R.id.opt_expense);
         categoryOption = rootView.findViewById(R.id.opt_category);
@@ -142,8 +154,27 @@ public class HomeFragment extends Fragment {
             textSwitcher.setText(texts[currentIndex]);
         });
 
+        // Add hide/show expense functionality
+        TextView expenseCurrency = rootView.findViewById(R.id.expense_currency);
+        TextView expenseTotal = rootView.findViewById(R.id.expense_total);
+        View hideExpenseButton = rootView.findViewById(R.id.hide_expense);
+
+        final boolean[] isExpenseHidden = {false}; // State to track toggle
+
+        hideExpenseButton.setOnClickListener(v -> {
+            if (isExpenseHidden[0]) {
+                // Show the actual expense
+                expenseCurrency.setVisibility(View.VISIBLE);
+                expenseTotal.setText("200,000.00"); // Replace with actual amount
+                isExpenseHidden[0] = false;
+            } else {
+                // Hide the expense
+                expenseCurrency.setVisibility(View.INVISIBLE);
+                expenseTotal.setText("******");
+                isExpenseHidden[0] = true;
+            }
+        });
+
         return rootView;
     }
-
-
 }
