@@ -69,6 +69,7 @@ public interface ApiService {
             @Query("userId") String userId
     );
 
+
     @POST("addBudget")
     Call<mBudget> addBudget(@Body mBudget expense);
 
@@ -83,6 +84,13 @@ public interface ApiService {
             @Field("amount") String addAmount
 
     );
+
+    @DELETE("deleteBudget/{categoryTitle}")
+    Call<mBudget> deleteBudget(
+            @Path("categoryTitle") String categoryTitle,
+            @Query("userId") String userId
+    );
+
 
     @POST("addExpense")
     Call<mExpense> addExpense(@Body mExpense expense);

@@ -139,4 +139,6 @@ please verify on your email.</string>
     <string name="budget_add">Budget Category added successfully!</string>
     <string name="budget_dupe">Budget Category already exists.</string>
     <string name="budget_fail">Failed to add budget. Please try again!</string>
+    <string name="budget_deleted">Budget deleted successfully.</string>
+    <string name="budget_delete_fail">Failed to delete budget.</string>
 </resources>
