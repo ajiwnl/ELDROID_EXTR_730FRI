@@ -76,21 +76,21 @@ public interface ApiService {
     @POST("userBudgets")
     Call<List<mBudget>> getBudgetByUserId(@Query("userId") String userId);
 
-    @FormUrlEncoded
     @PATCH("updateBudget/{categoryTitle}")
     Call<mBudget> patchBudget(
             @Path("categoryTitle") String categoryTitle,
-            @Field("userId") String userId,
-            @Field("amount") String addAmount
-
+            @Body mBudget budget
     );
 
+<<<<<<< HEAD
+=======
     @DELETE("deleteBudget/{categoryTitle}")
     Call<mBudget> deleteBudget(
             @Path("categoryTitle") String categoryTitle,
             @Query("userId") String userId
     );
 
+>>>>>>> 21624750a7dc14155d209b80d24f55c47a0201d2
 
     @POST("addExpense")
     Call<mExpense> addExpense(@Body mExpense expense);

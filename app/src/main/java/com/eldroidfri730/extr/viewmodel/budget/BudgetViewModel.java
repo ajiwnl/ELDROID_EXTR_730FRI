@@ -84,26 +84,26 @@ public class BudgetViewModel extends ViewModel {
 
         Call<mBudget> call = apiService.patchBudget(
                 budget.getCategoryTitle(),
-                budget.getUserId(),
-                String.valueOf(budget.getBudget())
+                budget
         );
 
         call.enqueue(new Callback<mBudget>() {
             @Override
             public void onResponse(Call<mBudget> call, Response<mBudget> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Budget Update", "Budget updated successfully: " + response.body());
+                    Log.d("API Call", "Budget updated successfully: " + response.body());
                 } else {
-                    Log.e("Budget Update", "Failed to update budget. Code: " + response.code());
+                    Log.e("API Call", "Error: " + response.code() + ", " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<mBudget> call, Throwable t) {
-                Log.e("Budget Update", "API call failed.", t);
+                budgetErrorMessage.postValue(application.getString(R.string.cat_fetch_neterror));
             }
         });
     }
+
 
     public void fetchBudgetByUserId(String userId) {
         Log.d("BudgetViewModel", "Fetching Budget for userId: " + userId);
