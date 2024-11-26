@@ -27,6 +27,10 @@ public class mExpense {
         this.userId = userId;
     }
 
+    public String getExpenseName() {
+        return expenseName;
+    }
+
     // Getter and Setter methods
     public void setUserId(String userId) {
         this.userId = userId;
