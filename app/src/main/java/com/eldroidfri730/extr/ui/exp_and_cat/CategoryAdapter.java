@@ -77,8 +77,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_category, null);
         Dialog dialog = new Dialog(context);
         dialog.setContentView(dialogView);
-        dialog.getWindow().setLayout(800, WindowManager.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.getWindow().setLayout(600, 500);
         dialog.setCancelable(false);
 
         // Get references to the dialog views
