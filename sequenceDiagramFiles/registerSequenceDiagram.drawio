@@ -1,0 +1,242 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0" version="24.9.0">
+  <diagram name="Page-1" id="iBLRJY-gE2kyyVANsL76">
+    <mxGraphModel dx="2025" dy="1333" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="06jpUtFlK6CPKatlT8Im-3" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="-895" y="-608" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-4" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;EXTR API SERVER&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-504" y="-608" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-6" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;MONGODB&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-282" y="-608" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-670" y="42" as="sourcePoint" />
+            <mxPoint x="-669.59" y="-548" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-11" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-445" y="45" as="sourcePoint" />
+            <mxPoint x="-444.59" y="-545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-13" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-215" y="42" as="sourcePoint" />
+            <mxPoint x="-214.58999999999997" y="-548" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-14" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-653" y="-472" as="sourcePoint" />
+            <mxPoint x="-472" y="-475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-16" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;POST/regsiter&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="06jpUtFlK6CPKatlT8Im-14" vertex="1" connectable="0">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-20" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-425" y="-456" as="sourcePoint" />
+            <mxPoint x="-244" y="-459" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-21" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Query Database&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="06jpUtFlK6CPKatlT8Im-20" vertex="1" connectable="0">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-34" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-253" y="-397" as="sourcePoint" />
+            <mxPoint x="-427" y="-395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-37" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;User Existence check&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="06jpUtFlK6CPKatlT8Im-34" vertex="1" connectable="0">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x3w0C0bRtv-WAbDGBeUA-3" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;UI Application&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-727" y="-608" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-881" y="42" as="sourcePoint" />
+            <mxPoint x="-880.59" y="-548" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-3" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-868" y="-492" as="sourcePoint" />
+            <mxPoint x="-687" y="-495" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-8" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;User enter registers&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="dnPCXCKaiIPUW16wsFYT-3" vertex="1" connectable="0">
+          <mxGeometry x="-0.0318" y="2" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-9" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-478" y="-372" as="sourcePoint" />
+            <mxPoint x="-652" y="-370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-10" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;API Response&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="dnPCXCKaiIPUW16wsFYT-9" vertex="1" connectable="0">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-2" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-691" y="-350" as="sourcePoint" />
+            <mxPoint x="-865" y="-348" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-3" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;409 Username/Email exist&amp;nbsp;&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-2">
+          <mxGeometry x="0.0227" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-4" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-424" y="-322" as="sourcePoint" />
+            <mxPoint x="-243" y="-325" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-5" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Create new User in MongoDB&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-4">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-6" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-425" y="-291" as="sourcePoint" />
+            <mxPoint x="-244" y="-294" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-7" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Hash Password&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-6">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-10" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-424" y="-254" as="sourcePoint" />
+            <mxPoint x="-243" y="-257" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-11" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Create verification token&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-10">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-13" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-480" y="-207" as="sourcePoint" />
+            <mxPoint x="-654" y="-205" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-14" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;201 user created&lt;/font&gt;&lt;span style=&quot;font-size: 10px; background-color: initial;&quot;&gt;&amp;nbsp;and sent the verification email&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-636" y="-243" width="156" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-16" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-691" y="-171" as="sourcePoint" />
+            <mxPoint x="-865" y="-169" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-17" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;View email verification&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-16">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-18" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-873" y="-103" as="sourcePoint" />
+            <mxPoint x="-692" y="-106" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-19" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Verify the email&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-18">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-20" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-655" y="-80" as="sourcePoint" />
+            <mxPoint x="-474" y="-83" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-21" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;Validate token&amp;nbsp;&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-20">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-23" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-425" y="-62" as="sourcePoint" />
+            <mxPoint x="-244" y="-65" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-24" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Check Db for Token Expiry&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-23">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-26" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-425" y="27" as="sourcePoint" />
+            <mxPoint x="-244" y="24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-27" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;Update DB verification status&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-26">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint x="3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-28" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-247" y="-30" as="sourcePoint" />
+            <mxPoint x="-421" y="-28" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-29" value="Invalid/Expired token check" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-28">
+          <mxGeometry x="0.0227" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-33" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-697" y="5" as="sourcePoint" />
+            <mxPoint x="-871" y="7" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-34" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;400 Response Invalid token&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-33">
+          <mxGeometry x="0.0227" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-35" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-477" y="-8" as="sourcePoint" />
+            <mxPoint x="-651" y="-6" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="URXLup4sjaEc1I7ll5hV-36" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;API Response&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="URXLup4sjaEc1I7ll5hV-35">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

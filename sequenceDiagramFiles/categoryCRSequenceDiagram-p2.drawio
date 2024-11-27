@@ -1,0 +1,314 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0" version="24.9.0">
+  <diagram name="Page-1" id="iBLRJY-gE2kyyVANsL76">
+    <mxGraphModel dx="1888" dy="1244" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="06jpUtFlK6CPKatlT8Im-3" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="-895" y="-608" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-4" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;EXTR API SERVER&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-504" y="-608" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-6" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;MONGODB&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-282" y="-608" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-670" y="970.6666666666666" as="sourcePoint" />
+            <mxPoint x="-669.59" y="-548" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-11" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-445" y="979" as="sourcePoint" />
+            <mxPoint x="-444.59" y="-545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-13" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-215" y="976.5" as="sourcePoint" />
+            <mxPoint x="-214.58999999999997" y="-548" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-14" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-653" y="-472" as="sourcePoint" />
+            <mxPoint x="-472" y="-475" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-16" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;POST/userCategories&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="06jpUtFlK6CPKatlT8Im-14" vertex="1" connectable="0">
+          <mxGeometry x="-0.1583" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-20" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-425" y="-456" as="sourcePoint" />
+            <mxPoint x="-244" y="-459" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="06jpUtFlK6CPKatlT8Im-34" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-253" y="-397" as="sourcePoint" />
+            <mxPoint x="-427" y="-395" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x3w0C0bRtv-WAbDGBeUA-3" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;UI Application&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-727" y="-608" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;strokeWidth=5;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-881" y="977" as="sourcePoint" />
+            <mxPoint x="-880.59" y="-548" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-3" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-868" y="-492" as="sourcePoint" />
+            <mxPoint x="-683" y="-492" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-9" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-478" y="-372" as="sourcePoint" />
+            <mxPoint x="-652" y="-370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnPCXCKaiIPUW16wsFYT-10" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;API Response&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="dnPCXCKaiIPUW16wsFYT-9" vertex="1" connectable="0">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-2" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;User navigates to Category&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;Screen&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-858" y="-532" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-5" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-wrap-mode: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bspan%20style%3D%26quot%3Bfont-size%3A%2014px%3B%20text-wrap-mode%3A%20nowrap%3B%26quot%3B%26gt%3BUser%20navigates%20to%20Category%26amp%3Bnbsp%3B%26lt%3B%2Fspan%26gt%3B%26lt%3Bdiv%26gt%3B%26lt%3Bspan%20style%3D%26quot%3Bfont-size%3A%2014px%3B%20text-wrap-mode%3A%20nowrap%3B%26quot%3B%26gt%3BScreen%26lt%3B%2Fspan%26gt%3B%26lt%3B%2Fdiv%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dleft%3BverticalAlign%3Dmiddle%3BwhiteSpace%3Dwrap%3Brounded%3D0%3BfontSize%3D16%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22-858%22%20y%3D%22-532%22%20width%3D%2260%22%20height%3D%2230%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;&lt;span style=&quot;font-size: 14px; text-align: center; text-wrap-mode: nowrap;&quot;&gt;Query Database by userId&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-426" y="-497" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-7" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Response body of userCategories&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-623" y="-420" width="134" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-8" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Returns category by userId&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-419" y="-438" width="138" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-10" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-689" y="-352" as="sourcePoint" />
+            <mxPoint x="-863" y="-350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-11" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Display all the categories by userId&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-855" y="-393" width="138" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-13" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-869.5" y="-267" as="sourcePoint" />
+            <mxPoint x="-684.5" y="-267" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-14" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;User clicks the list item and&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;edit that category item&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-868.5" y="-307" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-15" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-655" y="-237" as="sourcePoint" />
+            <mxPoint x="-474" y="-240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-20" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-426" y="-195" as="sourcePoint" />
+            <mxPoint x="-241" y="-195" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-22" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Query in Database&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="kGnQ39eMeGSa1_qNiIke-20" vertex="1" connectable="0">
+          <mxGeometry x="-0.1757" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-23" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-252" y="-126" as="sourcePoint" />
+            <mxPoint x="-426" y="-124" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-24" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Category existence check&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-418" y="-167" width="138" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-25" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-478" y="-106" as="sourcePoint" />
+            <mxPoint x="-652" y="-104" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-26" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;API Response&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="kGnQ39eMeGSa1_qNiIke-25" vertex="1" connectable="0">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-27" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;dashed=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-694.5" y="-57" as="sourcePoint" />
+            <mxPoint x="-868.5" y="-55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-31" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;404 Response&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;Category not found&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-865" y="-97" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-36" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-418" y="44" as="sourcePoint" />
+            <mxPoint x="-237" y="41" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-38" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;Update Category in MongoDB&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-426" y="-7" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-39" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-252" y="121" as="sourcePoint" />
+            <mxPoint x="-426" y="123" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-40" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;MongoDB returns confirmation&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-418" y="80" width="138" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-41" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-475" y="209" as="sourcePoint" />
+            <mxPoint x="-649" y="211" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-42" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;API Response&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" parent="kGnQ39eMeGSa1_qNiIke-41" vertex="1" connectable="0">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-43" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Response body of updateCategory&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-620" y="161" width="134" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-44" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-684" y="268" as="sourcePoint" />
+            <mxPoint x="-858" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="kGnQ39eMeGSa1_qNiIke-45" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Display the updated Category in the list&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="-850" y="227" width="138" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-1" value="&lt;span style=&quot;font-size: 14px; text-align: center; text-wrap-mode: nowrap;&quot;&gt;PATCH/&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-align: center; text-wrap-mode: nowrap;&quot;&gt;updateCategory/{categoryTitle}&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-660" y="-290" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-3" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-694.5" as="sourcePoint" />
+            <mxPoint x="-868.5" y="2" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-4" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;409 Response&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;Category exist&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-865" y="-40" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-6" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-868.5" y="342" as="sourcePoint" />
+            <mxPoint x="-683.5" y="342" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-7" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;User clicks the list item and&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;delete that category item&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-867.5" y="302" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-10" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-651" y="405" as="sourcePoint" />
+            <mxPoint x="-470" y="402" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-11" value="&lt;span style=&quot;font-size: 14px; text-align: center; text-wrap-mode: nowrap;&quot;&gt;DELETE/&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-align: center; text-wrap-mode: nowrap;&quot;&gt;deleteCategory/{categoryTitle}&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-656" y="352" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-17" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-426" y="426" as="sourcePoint" />
+            <mxPoint x="-241" y="426" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-18" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Query in Database&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="E8EAHt5hBr_j_Ai_6k0k-17">
+          <mxGeometry x="-0.1757" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-19" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-252" y="495" as="sourcePoint" />
+            <mxPoint x="-426" y="497" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-20" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Category existence check&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-418" y="454" width="138" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-21" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-479" y="524" as="sourcePoint" />
+            <mxPoint x="-653" y="526" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-22" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;API Response&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="E8EAHt5hBr_j_Ai_6k0k-21">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-25" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-691" y="572" as="sourcePoint" />
+            <mxPoint x="-865" y="574" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-26" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;404 Response&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;Category not found&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-861.5" y="532" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-27" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-418" y="620" as="sourcePoint" />
+            <mxPoint x="-237" y="617" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-28" value="&lt;span style=&quot;font-size: 14px; text-wrap-mode: nowrap;&quot;&gt;Delete Category in MongoDB&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-426" y="569" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-29" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-252" y="697" as="sourcePoint" />
+            <mxPoint x="-426" y="699" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-30" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;MongoDB returns confirmation&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-418" y="656" width="138" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-31" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-482" y="757" as="sourcePoint" />
+            <mxPoint x="-656" y="759" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-32" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;API Response&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="E8EAHt5hBr_j_Ai_6k0k-31">
+          <mxGeometry x="0.0478" y="-1" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-33" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Response body of&amp;nbsp;&lt;/font&gt;&lt;div&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;deleteCategory&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-634" y="709" width="134" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-35" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-691" y="834" as="sourcePoint" />
+            <mxPoint x="-865" y="836" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E8EAHt5hBr_j_Ai_6k0k-36" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Display the updated Category in the list&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="-857" y="793" width="138" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
