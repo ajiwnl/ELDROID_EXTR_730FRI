@@ -2,6 +2,9 @@
 
 A user-friendly mobile application designed to help users effectively monitor and manage their personal finances by recording income, tracking expenses, and providing detailed reports to enhance budgeting and financial decision-making.
 
+![image](https://github.com/user-attachments/assets/1e49420f-d0b0-4a13-bc56-0a7c4872c336)
+
+
 ## ELDROID Members
 
 -   [Franz Ruie Morada](https://www.github.com/UnusualRuWei)
